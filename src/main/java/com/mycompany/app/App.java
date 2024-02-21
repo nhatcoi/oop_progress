@@ -5,8 +5,11 @@
 
 package com.mycompany.app;
 
+import java.util.*;
+
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello Remote World!");
+        System.out.println("NHAT COI");
+        System.out.println(new Date());
     }
 }
