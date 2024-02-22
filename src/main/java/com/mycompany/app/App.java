@@ -9,15 +9,13 @@ public class App {
     public static class Number {
         public int i;
     }
-       
-    public static void main(String[] args) {
-        Number n1 = new Number();
-        Number n2 = new Number();
-        n1.i = 2;
-        n2.i = 5;
-        n1 = n2;
-        n2.i = 10;
-        n1.i = 20;
-        System.out.println(n1.i + " " + n2.i);
+    static void f(Number m) {
+        m.i = 15;
+        }
+        public static void main(String[] args) {
+        Number n = new Number();
+        n.i = 14;
+        f(n);
+        System.out.println(n.i);
     }
 }
