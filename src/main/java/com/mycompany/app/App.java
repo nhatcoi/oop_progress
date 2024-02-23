@@ -1,21 +1,49 @@
-/*----------------------------------------------------------------------------------------
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for license information.
- *---------------------------------------------------------------------------------------*/
-
 package com.mycompany.app;
+import java.util.Random;
 
 public class App {
-    public static class Number {
-        public int i;
-    }
-    static void f(Number m) {
-        m.i = 15;
+    public static void main(String[] args) {
+        int numValues = 25;
+        int[] randomValues = generateRandomValues(numValues);
+        int referenceValue = generateRandomValue();
+
+        System.out.println("Generated random values:");
+        for (int value : randomValues) {
+            System.out.print(value + " ");
         }
-        public static void main(String[] args) {
-        Number n = new Number();
-        n.i = 14;
-        f(n);
-        System.out.println(n.i);
+
+        System.out.println("\nReference value: " + referenceValue);
+
+        classifyValues(randomValues, referenceValue);
+    }
+
+    private static int[] generateRandomValues(int numValues) {
+        Random random = new Random();
+        int[] values = new int[numValues];
+
+        for (int i = 0; i < numValues; i++) {
+            values[i] = random.nextInt(25) + 1;
+        }
+
+        return values;
+    }
+
+    private static int generateRandomValue() {
+        Random random = new Random();
+        return random.nextInt(25) + 1;
+    }
+
+    private static void classifyValues(int[] values, int referenceValue) {
+        System.out.println("\nClassifications:");
+
+        for (int value : values) {
+            if (value > referenceValue) {
+                System.out.println(value + " is greater than the reference value.");
+            } else if (value < referenceValue) {
+                System.out.println(value + " is less than the reference value.");
+            } else {
+                System.out.println(value + " is equal to the reference value.");
+            }
+        }
     }
 }
