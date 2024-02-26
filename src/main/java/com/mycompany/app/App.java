@@ -1,4 +1,5 @@
 package com.mycompany.app;
+
 import java.util.Random;
 
 public class App {
@@ -10,7 +11,7 @@ public class App {
         System.out.println("Generated random values:");
         for (int value : randomValues) {
             System.out.print(value + " ");
-        }
+        } // Nhat
 
         System.out.println("\nReference value: " + referenceValue);
 
