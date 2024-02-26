@@ -2,6 +2,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "E9",
+            "request": "launch",
+            "mainClass": "com.mycompany.app.week1.E9",
+            "projectName": "my-app"
+        },
+        {
+            "type": "java",
+            "name": "E5",
+            "request": "launch",
+            "mainClass": "com.mycompany.app.week1.E5",
+            "projectName": "my-app"
+        },
+        {
+            "type": "java",
+            "name": "E3",
+            "request": "launch",
+            "mainClass": "com.mycompany.app.week1.E3",
+            "projectName": "my-app"
+        },
+        {
+            "type": "java",
+            "name": "E1",
+            "request": "launch",
+            "mainClass": "com.mycompany.app.week1.E1",
+            "projectName": "my-app"
+        },
+        {
+            "type": "java",
             "name": "Launch App",
             "request": "launch",
             "cwd": "${workspaceFolder}",
