@@ -2,6 +2,41 @@
     "configurations": [
         {
             "type": "java",
+            "name": "E10",
+            "request": "launch",
+            "mainClass": "com.mycompany.app.week1.E10",
+            "projectName": "my-app"
+        },
+        {
+            "type": "java",
+            "name": "E8",
+            "request": "launch",
+            "mainClass": "com.mycompany.app.week1.E8",
+            "projectName": "my-app"
+        },
+        {
+            "type": "java",
+            "name": "E6",
+            "request": "launch",
+            "mainClass": "com.mycompany.app.week1.E6",
+            "projectName": "my-app"
+        },
+        {
+            "type": "java",
+            "name": "E4",
+            "request": "launch",
+            "mainClass": "com.mycompany.app.week1.E4",
+            "projectName": "my-app"
+        },
+        {
+            "type": "java",
+            "name": "E2",
+            "request": "launch",
+            "mainClass": "com.mycompany.app.week1.E2",
+            "projectName": "my-app"
+        },
+        {
+            "type": "java",
             "name": "E9",
             "request": "launch",
             "mainClass": "com.mycompany.app.week1.E9",
