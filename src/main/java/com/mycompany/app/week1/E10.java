@@ -1,7 +1,7 @@
 package com.mycompany.app.week1;
 
 public class E10 {
-    public static void main(String[] args) {
+    public void Ex10() {
         for (int i = 10; i < 100; i++) {
             for (int j = i; j < 100; j++) {
                 int product = i * j;

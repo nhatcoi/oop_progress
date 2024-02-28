@@ -3,7 +3,7 @@ package com.mycompany.app.week1;
 import java.util.Random;
 
 public class E2 {
-    public static void main(String[] args) {
+    public void Ex2() {
         int numValues = 25;
         int[] randomValues = generateRandomValues(numValues);
         int referenceValue = generateRandomValue();

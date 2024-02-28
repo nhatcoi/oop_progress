@@ -1,9 +1,7 @@
 package com.mycompany.app.week1;
 
-import java.util.Scanner;
-
 public class E8 {
-    public static void main(String[] args) {
+    public void Ex8() {
 
         for (int i = 1; i <= 3; i++) {
             switch (i) {

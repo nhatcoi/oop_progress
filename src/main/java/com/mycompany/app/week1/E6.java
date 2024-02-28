@@ -10,7 +10,7 @@ public class E6 {
             return +1; // Match
     }
 
-    public static void main(String[] args) {
+    public void Ex6() {
         System.out.println(test(10, 5, 15));
         System.out.println(test(5, 10, 15));
         System.out.println(test(5, 5, 5));

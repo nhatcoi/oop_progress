@@ -1,7 +1,7 @@
 package com.mycompany.app.week1;
 
 public class E4 {
-    public static void main(String[] args) {
+    public void Ex4() {
         for (int i = 2; i <= 1000; i++) {
             boolean isPrime = true;
             for (int j = 2; j < i; j++) { // Check divisibility for numbers less than i
