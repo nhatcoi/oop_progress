@@ -1,3 +1,7 @@
 ## Group 17
 
-##### Thành viên
+## Member
+- Nguyen Van Nhat
+- Nghiem Duc Viet
+
+------------------------------------------------------------------
