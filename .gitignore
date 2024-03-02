@@ -330,5 +330,5 @@ ASALocalRun/
 .mfractor/
 
 *.DS_Store
-
+*.class
 target
