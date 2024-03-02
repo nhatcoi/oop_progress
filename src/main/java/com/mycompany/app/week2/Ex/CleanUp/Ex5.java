@@ -23,5 +23,11 @@ public class Ex5 {
         public void bark(String message) {
             debug.debug("bark: " + message);
         }
+
+        public void bark(int times, String message) {
+            for (int i = 0; i < times; i++) {
+                debug.debug("Bark: " + message);
+            }
+        }
     }
 }
