@@ -1,7 +1,7 @@
 package com.mycompany.app;
 
 import com.mycompany.app.Debug.Debug;
-import com.mycompany.app.week2.Ex.CleanUp.Ex10;
+import com.mycompany.app.week2.Ex.CleanUp.Ex11;
 
 public class App {
     static Debug debug = new Debug();
@@ -9,9 +9,8 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Group 17");
 
-        Ex10 ex = new Ex10();
-        ex = null;
-        System.gc();
+        Ex11 ex = new Ex11();
+        ex.run();
         // FirstClass firstObj = new FirstClass();
         // //can access protected data from another class
         // secondMethod(firstObj);
