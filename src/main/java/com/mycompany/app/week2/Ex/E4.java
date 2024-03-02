@@ -15,5 +15,9 @@ public class E4 {
         public Dog(String name, int weight) {
             super(name, weight);
         }
+
+        public String getName() {
+            return name;
+        }
     }
 }
