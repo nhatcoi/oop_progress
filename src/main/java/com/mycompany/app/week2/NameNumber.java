@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package com.mycompany.app.week2;
 
 /*Todo:
  * NameNumber class

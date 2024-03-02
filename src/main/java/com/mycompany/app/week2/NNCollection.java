@@ -1,6 +1,4 @@
-package com.mycompany.app;
-
-import NameNumber;
+package com.mycompany.app.week2;
 /*
  * todo: Array of Objects
  * if different name, insert number
@@ -16,7 +14,7 @@ public class NNCollection {
     private int free;
 
     //Constructor
-    NNCollection() {free = 0;}
+    public NNCollection() {free = 0;}
     //Method insert Number if Name is not found
     public void insert(NameNumber n) {
         int index = 0;
