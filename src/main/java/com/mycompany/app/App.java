@@ -4,6 +4,9 @@ import com.mycompany.app.Debug.Debug;
 import com.mycompany.app.week2.Ex.ReUse.Ex1;
 import com.mycompany.app.week2.Ex.ReUse.Ex1.First;
 import com.mycompany.app.week2.Ex.ReUse.Ex1.Second;
+import com.mycompany.app.Debug.DebugOff;
+import com.mycompany.app.week1.E1;
+import com.mycompany.app.week2.*;
 
 public class App {
     static Debug debug = new Debug();
@@ -42,6 +45,28 @@ public class App {
         // // E4.Dog dog = new E4.Dog("Fido", 50);
         // // //Debug.debug(dog.name); cant not call this because use protected
         // // debug.debug(dog.getName()); // can call this because use getter
+        // call or revoke the work of each task in here
+        // for example, revoke class E1
+        // E1 e = new E1();
+        // e.Ex1();
+
+        // NameNumber [] nn = new NameNumber[2];
+        // //To do: bug Name Number
+        // //set new value
+        // nn[0] = new NameNumber("John Doe", "0919191919");
+        // nn[1] = new NameNumber("John Doe", "919");
+        // String lastName = nn[0].getLastName();
+        // String number = nn[0].getTelNumber();
+
+        // NNCollection nnC = new NNCollection();
+        // nnC.insert(nn[0]);
+        // nnC.insert(nn[1]);
+        // String numFind = nnC.findNumber(lastName);
+        Debug d = new DebugOff();
+        d.debug("test123");
+
+        Debug d2 = new Debug();
+        d2.debug("test123");
     }
 
     // static void secondMethod(FirstClass obj) {
