@@ -9,5 +9,17 @@ public class App {
         E1 e = new E1();
         e.Ex1();
 
+        NameNumber [] nn = new NameNumber[2];
+        //To do: bug Name Number
+        //set new value
+        nn[0] = new NameNumber("John Doe", "0919191919");
+        nn[1] = new NameNumber("John Doe", "919");
+        String lastName = nn[0].getLastName();
+        String number = nn[0].getTelNumber();
+
+        NNCollection nnC = new NNCollection();
+        nnC.insert(nn[0]); 
+        nnC.insert(nn[1]); 
+        String numFind = nnC.findNumber(lastName);
     }
 }
