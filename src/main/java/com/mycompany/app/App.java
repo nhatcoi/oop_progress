@@ -13,6 +13,10 @@ import com.mycompany.app.week2.polymorphism.ex2_3_4.Shapes;
 import com.mycompany.app.week2.polymorphism.ex2_3_4.Square;
 import com.mycompany.app.week2.polymorphism.ex2_3_4.Triangle;
 import com.mycompany.app.week2.polymorphism.ex6_7_8.*;
+import com.mycompany.app.week2.polymorphism.ex9.Gerbil;
+import com.mycompany.app.week2.polymorphism.ex9.Hamster;
+import com.mycompany.app.week2.polymorphism.ex9.Mouse;
+import com.mycompany.app.week2.polymorphism.ex9.Rodent;
 
 public class App {
     static Debug debug = new Debug();
@@ -74,6 +78,19 @@ public class App {
         // exercise 6 - toString method
         Music3.toString(orchestra);
 
+
+        // exercise 9 - Rodent
+        Rodent[] rodents = {
+            new Mouse(),
+            new Gerbil(),
+            new Hamster()
+        };
+
+        for (Rodent rodent : rodents) {
+            rodent.eat();
+            rodent.sleep();
+            rodent.run();
+        }
 
     }
 }
