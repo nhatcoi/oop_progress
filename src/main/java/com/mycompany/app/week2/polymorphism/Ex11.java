@@ -1,7 +1,7 @@
-package com.mycompany.app.week2.polymorphism.ex11;
+package com.mycompany.app.week2.polymorphism;
 
 // Order of constructor calls.
-public class Ex11_Sandwich {
+public class Ex11 {
     static class Meal {
         Meal() {
             System.out.println("Meal()");

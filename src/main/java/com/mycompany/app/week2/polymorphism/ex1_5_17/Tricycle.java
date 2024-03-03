@@ -1,4 +1,4 @@
-package com.mycompany.app.week2.polymorphism.ex1_5;
+package com.mycompany.app.week2.polymorphism.ex1_5_17;
 
 public class Tricycle extends Cycle{
     public void ride() {

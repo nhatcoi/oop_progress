@@ -8,13 +8,12 @@ import com.mycompany.app.week2.polymorphism.Ex13;
 import com.mycompany.app.week2.polymorphism.Ex15;
 import com.mycompany.app.week2.polymorphism.Ex16;
 import com.mycompany.app.week2.polymorphism.ex10.*;
-import com.mycompany.app.week2.polymorphism.ex1_5.*;
+import com.mycompany.app.week2.polymorphism.ex1_5_17.*;
 import com.mycompany.app.week2.polymorphism.ex2_3_4.*;
 import com.mycompany.app.week2.polymorphism.ex6_7_8.*;
 import com.mycompany.app.week2.polymorphism.ex9_12_14.*;
-import com.mycompany.app.week2.polymorphism.ex11.Ex11_Sandwich.Sandwich;
+import com.mycompany.app.week2.polymorphism.Ex11.*;
 import com.mycompany.app.week2.polymorphism.Ex13.*;
-import com.mycompany.app.week2.polymorphism.Ex15.*;
 import com.mycompany.app.week2.polymorphism.Ex16.*;
 
 public class App {
@@ -108,17 +107,17 @@ public class App {
         // exercise 13 -  verify the termination condition
 
         Shared shared = new Ex13().new Shared();
-        Composing[] composing = { new Composing(shared),
+        Composing[] composing = {new Composing(shared),
                 new Composing(shared), new Composing(shared),
-                new Composing(shared), new Composing(shared) };
-        for(Composing c : composing) {
+                new Composing(shared), new Composing(shared)};
+        for (Composing c : composing) {
             c.dispose();
         }
-        finalize2();
+        shared.finalize2();
 
         // exercise 15
         new Ex15().new RoundGlyph(5);
-        new Ex15().new RectangularGlyph(2,3);
+        new Ex15().new RectangularGlyph(2, 3);
 
         // exercise 16
         Starship starship = new Ex16().new Starship();
@@ -128,9 +127,13 @@ public class App {
         starship.performAlert();
         starship.toRedAlert();
         starship.performAlert();
-    }
-    private static void finalize2() {
-        System.out.println("Finalizing " + new Ex13());
+
+        // exercise 17
+        Cycle[] cycles = {new Unicycle(), new Bicycle(), new Tricycle()};
+
+        ((Unicycle)cycles[0]).balance();
+        ((Bicycle)cycles[1]).balance();
+
     }
 
 }

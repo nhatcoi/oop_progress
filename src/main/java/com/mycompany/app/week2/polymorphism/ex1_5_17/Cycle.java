@@ -1,4 +1,4 @@
-package com.mycompany.app.week2.polymorphism.ex1_5;
+package com.mycompany.app.week2.polymorphism.ex1_5_17;
 
 public class Cycle {
     public void ride() {
@@ -8,5 +8,7 @@ public class Cycle {
     public int wheels(int w) {
         return w;
     }
+
+
 }
 

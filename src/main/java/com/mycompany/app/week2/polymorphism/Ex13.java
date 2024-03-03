@@ -26,6 +26,10 @@ public class Ex13 {
         public String toString() {
             return "Shared " + id;
         }
+
+        public void finalize2() {
+            System.out.println("Finalizing " + new Ex13());
+        }
     }
 
     public static class Composing {
