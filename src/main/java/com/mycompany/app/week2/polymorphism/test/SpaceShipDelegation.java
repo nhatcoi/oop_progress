@@ -1,4 +1,4 @@
-package com.mycompany.app.week2.polymorphism.ex11;
+package com.mycompany.app.week2.polymorphism.test;
 
 public class SpaceShipDelegation {
     private String name;

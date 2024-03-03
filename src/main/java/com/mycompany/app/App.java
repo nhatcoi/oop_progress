@@ -6,7 +6,8 @@ import com.mycompany.app.week2.Ex.ReUse.Ex9;
 import com.mycompany.app.week2.Ex.ReUse.Ex9.Stem;
 import com.mycompany.app.week2.polymorphism.ex10.Base;
 import com.mycompany.app.week2.polymorphism.ex10.Derived;
-import com.mycompany.app.week2.polymorphism.ex11.Detergent;
+import com.mycompany.app.week2.polymorphism.ex11.Ex11_Sandwich;
+import com.mycompany.app.week2.polymorphism.test.Detergent;
 import com.mycompany.app.week2.polymorphism.ex1_5.Cycle;
 import com.mycompany.app.week2.polymorphism.ex1_5.Bicycle;
 import com.mycompany.app.week2.polymorphism.ex1_5.Tricycle;
@@ -20,6 +21,7 @@ import com.mycompany.app.week2.polymorphism.ex9.Gerbil;
 import com.mycompany.app.week2.polymorphism.ex9.Hamster;
 import com.mycompany.app.week2.polymorphism.ex9.Mouse;
 import com.mycompany.app.week2.polymorphism.ex9.Rodent;
+import com.mycompany.app.week2.polymorphism.ex11.Ex11_Sandwich.Sandwich;
 
 public class App {
     static Debug debug = new Debug();
@@ -100,13 +102,10 @@ public class App {
         base.method1();
         // Explain : When method1 is called, it in turn calls method2, which is overridden in Derived. Because of polymorphism, the method2 of Derived is called, not method2 of Base
 
-        // exercise 11 - Detergent - it uses delegation.
-        Detergent detergent = new Detergent();
-        detergent.append("Diana");
-        detergent.scrub();
-        detergent.apply();
-        detergent.dilute();
-        detergent.foam();
-        System.out.println(detergent.toString());
+        // exercise 11 - // Order of constructor calls.
+        new Sandwich();
+
+
+
     }
 }
