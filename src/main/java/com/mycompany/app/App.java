@@ -12,6 +12,7 @@ import com.mycompany.app.week2.polymorphism.ex2_3_4.Circle;
 import com.mycompany.app.week2.polymorphism.ex2_3_4.Shapes;
 import com.mycompany.app.week2.polymorphism.ex2_3_4.Square;
 import com.mycompany.app.week2.polymorphism.ex2_3_4.Triangle;
+import com.mycompany.app.week2.polymorphism.ex6_7_8.*;
 
 public class App {
     static Debug debug = new Debug();
@@ -52,6 +53,26 @@ public class App {
         shape1.draw();
         Shapes shape2 = new Circle();
         shape2.message();
+
+        // exercise 7 - verify that polymorphism works for your new type.
+        Note note = new Note();
+        Instrument instrument = new Instrument();
+        instrument.play(note, 0);
+        instrument = new Wind();
+        instrument.play(note, 6);
+        System.out.println();
+
+        // exercise 8 - randomly creates Instrument objects
+        Instrument[] orchestra = {
+                new Wind(),
+                new Percussion(),
+                new Stringed(),
+                new Brass(),
+                new Woodwind()
+        };
+        Music3.tuneAll(orchestra);
+        // exercise 6 - toString method
+        Music3.toString(orchestra);
 
 
     }
