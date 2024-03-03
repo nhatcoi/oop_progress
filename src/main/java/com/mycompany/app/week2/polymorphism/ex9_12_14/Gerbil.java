@@ -6,7 +6,7 @@ public class Gerbil extends Rodent {
         super(name, sharedTeeth);
     }
 
-    @Override
+        @Override
         public void eat() {
             System.out.println("Gerbil is gobble");
         }
@@ -20,6 +20,4 @@ public class Gerbil extends Rodent {
         public void sleep() {
             System.out.println("Gerbil is sleeping");
         }
-
-
 }
