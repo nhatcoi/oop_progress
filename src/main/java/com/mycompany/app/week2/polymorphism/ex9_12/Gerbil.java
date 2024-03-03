@@ -1,8 +1,12 @@
-package com.mycompany.app.week2.polymorphism.ex9;
+package com.mycompany.app.week2.polymorphism.ex9_12;
 
 public class Gerbil extends Rodent {
 
-        @Override
+    public Gerbil(String name, Teeth sharedTeeth) {
+        super(name, sharedTeeth);
+    }
+
+    @Override
         public void eat() {
             System.out.println("Gerbil is gobble");
         }
@@ -17,13 +21,5 @@ public class Gerbil extends Rodent {
             System.out.println("Gerbil is sleeping");
         }
 
-        @Override
-        public String name(String n) {
-            return n;
-        }
 
-        @Override
-        public int age(int months) {
-            return months;
-        }
 }

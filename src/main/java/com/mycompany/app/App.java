@@ -4,24 +4,14 @@ import com.mycompany.app.Debug.Debug;
 
 import com.mycompany.app.week2.Ex.ReUse.Ex9;
 import com.mycompany.app.week2.Ex.ReUse.Ex9.Stem;
-import com.mycompany.app.week2.polymorphism.ex10.Base;
-import com.mycompany.app.week2.polymorphism.ex10.Derived;
-import com.mycompany.app.week2.polymorphism.ex11.Ex11_Sandwich;
-import com.mycompany.app.week2.polymorphism.test.Detergent;
-import com.mycompany.app.week2.polymorphism.ex1_5.Cycle;
-import com.mycompany.app.week2.polymorphism.ex1_5.Bicycle;
-import com.mycompany.app.week2.polymorphism.ex1_5.Tricycle;
-import com.mycompany.app.week2.polymorphism.ex1_5.Unicycle;
-import com.mycompany.app.week2.polymorphism.ex2_3_4.Circle;
-import com.mycompany.app.week2.polymorphism.ex2_3_4.Shapes;
-import com.mycompany.app.week2.polymorphism.ex2_3_4.Square;
-import com.mycompany.app.week2.polymorphism.ex2_3_4.Triangle;
+import com.mycompany.app.week2.polymorphism.Ex13;
+import com.mycompany.app.week2.polymorphism.ex10.*;
+import com.mycompany.app.week2.polymorphism.ex1_5.*;
+import com.mycompany.app.week2.polymorphism.ex2_3_4.*;
 import com.mycompany.app.week2.polymorphism.ex6_7_8.*;
-import com.mycompany.app.week2.polymorphism.ex9.Gerbil;
-import com.mycompany.app.week2.polymorphism.ex9.Hamster;
-import com.mycompany.app.week2.polymorphism.ex9.Mouse;
-import com.mycompany.app.week2.polymorphism.ex9.Rodent;
+import com.mycompany.app.week2.polymorphism.ex9_12.*;
 import com.mycompany.app.week2.polymorphism.ex11.Ex11_Sandwich.Sandwich;
+import com.mycompany.app.week2.polymorphism.Ex13.*;
 
 public class App {
     static Debug debug = new Debug();
@@ -84,11 +74,13 @@ public class App {
         Music3.toString(orchestra);
 
 
-        // exercise 9 - Rodent
+        // exercise 9, 12, 14 -
+        Teeth sharedTeeth = new Teeth();
         Rodent[] rodents = {
-            new Mouse(),
-            new Gerbil(),
-            new Hamster()
+                new Mouse("Mickey", sharedTeeth),
+                new Gerbil("Gerry", sharedTeeth),
+                new Hamster("Harry", sharedTeeth),
+                new Rodent("Generic Rodent", sharedTeeth)
         };
 
         for (Rodent rodent : rodents) {
@@ -96,6 +88,9 @@ public class App {
             rodent.sleep();
             rodent.run();
         }
+
+        // Release the shared object after using it
+        sharedTeeth.release(); // = 4
 
         // exercise 10 - Base - Derived
         Base base = new Derived();
@@ -105,7 +100,20 @@ public class App {
         // exercise 11 - // Order of constructor calls.
         new Sandwich();
 
+        // exercise 13 -  verify the termination condition
+        Shared shared = new Shared();
+        Composing[] composing = { new Composing(shared),
+                new Composing(shared), new Composing(shared),
+                new Composing(shared), new Composing(shared) };
+        for(Composing c : composing) {
+            c.dispose();
+        }
+        finalize2();
 
 
     }
+    private static void finalize2() {
+        System.out.println("Finalizing " + new Ex13());
+    }
+
 }

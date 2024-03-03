@@ -1,6 +1,10 @@
-package com.mycompany.app.week2.polymorphism.ex9;
+package com.mycompany.app.week2.polymorphism.ex9_12;
 
 public class Mouse extends Rodent{
+
+    public Mouse(String name, Teeth sharedTeeth) {
+        super(name, sharedTeeth);
+    }
 
     @Override
     public void eat() {
@@ -17,13 +21,4 @@ public class Mouse extends Rodent{
         System.out.println("Mouse is sleeping");
     }
 
-    @Override
-    public String name(String n) {
-        return n;
-    }
-
-    @Override
-    public int age(int months) {
-        return months;
-    }
 }
