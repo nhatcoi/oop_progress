@@ -1,4 +1,4 @@
-package com.mycompany.app.week2.polymorphism.ex9_12;
+package com.mycompany.app.week2.polymorphism.ex9_12_14;
 
 public class Hamster extends Rodent{
     public Hamster(String name, Teeth sharedTeeth) {

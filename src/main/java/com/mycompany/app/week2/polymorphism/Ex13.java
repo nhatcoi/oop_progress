@@ -1,7 +1,12 @@
 package com.mycompany.app.week2.polymorphism;
 
 public class Ex13 {
-    public static class Shared{
+
+    public Shared getShared() {
+        return new Shared();
+    }
+
+    public class Shared{
         private int refcount = 0;
         private static long counter = 0;
         private final long id = counter++;

@@ -5,13 +5,17 @@ import com.mycompany.app.Debug.Debug;
 import com.mycompany.app.week2.Ex.ReUse.Ex9;
 import com.mycompany.app.week2.Ex.ReUse.Ex9.Stem;
 import com.mycompany.app.week2.polymorphism.Ex13;
+import com.mycompany.app.week2.polymorphism.Ex15;
+import com.mycompany.app.week2.polymorphism.Ex16;
 import com.mycompany.app.week2.polymorphism.ex10.*;
 import com.mycompany.app.week2.polymorphism.ex1_5.*;
 import com.mycompany.app.week2.polymorphism.ex2_3_4.*;
 import com.mycompany.app.week2.polymorphism.ex6_7_8.*;
-import com.mycompany.app.week2.polymorphism.ex9_12.*;
+import com.mycompany.app.week2.polymorphism.ex9_12_14.*;
 import com.mycompany.app.week2.polymorphism.ex11.Ex11_Sandwich.Sandwich;
 import com.mycompany.app.week2.polymorphism.Ex13.*;
+import com.mycompany.app.week2.polymorphism.Ex15.*;
+import com.mycompany.app.week2.polymorphism.Ex16.*;
 
 public class App {
     static Debug debug = new Debug();
@@ -76,6 +80,7 @@ public class App {
 
         // exercise 9, 12, 14 -
         Teeth sharedTeeth = new Teeth();
+
         Rodent[] rodents = {
                 new Mouse("Mickey", sharedTeeth),
                 new Gerbil("Gerry", sharedTeeth),
@@ -101,7 +106,8 @@ public class App {
         new Sandwich();
 
         // exercise 13 -  verify the termination condition
-        Shared shared = new Shared();
+
+        Shared shared = new Ex13().new Shared();
         Composing[] composing = { new Composing(shared),
                 new Composing(shared), new Composing(shared),
                 new Composing(shared), new Composing(shared) };
@@ -110,7 +116,18 @@ public class App {
         }
         finalize2();
 
+        // exercise 15
+        new Ex15().new RoundGlyph(5);
+        new Ex15().new RectangularGlyph(2,3);
 
+        // exercise 16
+        Starship starship = new Ex16().new Starship();
+        starship.toGreenAlert();
+        starship.performAlert();
+        starship.toYellowAlert();
+        starship.performAlert();
+        starship.toRedAlert();
+        starship.performAlert();
     }
     private static void finalize2() {
         System.out.println("Finalizing " + new Ex13());

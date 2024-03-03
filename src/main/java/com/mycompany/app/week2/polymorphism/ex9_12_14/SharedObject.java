@@ -1,6 +1,6 @@
-package com.mycompany.app.week2.polymorphism.ex9_12;
+package com.mycompany.app.week2.polymorphism.ex9_12_14;
 
-class SharedObject {
+public class SharedObject {
     private static int referenceCount = 0;
 
     public SharedObject() {
