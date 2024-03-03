@@ -1,6 +1,6 @@
 package com.mycompany.app.week2.polymorphism.ex9;
 
-public class Hamster implements Rodent{
+public class Hamster extends Rodent{
     @Override
     public void eat() {
         System.out.println("Hamster is gobble");

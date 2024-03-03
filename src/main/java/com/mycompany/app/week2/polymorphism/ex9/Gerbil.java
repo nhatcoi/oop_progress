@@ -1,6 +1,6 @@
 package com.mycompany.app.week2.polymorphism.ex9;
 
-public class Gerbil implements Rodent {
+public class Gerbil extends Rodent {
 
         @Override
         public void eat() {

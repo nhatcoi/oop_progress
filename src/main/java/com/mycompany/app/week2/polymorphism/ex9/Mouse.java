@@ -1,6 +1,6 @@
 package com.mycompany.app.week2.polymorphism.ex9;
 
-public class Mouse implements Rodent{
+public class Mouse extends Rodent{
 
     @Override
     public void eat() {

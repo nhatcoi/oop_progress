@@ -6,6 +6,7 @@ import com.mycompany.app.week2.Ex.ReUse.Ex9;
 import com.mycompany.app.week2.Ex.ReUse.Ex9.Stem;
 import com.mycompany.app.week2.polymorphism.ex10.Base;
 import com.mycompany.app.week2.polymorphism.ex10.Derived;
+import com.mycompany.app.week2.polymorphism.ex11.Detergent;
 import com.mycompany.app.week2.polymorphism.ex1_5.Cycle;
 import com.mycompany.app.week2.polymorphism.ex1_5.Bicycle;
 import com.mycompany.app.week2.polymorphism.ex1_5.Tricycle;
@@ -98,5 +99,14 @@ public class App {
         Base base = new Derived();
         base.method1();
         // Explain : When method1 is called, it in turn calls method2, which is overridden in Derived. Because of polymorphism, the method2 of Derived is called, not method2 of Base
+
+        // exercise 11 - Detergent - it uses delegation.
+        Detergent detergent = new Detergent();
+        detergent.append("Diana");
+        detergent.scrub();
+        detergent.apply();
+        detergent.dilute();
+        detergent.foam();
+        System.out.println(detergent.toString());
     }
 }
