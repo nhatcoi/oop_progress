@@ -161,6 +161,11 @@ static Debug debug = new Debug();
         Ex19.TossOutcome tossOutcome = tossFactory.createTossOutcome();
         tossOutcome.displayOutcome();
     }
+
+    public class Musics {
+        static void tune(Playable p) {
+            p.play(new Note());
+        }
     public static void main(String[] args) {
         System.out.println("Group 17");
 
@@ -232,6 +237,17 @@ static Debug debug = new Debug();
         performToss(new Ex19().new CoinTossFactory());
         // Perform a dice toss
         performToss(new Ex19().new DiceTossFactory());
+
+        // ex10
+            Wind flute = new Wind();
+            Percussion drum = new Percussion();
+            Stringed violin = new Stringed();
+
+            tune(flute);
+            tune(drum);
+            tune(violin);
+        }
+    }
     }
 
 }
