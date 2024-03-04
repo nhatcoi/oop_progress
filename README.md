@@ -19,7 +19,7 @@ for example, revoke class E1 as the code below
 + Good start !
 ```
 package com.mycompany.app;
-import com.mycompany.app.week1.E1;
+import com.mycompany.app.week1.code3.E1;
 
 public class App {
     public static void main(String[] args) {
