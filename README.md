@@ -8,6 +8,7 @@
 
 # Misson
   -  Assignment Week 1 : Done
+  -  Assignment Week 2 : Done
 
 # Lecturer's Feedback
 
