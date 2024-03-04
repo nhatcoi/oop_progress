@@ -40,20 +40,4 @@ public class Ex10 {
         }
         // Stringed specific methods...
     }
-
-    public class Musics {
-        static void tune(Playable p) {
-            p.play(new Note());
-        }
-
-        public void main(String[] args) {
-            Wind flute = new Wind();
-            Percussion drum = new Percussion();
-            Stringed violin = new Stringed();
-
-            tune(flute);
-            tune(drum);
-            tune(violin);
-        }
-    }
 }
