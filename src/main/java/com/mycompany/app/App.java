@@ -11,6 +11,7 @@ import com.mycompany.app.week2.code2.polymorphism.ex1_5_17.Unicycle;
 import com.mycompany.app.week2.code3.Classes;
 import com.mycompany.app.week3.code2.InterfacesExercise21.InnerInterfacesExercise21;
 import com.mycompany.app.week3.code2.InterfacesExercise21.InnerClass;
+import com.mycompany.app.week3.code3.Abstraction;
 import com.mycompany.app.week3.code3.Polymorphism;
 import com.mycompany.app.week3.code3.Polymorphism.*;
 
@@ -21,6 +22,10 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println("Group 17");
+
+        Abstraction abstraction = new Abstraction();
+        Abstraction.Pig myPigA = abstraction.new Pig();
+        myPigA.animalSound();// Create a Pig object
 
         Polymorphism polymorphism = new Polymorphism();
         Animal myAnimal = polymorphism.new Animal(); // Create a Animal object
