@@ -11,6 +11,9 @@ import com.mycompany.app.week2.code2.polymorphism.ex1_5_17.Unicycle;
 import com.mycompany.app.week2.code3.Classes;
 import com.mycompany.app.week3.code2.InterfacesExercise21.InnerInterfacesExercise21;
 import com.mycompany.app.week3.code2.InterfacesExercise21.InnerClass;
+import com.mycompany.app.week3.code3.Polymorphism;
+import com.mycompany.app.week3.code3.Polymorphism.*;
+
 import static com.mycompany.app.week2.code3.Methods.myMethod;
 
 public class App {
@@ -18,6 +21,14 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println("Group 17");
+
+        Polymorphism polymorphism = new Polymorphism();
+        Animal myAnimal = polymorphism.new Animal(); // Create a Animal object
+        Animal myPig = polymorphism.new Pig(); // Create a Pig object
+        Animal myDog = polymorphism.new Dog(); // Create a Dog object
+        myAnimal.animalSound();
+        myPig.animalSound();
+        myDog.animalSound();
 
         InnerClass innerClass = new InnerClass();
         InnerInterfacesExercise21.NestedClass.Call(innerClass);
