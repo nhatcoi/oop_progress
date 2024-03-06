@@ -21,7 +21,7 @@ import com.mycompany.app.week3.code3.Polymorphism.*;
 import static com.mycompany.app.week2.code3.Methods.myMethod;
 import com.mycompany.app.week3.code1.DisruptLecture.*;
 import com.mycompany.app.week3.code1.TestArithmetic.*;
-import com.mycompany.app.week3.code1.Transmogrify.HappyActor.SadActor.Stage;
+import com.mycompany.app.week3.code1.Transmogrify.*;
 
 public class App {
     static Debug debug = new Debug();
@@ -93,7 +93,7 @@ public class App {
 
         // Transmogrify.java
         System.out.println("Transmogrify.java");
-        Stage s = new Transmogrify().new HappyActor().new SadActor(). new Stage();
+        Stage s = new Transmogrify().new Stage();
         s.go(); //happy actor
         s.change();
         s.go(); // sad actor

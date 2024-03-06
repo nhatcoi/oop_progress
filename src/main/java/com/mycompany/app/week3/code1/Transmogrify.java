@@ -6,23 +6,25 @@ public class Transmogrify {
     }
 
     public class HappyActor extends Actor {
-        public void act() { //…}
+        public void act() {
+            System.out.println("HappyActor");
+        }
+    }
+
+    public class SadActor extends Actor {
+        public void act() {
+            System.out.println("SadActor");
+        }
+    }
+    public class Stage {
+        public Actor a = new HappyActor();
+
+        public void change() {
+            a = new SadActor();
         }
 
-        public class SadActor extends Actor {
-            public void act() { //…}
-            }
-            public class Stage {
-                public Actor a = new HappyActor();
-
-                public void change() {
-                    a = new SadActor();
-                }
-
-                public void go() {
-                    a.act();
-                }
-            }
+        public void go() {
+            a.act();
         }
     }
 }
