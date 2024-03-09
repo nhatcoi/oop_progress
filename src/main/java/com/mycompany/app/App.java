@@ -41,9 +41,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("test.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("home-view.fxml")));
         Scene scene = new Scene(root, 1280, 720);
-        primaryStage.setTitle("Hello!");
+        primaryStage.setTitle("File Manager");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
