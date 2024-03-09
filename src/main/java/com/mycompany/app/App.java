@@ -1,12 +1,14 @@
 package com.mycompany.app;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+//import javafx.scene.control.Button;
+//import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import com.mycompany.app.Debug.Debug;
+//import com.mycompany.app.Debug.Debug;
 
 import com.mycompany.app.week2.code2.interfaces.Ex3;
 import com.mycompany.app.week2.code2.interfaces.Ex3.*;
@@ -29,34 +31,20 @@ import static com.mycompany.app.week2.code3.Methods.myMethod;
 
 import com.mycompany.app.week3.code1.DisruptLecture.*;
 import com.mycompany.app.week3.code1.TestArithmetic.*;
-import com.mycompany.app.week3.code1.Transmogrify.*;
+//import com.mycompany.app.week3.code1.Transmogrify.*;
+
+import java.io.IOException;
+import java.util.Objects;
 
 public class App extends Application {
-    static Debug debug = new Debug();
+    //static Debug debug = new Debug();
 
     @Override
-    public void start(Stage primaryStage) {
-        // Tạo một nút
-        Button btn = new Button();
-        btn.setText("Click me!");
-
-        // Xử lý sự kiện khi nút được nhấn
-        btn.setOnAction(e -> System.out.println("Hello, JavaFX!"));
-
-        // Tạo một StackPane (layout container) và thêm nút vào đó
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-
-        // Tạo một Scene với StackPane làm nội dung, cài đặt kích thước
-        Scene scene = new Scene(root, 300, 250);
-
-        // Đặt tiêu đề của cửa sổ
-        primaryStage.setTitle("Hello JavaFX!");
-
-        // Đặt Scene vào cửa sổ chính
+    public void start(Stage primaryStage) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("test.fxml")));
+        Scene scene = new Scene(root, 1280, 720);
+        primaryStage.setTitle("Hello!");
         primaryStage.setScene(scene);
-
-        // Hiển thị cửa sổ
         primaryStage.show();
     }
 
@@ -69,7 +57,7 @@ public class App extends Application {
         myPigA.animalSound();// Create a Pig object
 
         Polymorphism polymorphism = new Polymorphism();
-        Animal myAnimal = polymorphism.new Animal(); // Create a Animal object
+        Animal myAnimal = polymorphism.new Animal(); // Create an Animal object
         Animal myPig = polymorphism.new Pig(); // Create a Pig object
         Animal myDog = polymorphism.new Dog(); // Create a Dog object
         myAnimal.animalSound();
