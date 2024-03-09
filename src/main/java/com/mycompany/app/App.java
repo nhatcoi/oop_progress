@@ -1,5 +1,11 @@
 package com.mycompany.app;
 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
 import com.mycompany.app.Debug.Debug;
 
 import com.mycompany.app.week2.code2.interfaces.Ex3;
@@ -18,15 +24,44 @@ import com.mycompany.app.week3.code2.InterfacesExercise21.InnerClass;
 import com.mycompany.app.week3.code3.Abstraction;
 import com.mycompany.app.week3.code3.Polymorphism;
 import com.mycompany.app.week3.code3.Polymorphism.*;
+
 import static com.mycompany.app.week2.code3.Methods.myMethod;
+
 import com.mycompany.app.week3.code1.DisruptLecture.*;
 import com.mycompany.app.week3.code1.TestArithmetic.*;
 import com.mycompany.app.week3.code1.Transmogrify.*;
 
-public class App {
+public class App extends Application {
     static Debug debug = new Debug();
 
+    @Override
+    public void start(Stage primaryStage) {
+        // Tạo một nút
+        Button btn = new Button();
+        btn.setText("Click me!");
+
+        // Xử lý sự kiện khi nút được nhấn
+        btn.setOnAction(e -> System.out.println("Hello, JavaFX!"));
+
+        // Tạo một StackPane (layout container) và thêm nút vào đó
+        StackPane root = new StackPane();
+        root.getChildren().add(btn);
+
+        // Tạo một Scene với StackPane làm nội dung, cài đặt kích thước
+        Scene scene = new Scene(root, 300, 250);
+
+        // Đặt tiêu đề của cửa sổ
+        primaryStage.setTitle("Hello JavaFX!");
+
+        // Đặt Scene vào cửa sổ chính
+        primaryStage.setScene(scene);
+
+        // Hiển thị cửa sổ
+        primaryStage.show();
+    }
+
     public static void main(String[] args) {
+        launch(args);
         System.out.println("Group 17");
 
         Abstraction abstraction = new Abstraction();
@@ -49,7 +84,7 @@ public class App {
         Bicycle bicycle = new Bicycle();
         Tricycle tricycle = new Tricycle();
 
-        Cycle[] cycles = { unicycle, bicycle, tricycle };
+        Cycle[] cycles = {unicycle, bicycle, tricycle};
 
         for (Cycle cycle : cycles) {
             if (cycle instanceof Unicycle) {
@@ -85,7 +120,7 @@ public class App {
         Node n = new TestArithmetic().new Plus(new TestArithmetic().new Plus(
                 new TestArithmetic().new Const(1.1), new TestArithmetic().new Const(2.2)),
                 new TestArithmetic().new Const(3.3));
-        System.out.println(""+ n.eval());
+        System.out.println("" + n.eval());
 
         // GlyphTest.java
         System.out.println("GlyphTest.java");
@@ -93,9 +128,10 @@ public class App {
 
         // Transmogrify.java
         System.out.println("Transmogrify.java");
-        Stage s = new Transmogrify().new Stage();
+        Transmogrify.Stage s = new Transmogrify().new Stage();
         s.go(); //happy actor
         s.change();
         s.go(); // sad actor
     }
+
 }
