@@ -13,7 +13,7 @@ public interface IHome {
 
     String calculateSize(File size);
 
-    String FindAbsolutePath(File file);
+    String FindAbsolutePath(TreeItem<String> item, String s);
 
     boolean isDrive(File file);
 
