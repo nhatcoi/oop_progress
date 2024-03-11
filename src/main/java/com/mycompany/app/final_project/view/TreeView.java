@@ -51,7 +51,9 @@ public class TreeView extends Home {
             return FindAbsolutePath(item.getParent(), dir);
         }
     }
+
     private Set<String> loadedDirectories = new HashSet<>();
+
     @Override
     public void CreateTreeView(javafx.scene.control.TreeView<String> treeView) {
         TreeItem<String> rootNode = new TreeItem<>("This PC", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/pc.png"))));
@@ -61,16 +63,23 @@ public class TreeView extends Home {
 
         treeView.setOnMouseClicked(event -> {
             TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
-            if (selectedItem != null && selectedItem.getChildren().isEmpty()) {
-                String fullPath = getFullPath(selectedItem);
-                loadDirectory(selectedItem, new File(fullPath));
+            if (selectedItem != null && selectedItem.getValue() != null) {
+                String path = getFullPath(selectedItem);
+                // Chỉ load nếu thư mục chưa được load trước đó và không có thư mục con
+                if (!loadedDirectories.contains(path) && selectedItem.getChildren().isEmpty()) {
+                    selectedItem.setExpanded(true); // Mở rộng nút khi được click vào
+                    loadDirectory(selectedItem, new File(path));
+                    loadedDirectories.add(path); // Đánh dấu thư mục đã được load
+                }
             }
         });
 
+
         File[] sysroots = File.listRoots();
-        for (File sysroot : sysroots) {
-            TreeItem<String> driveNode = new TreeItem<>(sysroot.getAbsolutePath(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/drive.png"))));
-            rootNode.getChildren().add(driveNode);
+        for (File root : sysroots) {
+            TreeItem<String> rootItem = new TreeItem<>(root.getAbsolutePath(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/drive.png"))));
+            treeView.getRoot().getChildren().add(rootItem);
+            loadDirectory(rootItem, root);
         }
     }
 
@@ -85,18 +94,28 @@ public class TreeView extends Home {
     }
 
     private void loadDirectory(TreeItem<String> parentItem, File directory) {
-        if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isDirectory()) {
-                        TreeItem<String> directoryNode = new TreeItem<>(file.getName(),new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/folder.png"))));
-                        parentItem.getChildren().add(directoryNode);
-                    }
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                String fileName = file.getName().toLowerCase();
+                if (file.isDirectory()) {
+                    TreeItem<String> directoryNode = new TreeItem<>(file.getName(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/folder.png"))));
+                    parentItem.getChildren().add(directoryNode);
+                } else if (fileName.endsWith(".txt")) {
+                    TreeItem<String> fileNode = new TreeItem<>(file.getName(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/txt.png"))));
+                    parentItem.getChildren().add(fileNode);
+                } else if (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
+                    TreeItem<String> fileNode = new TreeItem<>(file.getName(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/image.png"))));
+                    parentItem.getChildren().add(fileNode);
+                } else {
+                    TreeItem<String> fileNode = new TreeItem<>(file.getName(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/empty.png"))));
+                    parentItem.getChildren().add(fileNode);
                 }
             }
         }
+
     }
+
     @Override
     public void CreateTableView(TableView<Fileinfo> tableView, TableColumn<Fileinfo, String> nameColumn, TableColumn<Fileinfo, String> sizeColumn, TableColumn<Fileinfo, String> dateColumn, TableColumn<Fileinfo, ImageView> imageColumn) {
 
