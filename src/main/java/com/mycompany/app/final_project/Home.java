@@ -23,10 +23,10 @@ import java.util.Objects;
 import static javafx.embed.swing.SwingFXUtils.toFXImage;
 
 public abstract class Home implements IHome {
-    static File currDirFile;
-    static String currDirStr;
-    static Label lbl;
-    static String currDirName;
+    public static File currDirFile;
+    public static String currDirStr;
+    public static Label lbl;
+    public static String currDirName;
     static TilePane tilePane;
     SimpleDateFormat sdf;
 

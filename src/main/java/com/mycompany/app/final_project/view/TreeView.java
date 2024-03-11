@@ -12,7 +12,7 @@ import java.io.File;
 import java.util.Objects;
 
 public class TreeView extends Home {
-    TreeView() {
+    public TreeView() {
     }
 
     ; // Constructor
@@ -60,7 +60,7 @@ public class TreeView extends Home {
         TreeItem<String> ThisPc = new TreeItem<>("This PC", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/pc.png"))));
         TreeItem<String>[] drives = new TreeItem[sysroots.length];
         for (int i = 0; i < sysroots.length; i++) {
-            drives[i] = new TreeItem<>(sysroots[i].getAbsolutePath(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/thumb_Hard_Drive.png"))));
+            drives[i] = new TreeItem<>(sysroots[i].getAbsolutePath(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/drive.png"))));
             try {
                 drives[i].getChildren().addAll(TreeCreate(sysroots[i]));
             } catch (NullPointerException x) {
