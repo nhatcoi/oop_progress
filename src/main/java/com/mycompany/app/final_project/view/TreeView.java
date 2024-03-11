@@ -19,24 +19,22 @@ public class TreeView extends Home {
 
     @Override
     public TreeItem<String>[] TreeCreate(File dir) {
-        TreeItem<String>[] A = null;
         File[] fl = dir.listFiles();
-        assert fl != null;
+        //System.out.println(fl.length);
         int n = fl.length - FilesHiddenCount(dir);
-        A = new TreeItem[n];
+        TreeItem<String>[] A = new TreeItem[n];
         int pos = 0;
         for (File file : fl) {
-
-            if (!file.isFile() && !file.isHidden() && file.isDirectory() && n == 0) {
-                A[pos] = new TreeItem<>(file.getName(), new ImageView(new Image(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("img/folderOpen.png")))));
-                pos++;
-            } else if (!file.isFile() && !file.isHidden() && file.isDirectory() && n > 0) {
-                A[pos] = new TreeItem<>(file.getName(), new ImageView(new Image(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("img/folderOpen.png")))));
+            if (file.isHidden()) {
+                continue; // Bỏ qua các tệp ẩn
+            }
+            if (file.isDirectory()) {
+                A[pos] = new TreeItem<>(file.getName(), new ImageView(new Image(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("img/folder.png")))));
                 try {
                     A[pos].getChildren().addAll(TreeCreate(file));
                     pos++;
                 } catch (Exception x) {
-                    System.out.println("Exception x in treecreate at " + file.getAbsolutePath() + " " + x.getMessage());
+                    System.out.println("treecreate tại " + file.getAbsolutePath() + " " + x.getMessage());
                 }
             }
         }

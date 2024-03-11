@@ -54,6 +54,7 @@ public class HomeController implements Initializable {
                 TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
                 fx1.currDirName = item.getValue();
                 fx1.currDirFile = new File(fx1.FindAbsolutePath(item, item.getValue()));
+                label.setText(fx1.currDirStr);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

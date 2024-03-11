@@ -94,19 +94,25 @@ public abstract class Home implements IHome {
     @Override
     public int FilesHiddenCount(File dir) {
         int count = 0;
-        File[] fl = dir.listFiles();
-        //System.out.println(fl.length);
-        assert fl != null;
-        for (File file : fl) {
-            try {
-                if (file.isHidden() || file.isFile()) count++;
-            } catch (Exception x) {
-                System.out.println("Exception at prototype1, fileexplorer CountDir: " + x.getMessage());
+        try {
+            File[] fl = dir.listFiles();
+            if (fl != null) {
+                for (File file : fl) {
+                    if (file.isHidden() || file.isFile()) {
+                        count++;
+                    }
+                }
+            } else {
+                System.out.println("Directory is empty or cannot be accessed: " + dir.getAbsolutePath());
             }
-
+        } catch (SecurityException e) {
+            System.out.println("SecurityException while accessing directory: " + e.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Exception while counting hidden files: " + ex.getMessage());
         }
         return count;
     }
+
 
     public int NumOfDirectChilds(File f) {
         return Objects.requireNonNull(f.listFiles()).length;
