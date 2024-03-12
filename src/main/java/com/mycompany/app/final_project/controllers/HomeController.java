@@ -77,7 +77,7 @@ public class HomeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
-                System.out.println("Xóa " + selectedItem.getValue());
+                Home.removeFileOrFolder(selectedItem);
             }
         });
         contextMenu.getItems().addAll(addMenuItem, addMenuItem2, editMenuItem, deleteMenuItem);

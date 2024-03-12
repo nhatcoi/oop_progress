@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Ultis {
     public static String getFullPath(TreeItem<String> item) {
@@ -18,7 +19,28 @@ public class Ultis {
         }
         return fullPath.toString();
     }
+    public static void deleteDirectory(File directory) throws IOException {
+        if (!directory.exists()) {
+            return;
+        }
 
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectory(file);
+                } else {
+                    if (!file.delete()) {
+                        throw new IOException("Failed to delete file: " + file.getAbsolutePath());
+                    }
+                }
+            }
+        }
+
+        if (!directory.delete()) {
+            throw new IOException("Failed to delete directory: " + directory.getAbsolutePath());
+        }
+    }
 
     public static void loadDirectory(TreeItem<String> parentItem, File directory) {
         File[] files = directory.listFiles();

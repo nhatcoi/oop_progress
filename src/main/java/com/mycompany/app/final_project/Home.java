@@ -118,6 +118,20 @@ public abstract class Home implements IHome {
         }
     }
 
+    public static void removeFileOrFolder(TreeItem<String> selectedItem) {
+        if (selectedItem != null) {
+            String fullPath = Ultis.getFullPath(selectedItem);
+            File fileToDelete = new File(fullPath);
+            try {
+                Ultis.deleteDirectory(fileToDelete);
+                selectedItem.getParent().getChildren().remove(selectedItem);
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Xử lý lỗi xóa thư mục
+            }
+        }
+    }
+
     @Override
     public Image getIconImage(File f) {
         ImageIcon icon = (ImageIcon) FileSystemView.getFileSystemView().getSystemIcon(f);
