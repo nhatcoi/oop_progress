@@ -8,7 +8,7 @@ public class Ex13 {
 
     public class Shared{
         private int refcount = 0;
-        private static long counter = 0;
+        private long counter = 0;
         private final long id = counter++;
         public Shared() {
             System.out.println("Creating " + this);
