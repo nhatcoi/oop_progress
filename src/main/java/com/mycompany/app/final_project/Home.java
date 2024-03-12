@@ -75,6 +75,49 @@ public abstract class Home implements IHome {
         }
     }
 
+    public static void renameFileOrFolder(TreeItem<String> selectedItem) {
+        if (selectedItem != null) {
+            String oldName = selectedItem.getValue();
+            TextInputDialog dialog = new TextInputDialog(oldName);
+            dialog.setTitle("Sửa tên");
+            dialog.setHeaderText("Nhập tên mới:");
+            dialog.setContentText("Tên mới:");
+
+            Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            stage.setAlwaysOnTop(true);
+
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(newName -> {
+                if (!newName.isEmpty() && !newName.equals(oldName)) {
+                    File parentDir = new File(Ultis.getFullPath(selectedItem.getParent()));
+                    File oldFile = new File(parentDir, oldName);
+
+                    if (oldFile.exists()) {
+                        if (selectedItem.isLeaf()) { // Là tệp tin
+                            File newFile = new File(parentDir, newName);
+                            if (oldFile.renameTo(newFile)) {
+                                selectedItem.setValue(newName);
+                                System.out.println("Đã đổi tên tệp tin thành công từ " + oldName + " thành " + newName);
+                            } else {
+                                System.out.println("Không thể đổi tên tệp tin");
+                            }
+                        } else {
+                            File newDir = new File(parentDir, newName);
+                            if (oldFile.renameTo(newDir)) {
+                                selectedItem.setValue(newName);
+                                System.out.println("Đã đổi tên thư mục thành công từ " + oldName + " thành " + newName);
+                            } else {
+                                System.out.println("Không thể đổi tên thư mục");
+                            }
+                        }
+                    } else {
+                        System.out.println("Không tìm thấy tệp tin hoặc thư mục");
+                    }
+                }
+            });
+        }
+    }
+
     @Override
     public Image getIconImage(File f) {
         ImageIcon icon = (ImageIcon) FileSystemView.getFileSystemView().getSystemIcon(f);

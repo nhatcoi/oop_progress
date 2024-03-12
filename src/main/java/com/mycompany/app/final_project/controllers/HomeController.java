@@ -67,6 +67,7 @@ public class HomeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+                Home.renameFileOrFolder(selectedItem);
                 System.out.println("Sửa " + selectedItem.getValue());
             }
         });
