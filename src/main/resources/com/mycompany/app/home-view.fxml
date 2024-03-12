@@ -5,11 +5,15 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.final_project.controllers.HomeController">
-   <children>
-      <Label layoutX="14.0" layoutY="14.0" text="Current Directory: " />
-      <Label id="label" fx:id="label" layoutX="112.0" layoutY="14.0" prefHeight="17.0" prefWidth="1033.0" text="Label" />
-      <TreeView fx:id="treeView" layoutX="14.0" layoutY="31.0" prefHeight="678.0" prefWidth="261.0" />
-      <Button fx:id="btn" layoutX="1171.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="OK" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
+            prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mycompany.app.final_project.controllers.HomeController">
+    <children>
+        <Label layoutX="14.0" layoutY="14.0" text="Current Directory: "/>
+        <Label id="label" fx:id="label" layoutX="112.0" layoutY="14.0" prefHeight="17.0" prefWidth="1033.0"
+               text="Label"/>
+        <TreeView fx:id="treeView"  layoutX="14.0" onMouseClicked="#handleMouseClicked" layoutY="31.0" prefHeight="678.0" prefWidth="261.0" />
+        <Button fx:id="btn" layoutX="1171.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0"
+                text="OK"/>
+    </children>
 </AnchorPane>

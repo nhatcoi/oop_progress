@@ -1,29 +1,19 @@
 package com.mycompany.app.final_project.controllers;
 
-import com.mycompany.app.final_project.interfaces.IHome;
-import com.mycompany.app.final_project.models.Fileinfo;
+import com.mycompany.app.final_project.Ultis;
+import javafx.beans.property.ReadOnlyProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.TilePane;
+import javafx.util.Callback;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static javafx.embed.swing.SwingFXUtils.toFXImage;
 
 public class HomeController implements Initializable {
 
@@ -45,19 +35,61 @@ public class HomeController implements Initializable {
         fx1.lbl = label;
         label.setText(fx1.currDirStr);
         fx1.CreateTreeView(treeView);
+
+        TreeItem<String> rootItem = treeView.getRoot();
+        addExpandListener(rootItem);
     }
 
+
     @FXML
-    private void handleMouseClicked(MouseEvent mouseEvent) {
-        if (mouseEvent.getClickCount() == 1) {
-            try {
-                TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
-                fx1.currDirName = item.getValue();
-                fx1.currDirFile = new File(fx1.FindAbsolutePath(item, item.getValue()));
-                label.setText(fx1.currDirStr);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+    private void handleMouseClicked(javafx.scene.input.MouseEvent mouseEvent) {
+        try {
+            TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
+            fx1.currDirName = item.getValue();
+            fx1.currDirFile = new File(fx1.FindAbsolutePath(item, item.getValue()));
+            fx1.currDirStr = fx1.currDirFile.getAbsolutePath();
+            System.out.println(fx1.currDirStr);
+            label.setText(fx1.currDirStr);
+            TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+            if (selectedItem != null && selectedItem.getValue() != null) {
+                String path = Ultis.getFullPath(selectedItem);
+                if (selectedItem.getChildren().isEmpty()) {
+                    selectedItem.setExpanded(true);
+                    Ultis.loadDirectory(selectedItem, new File(path));
+                } else {
+                    selectedItem.getChildren().clear();
+                    Ultis.loadDirectory(selectedItem, new File(path));
+                }
             }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
+
+    public void addExpandListener(TreeItem<String> item) {
+        item.expandedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) { // Nếu nút được mở rộng
+                TreeItem<String> treeItem = (TreeItem<String>) ((ReadOnlyProperty<?>) observable).getBean();
+                if (treeItem.getChildren().size() == 1 && treeItem.getChildren().get(0).getValue() == null) { // Nếu chỉ có một nút giả
+                    treeItem.getChildren().clear(); // Xóa nút giả
+                    // Thực hiện các hành động khác khi mở rộng nút ở đây
+                    if (treeItem != null && treeItem.getValue() != null) {
+                        String path = Ultis.getFullPath(treeItem);
+                        if (treeItem.getChildren().isEmpty()) {
+                            treeItem.setExpanded(true);
+                            Ultis.loadDirectory(treeItem, new File(path));
+                        } else {
+                            treeItem.getChildren().clear();
+                            Ultis.loadDirectory(treeItem, new File(path));
+                        }
+                    }
+                }
+            }
+        });
+
+        // Đệ quy để thêm trình lắng nghe cho tất cả các nút con của nút hiện tại
+        item.getChildren().forEach(this::addExpandListener);
+    }
+
 }

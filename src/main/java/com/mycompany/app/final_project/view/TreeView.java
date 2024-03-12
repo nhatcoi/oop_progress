@@ -2,6 +2,7 @@ package com.mycompany.app.final_project.view;
 
 import com.mycompany.app.final_project.Home;
 import com.mycompany.app.final_project.models.Fileinfo;
+import javafx.beans.property.ReadOnlyProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
@@ -52,8 +53,6 @@ public class TreeView extends Home {
         }
     }
 
-    private Set<String> loadedDirectories = new HashSet<>();
-
     @Override
     public void CreateTreeView(javafx.scene.control.TreeView<String> treeView) {
         TreeItem<String> rootNode = new TreeItem<>("This PC", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/pc.png"))));
@@ -61,25 +60,21 @@ public class TreeView extends Home {
 
         treeView.setRoot(rootNode);
 
-        treeView.setOnMouseClicked(event -> {
-            TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
-            if (selectedItem != null && selectedItem.getValue() != null) {
-                String path = getFullPath(selectedItem);
-                // Chỉ load nếu thư mục chưa được load trước đó và không có thư mục con
-                if (!loadedDirectories.contains(path) && selectedItem.getChildren().isEmpty()) {
-                    selectedItem.setExpanded(true); // Mở rộng nút khi được click vào
-                    loadDirectory(selectedItem, new File(path));
-                    loadedDirectories.add(path); // Đánh dấu thư mục đã được load
-                }
-            }
-        });
-
-
         File[] sysroots = File.listRoots();
         for (File root : sysroots) {
             TreeItem<String> rootItem = new TreeItem<>(root.getAbsolutePath(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/drive.png"))));
             treeView.getRoot().getChildren().add(rootItem);
             loadDirectory(rootItem, root);
+            rootItem.expandedProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue) { // Nếu nút được mở rộng
+                    TreeItem<String> treeItem = (TreeItem<String>) ((ReadOnlyProperty<?>) observable).getBean();
+                    if (treeItem.getChildren().size() == 1 && treeItem.getChildren().get(0).getValue() == null) { // Nếu chỉ có một nút giả
+                        treeItem.getChildren().clear(); // Xóa nút giả
+                        String path = treeItem.getValue();
+                        loadDirectory(treeItem, new File(path));
+                    }
+                }
+            });
         }
     }
 
@@ -100,6 +95,10 @@ public class TreeView extends Home {
                 String fileName = file.getName().toLowerCase();
                 if (file.isDirectory()) {
                     TreeItem<String> directoryNode = new TreeItem<>(file.getName(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/folder.png"))));
+                    File[] files2 = file.listFiles();
+                    if (files2 != null && files2.length > 0) {
+                        directoryNode.getChildren().add(new TreeItem<>());
+                    }
                     parentItem.getChildren().add(directoryNode);
                 } else if (fileName.endsWith(".txt")) {
                     TreeItem<String> fileNode = new TreeItem<>(file.getName(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/txt.png"))));
