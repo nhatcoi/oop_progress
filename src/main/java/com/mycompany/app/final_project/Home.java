@@ -2,12 +2,11 @@ package com.mycompany.app.final_project;
 
 import com.mycompany.app.final_project.interfaces.IHome;
 import com.mycompany.app.final_project.models.Fileinfo;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -19,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
+import java.util.Optional;
 
 import static javafx.embed.swing.SwingFXUtils.toFXImage;
 
@@ -37,6 +37,42 @@ public abstract class Home implements IHome {
     TableColumn<Fileinfo, ImageView> imageColumn;
 
     public Home() {
+    }
+
+    public static void createNewFile(TreeItem<String> selectedItem) {
+        if (selectedItem != null) {
+            File parentFolder = new File(Ultis.getFullPath(selectedItem));
+            if (parentFolder.isDirectory()) {
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Tạo file mới");
+                dialog.setHeaderText("Nhập tên file mới:");
+                dialog.setContentText("Tên file:");
+
+                Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+                stage.setAlwaysOnTop(true);
+
+                Optional<String> result = dialog.showAndWait();
+                result.ifPresent(name -> {
+                    File newFile = new File(parentFolder, name);
+                    int count = 1;
+                    while (newFile.exists()) {
+                        newFile = new File(parentFolder, name + "_" + count);
+                        count++;
+                    }
+                    try {
+                        if (newFile.createNewFile()) {
+                            System.out.println("Đã tạo file mới: " + newFile.getAbsolutePath());
+                            TreeItem<String> newFileItem = new TreeItem<>(newFile.getName());
+                            selectedItem.getChildren().add(newFileItem);
+                        } else {
+                            System.out.println("Không thể tạo file mới");
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Lỗi khi tạo file mới: " + e.getMessage());
+                    }
+                });
+            }
+        }
     }
 
     @Override
@@ -121,5 +157,40 @@ public abstract class Home implements IHome {
     @Override
     public void setLabelTxt() {
         lbl.setText(currDirStr);
+    }
+
+    public static void createNewFolder(TreeItem<String> selectedItem) {
+        if (selectedItem != null) {
+            File parentFolder = new File(Ultis.getFullPath(selectedItem));
+            if (parentFolder.isDirectory()) {
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Tạo thư mục mới");
+                dialog.setHeaderText("Nhập tên thư mục mới:");
+                dialog.setContentText("Tên thư mục:");
+
+                Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+                stage.setAlwaysOnTop(true);
+
+                Optional<String> result = dialog.showAndWait();
+
+                result.ifPresent(name -> {
+                    // Tạo thư mục mới với tên được nhập
+                    File newFolder = new File(parentFolder, name);
+                    int count = 1;
+                    while (newFolder.exists()) {
+                        newFolder = new File(parentFolder, name + "_" + count);
+                        count++;
+                    }
+                    if (newFolder.mkdir()) {
+                        System.out.println("Đã tạo thư mục mới: " + newFolder.getAbsolutePath());
+                        // Cập nhật TreeView
+                        TreeItem<String> newFolderItem = new TreeItem<>(newFolder.getName(), new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/folder.png"))));
+                        selectedItem.getChildren().add(newFolderItem);
+                    } else {
+                        System.out.println("Không thể tạo thư mục mới");
+                    }
+                });
+            }
+        }
     }
 }

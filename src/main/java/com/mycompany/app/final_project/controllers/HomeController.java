@@ -1,13 +1,18 @@
 package com.mycompany.app.final_project.controllers;
 
+import com.mycompany.app.final_project.Home;
 import com.mycompany.app.final_project.Ultis;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 import java.io.File;
@@ -35,6 +40,59 @@ public class HomeController implements Initializable {
         fx1.lbl = label;
         label.setText(fx1.currDirStr);
         fx1.CreateTreeView(treeView);
+        ContextMenu contextMenu = new ContextMenu();
+
+
+        MenuItem addMenuItem = new MenuItem("Thêm File");
+        addMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+                Home.createNewFile(selectedItem);
+            }
+        });
+
+        MenuItem addMenuItem2 = new MenuItem("Thêm Folder");
+        addMenuItem2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+                Home.createNewFolder(selectedItem);
+            }
+        });
+
+
+        MenuItem editMenuItem = new MenuItem("Sửa");
+        editMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+                System.out.println("Sửa " + selectedItem.getValue());
+            }
+        });
+
+        MenuItem deleteMenuItem = new MenuItem("Xóa");
+        deleteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+                System.out.println("Xóa " + selectedItem.getValue());
+            }
+        });
+        contextMenu.getItems().addAll(addMenuItem, addMenuItem2, editMenuItem, deleteMenuItem);
+        treeView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.SECONDARY) {
+                    TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+                    if (selectedItem != null) {
+
+
+                        contextMenu.show(treeView, event.getScreenX(), event.getScreenY());
+                    }
+                }
+            }
+        });
 
         TreeItem<String> rootItem = treeView.getRoot();
         addExpandListener(rootItem);
