@@ -102,32 +102,27 @@ public class HomeController implements Initializable {
     }
 
     public void addExpandListener(TreeItem<String> item) {
-    item.expandedProperty().addListener((observable, oldValue, newValue) -> {
-        if (newValue) {
-            if (item.getChildren().size() == 1 && item.getChildren().get(0).getValue() == null) {
-                item.getChildren().clear();
-                if (item.getValue() != null) {
-                    String path = Ultis.getFullPath(item);
-                    if (item.getChildren().isEmpty()) {
-                        item.setExpanded(true);
-                        Ultis.loadDirectory(item, new File(path));
-                    } else {
-                        item.getChildren().clear();
-                        Ultis.loadDirectory(item, new File(path));
+        item.expandedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                TreeItem<String> treeItem = (TreeItem<String>) ((ReadOnlyProperty<?>) observable).getBean();
+                System.out.println("Expanded: " + treeItem.getValue());
+                if (treeItem.getChildren().size() == 1 && treeItem.getChildren().get(0).getValue() == null) {
+                    treeItem.getChildren().clear();
+                    if (treeItem.getValue() != null) {
+                        String path = Ultis.getFullPath(item);
+                        if (treeItem.getChildren().isEmpty()) {
+                            treeItem.setExpanded(true);
+                            Ultis.loadDirectory(treeItem, new File(path));
+                        } else {
+                            treeItem.getChildren().clear();
+                            Ultis.loadDirectory(treeItem, new File(path));
+                        }
                     }
                 }
-            }
-        } else {
-            treeView.getSelectionModel().select(item);
-        }
-        for (TreeItem<String> childItem : item.getChildren()) {
-            addExpandListener(childItem);
-        }
-    });
-    for (TreeItem<String> childItem : item.getChildren()) {
-        addExpandListener(childItem);
-    }
-}
 
+            }
+        });
+        item.getChildren().forEach(this::addExpandListener);
+    }
 
 }
