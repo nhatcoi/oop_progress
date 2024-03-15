@@ -59,10 +59,10 @@ Nội dung:
 
 
 ## 1. Requirement Block Diagram.
-  1.1 UML Component Diagram
+  #1.1 UML Component Diagram
     ![Untitled (1)](https://github.com/nhatcoi/project_java/assets/92137849/09fb3498-eea8-475c-a442-62666d419447)
 
-## 1.2 UML Sequence Diagram
+  # 1.2 UML Sequence Diagram
    ![431524826_1406340076754247_7768790144607218766_n (1)](https://github.com/nhatcoi/project_java/assets/92137849/12079097-fa42-4223-a853-06dbe0a33759)
 
 
