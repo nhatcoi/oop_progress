@@ -62,7 +62,7 @@ Nội dung:
 
    ## 1.1 UML Component Diagram
       - NVN
-    ![Untitled (1)](https://github.com/nhatcoi/project_java/assets/92137849/09fb3498-eea8-475c-a442-62666d419447)
+   ![Untitled (1)](https://github.com/nhatcoi/project_java/assets/92137849/09fb3498-eea8-475c-a442-62666d419447)
 
    ## 1.2 UML Sequence Diagram
      - NDV
