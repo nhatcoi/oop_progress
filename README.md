@@ -2,18 +2,17 @@
 
 # Member
 1. Nguyen Van Nhat
-   ID: 23010887
-   Signature: NhatCoiii
+   - ID: 23010887
+   - Signature: NhatCoiii
 3. Nghiem Duc Viet
-   ID: ###
-   Signature: DucZiet
+   - ID: ###
+   - Signature: DucZiet
    
 
 ------------------------------------------------------------------
 
 # Misson
   -  Assignment Week 1 : Done
-    
   -  Assignment Week 2 : Done
   -  Assignment Week 3 : Done
 
@@ -42,7 +41,7 @@ public class App {
 
 ```
 
-## Bài tập lớn: Bài 01
+# Final Project: Exercices 01
 Nội dung:
   Yêu cầu:
 - Giao diện cửa sổ JavaFX.
@@ -59,12 +58,12 @@ Nội dung:
 - Sinh viên có thể thêm các chức năng vào chương trình để ứng dụng phong phú hơn bằng cách tìm hiểu về bài toán quản lý khách sạn (tùy chọn).
 
 
-# 1. Sơ đồ khối yêu cầu.
+## 1. Requirement Block Diagram.
   1.1 UML Component Diagram
     ![Untitled (1)](https://github.com/nhatcoi/project_java/assets/92137849/09fb3498-eea8-475c-a442-62666d419447)
 
-  1.2 UML Sequence Diagram
-    ![431524826_1406340076754247_7768790144607218766_n (1)](https://github.com/nhatcoi/project_java/assets/92137849/12079097-fa42-4223-a853-06dbe0a33759)
+## 1.2 UML Sequence Diagram
+   ![431524826_1406340076754247_7768790144607218766_n (1)](https://github.com/nhatcoi/project_java/assets/92137849/12079097-fa42-4223-a853-06dbe0a33759)
 
 
 
