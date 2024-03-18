@@ -17,7 +17,7 @@ public class App extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("home-view.fxml")));
 
         Scene scene = new Scene(root, 1280, 720);
-        primaryStage.setTitle("Hotel Management");
+        primaryStage.setTitle("Todo List App");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
