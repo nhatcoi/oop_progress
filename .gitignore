@@ -333,3 +333,6 @@ ASALocalRun/
 *.class
 target
 pom.xml
+
+.classpath
+.settings/*
