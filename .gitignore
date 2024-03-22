@@ -332,3 +332,7 @@ ASALocalRun/
 *.DS_Store
 *.class
 target
+pom.xml
+
+.classpath
+.settings/*
