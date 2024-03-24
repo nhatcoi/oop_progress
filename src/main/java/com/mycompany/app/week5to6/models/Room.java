@@ -1,8 +1,11 @@
 package com.mycompany.app.week5to6.models;
 
 import com.mycompany.app.week5to6.enums.Status;
+import com.mycompany.app.week5to6.util.Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.List;
 
 public class Room {
     private int id;
@@ -50,10 +53,9 @@ public class Room {
     }
 
     public static ObservableList<Room> getRooms() {
-        ObservableList<Room> rooms = FXCollections.observableArrayList();
-        rooms.add(new Room(1, "Single", Status.AVAILABLE.getText(), "$50"));
-        rooms.add(new Room(2, "Double", Status.BOOKED.getText(), "$80"));
-        rooms.add(new Room(3, "Suite", Status.OCCUPIED.getText(), "$120"));
-        return rooms;
+        List<Room> rooms = Utility.readJSONFile("data.json");
+        ObservableList<Room> roomData = FXCollections.observableArrayList();
+        roomData.addAll(rooms);
+        return roomData;
     }
 }

@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,7 +51,7 @@ public class CreateController {
         Utility.writeJSONFile(rooms, "data.json");
 
         Dialogs.showInformation("Thành Công", "Create Room", "Create Room Success");
-//        Stage stage = (Stage) btnCreated.getScene().getWindow();
-//        stage.close();
+        Stage stage = (Stage) btnCreated.getScene().getWindow();
+        stage.close();
     }
 }
