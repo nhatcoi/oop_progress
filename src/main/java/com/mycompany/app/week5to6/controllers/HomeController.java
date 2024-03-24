@@ -4,6 +4,7 @@ import com.mycompany.app.App;
 import com.mycompany.app.week5to6.models.Room;
 import com.mycompany.app.week5to6.util.Dialogs;
 import com.mycompany.app.week5to6.util.Utility;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -28,6 +30,8 @@ public class HomeController {
 
     public static ObservableList<Room> data = Room.getRooms();
     public Button btnDelete;
+    public Button btnSearch;
+    public TextField idSearchField;
 
     public void initialize() {
         tableRoom.setItems(data);
@@ -48,11 +52,12 @@ public class HomeController {
         tableRoom.getColumns().addAll(idColumn, typeColumn, statusColumn, priceColumn);
     }
 
-    public void refreshTable(){
+    public void refreshTable() {
         tableRoom.refresh();
 
-        Utility.writeJSONFile(data,"data.json");
+        Utility.writeJSONFile(data, "data.json");
     }
+
     @FXML
     public void Create(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource("create-view.fxml"))));
@@ -68,5 +73,20 @@ public class HomeController {
         Room selectedRoom = tableRoom.getSelectionModel().getSelectedItem();
         data.remove(selectedRoom);
         refreshTable();
+    }
+
+    public void searchData(ActionEvent actionEvent) {
+        String text = idSearchField.getText();
+        data.clear();
+        ObservableList<Room> allRoom = Room.getRooms();
+        if (Objects.equals(text, "")) {
+            data.addAll(allRoom);
+        } else {
+            for (Room r : allRoom) {
+                if (String.valueOf(r.getId()).contains(text)) {
+                    data.add(r);
+                }
+            }
+        }
     }
 }

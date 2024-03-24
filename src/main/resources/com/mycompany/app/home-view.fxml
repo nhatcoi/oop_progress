@@ -11,10 +11,10 @@
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.week5to6.controllers.HomeController">
     <children>
         <Label text="Nhập Text Vô" />
-        <TextField />
+        <TextField fx:id="idSearchField" />
         <AnchorPane prefHeight="53.0" prefWidth="600.0">
             <children>
-                <Button layoutX="137.0" layoutY="13.0" mnemonicParsing="false" text="Search" />
+                <Button fx:id="btnSearch" layoutX="137.0" layoutY="13.0" mnemonicParsing="false" onAction="#searchData" text="Search" />
                 <Button fx:id="createBtn" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#Create" text="Create" />
                 <Button fx:id="btnDelete" layoutX="75.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteData" text="Delete" />
             </children>
