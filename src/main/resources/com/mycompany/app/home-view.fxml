@@ -12,7 +12,7 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
       prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.mycompany.app.final_project.controllers.HomeController">
+      fx:controller="com.mycompany.app.week5to6.controllers.HomeController">
     <children>
         <Label text="Nhập Text Vô"/>
         <TextField/>

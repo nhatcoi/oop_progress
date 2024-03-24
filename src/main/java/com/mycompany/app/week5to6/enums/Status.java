@@ -1,4 +1,4 @@
-package com.mycompany.app.final_project.enums;
+package com.mycompany.app.week5to6.enums;
 
 public enum Status {
     AVAILABLE("Trống"),

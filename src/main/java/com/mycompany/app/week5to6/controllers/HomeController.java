@@ -1,7 +1,7 @@
-package com.mycompany.app.final_project.controllers;
+package com.mycompany.app.week5to6.controllers;
 
 import com.mycompany.app.App;
-import com.mycompany.app.final_project.models.Room;
+import com.mycompany.app.week5to6.models.Room;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

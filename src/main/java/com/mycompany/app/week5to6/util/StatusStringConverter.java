@@ -1,6 +1,6 @@
-package com.mycompany.app.final_project.util;
+package com.mycompany.app.week5to6.util;
 
-import com.mycompany.app.final_project.enums.Status;
+import com.mycompany.app.week5to6.enums.Status;
 import javafx.util.StringConverter;
 
 public class StatusStringConverter extends StringConverter<Status> {

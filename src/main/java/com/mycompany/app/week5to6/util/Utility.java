@@ -1,10 +1,9 @@
-package com.mycompany.app.final_project.util;
+package com.mycompany.app.week5to6.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.mycompany.app.final_project.models.Room;
-import org.json.JSONArray;
+import com.mycompany.app.week5to6.models.Room;
 
 import java.io.*;
 import java.util.List;

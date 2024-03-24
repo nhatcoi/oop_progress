@@ -1,16 +1,13 @@
-package com.mycompany.app.final_project.controllers;
+package com.mycompany.app.week5to6.controllers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.mycompany.app.final_project.enums.Status;
-import com.mycompany.app.final_project.models.Room;
-import com.mycompany.app.final_project.util.Dialogs;
-import com.mycompany.app.final_project.util.Utility;
+import com.mycompany.app.week5to6.enums.Status;
+import com.mycompany.app.week5to6.models.Room;
+import com.mycompany.app.week5to6.util.Dialogs;
+import com.mycompany.app.week5to6.util.Utility;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;

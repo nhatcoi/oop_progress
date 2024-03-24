@@ -1,6 +1,6 @@
-package com.mycompany.app.final_project.models;
+package com.mycompany.app.week5to6.models;
 
-import com.mycompany.app.final_project.enums.Status;
+import com.mycompany.app.week5to6.enums.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
