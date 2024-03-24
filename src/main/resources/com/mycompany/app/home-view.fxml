@@ -16,7 +16,7 @@
             <children>
                 <Button layoutX="137.0" layoutY="13.0" mnemonicParsing="false" text="Search" />
                 <Button fx:id="createBtn" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#Create" text="Create" />
-                <Button layoutX="75.0" layoutY="14.0" mnemonicParsing="false" text="Delete" />
+                <Button fx:id="btnDelete" layoutX="75.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteData" text="Delete" />
             </children>
         </AnchorPane>
         <Pane prefHeight="600.0" prefWidth="1280.0">

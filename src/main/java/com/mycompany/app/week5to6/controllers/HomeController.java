@@ -27,6 +27,7 @@ public class HomeController {
     public TableView<Room> tableRoom;
 
     public static ObservableList<Room> data = Room.getRooms();
+    public Button btnDelete;
 
     public void initialize() {
         tableRoom.setItems(data);
@@ -49,6 +50,8 @@ public class HomeController {
 
     public void refreshTable(){
         tableRoom.refresh();
+
+        Utility.writeJSONFile(data,"data.json");
     }
     @FXML
     public void Create(ActionEvent actionEvent) throws IOException {
@@ -59,5 +62,11 @@ public class HomeController {
         stage.setTitle("Create Room");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void deleteData(ActionEvent actionEvent) {
+        Room selectedRoom = tableRoom.getSelectionModel().getSelectedItem();
+        data.remove(selectedRoom);
+        refreshTable();
     }
 }

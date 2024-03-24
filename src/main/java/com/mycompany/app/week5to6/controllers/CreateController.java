@@ -50,7 +50,6 @@ public class CreateController {
         Stage stage = (Stage) btnCreated.getScene().getWindow();
         stage.close();
 
-        Utility.writeJSONFile(HomeController.data,"data.json");
 
     }
 }
