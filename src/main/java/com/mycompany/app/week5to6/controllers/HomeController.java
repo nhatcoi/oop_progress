@@ -11,7 +11,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,11 +26,30 @@ public class HomeController {
     @FXML
     public TableView<Room> tableRoom;
 
+    public static ObservableList<Room> data = Room.getRooms();
+
     public void initialize() {
-        ObservableList<Room> rooms = Room.getRooms();
-        tableRoom.setItems(rooms);
+        tableRoom.setItems(data);
+        tableRoom.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        TableColumn<Room, Integer> idColumn = new TableColumn<>("ID");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id")); // Sử dụng PropertyValueFactory để lấy dữ liệu từ thuộc tính "id" của Room
+
+        TableColumn<Room, String> typeColumn = new TableColumn<>("Type");
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type")); // Sử dụng PropertyValueFactory để lấy dữ liệu từ thuộc tính "type" của Room
+
+        TableColumn<Room, String> statusColumn = new TableColumn<>("Status");
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status")); // Sử dụng PropertyValueFactory để lấy dữ liệu từ thuộc tính "status" của Room
+
+        TableColumn<Room, String> priceColumn = new TableColumn<>("Price");
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price")); // Sử dụng PropertyValueFactory để lấy dữ liệu từ thuộc tính "price" của Room
+
+        // Thêm các cột vào TableView
+        tableRoom.getColumns().addAll(idColumn, typeColumn, statusColumn, priceColumn);
     }
 
+    public void refreshTable(){
+        tableRoom.refresh();
+    }
     @FXML
     public void Create(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource("create-view.fxml"))));

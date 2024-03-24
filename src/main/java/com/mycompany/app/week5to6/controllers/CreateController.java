@@ -37,21 +37,20 @@ public class CreateController {
 
         Room room = new Room(idRoom, typeRoom, statusRoom, priceRoom);
 
-        if (rooms == null) {
-            rooms = new ArrayList<>();
-        }
         for (Room r : rooms) {
             if (r.getId() == idRoom) {
                 Dialogs.showWarning("Warning", "Room Đã Tồn Tại", "Trùng ID gòi má");
                 return;
             }
         }
-        rooms.add(room);
+        HomeController.data.add(room);
 
-        Utility.writeJSONFile(rooms, "data.json");
 
         Dialogs.showInformation("Thành Công", "Create Room", "Create Room Success");
         Stage stage = (Stage) btnCreated.getScene().getWindow();
         stage.close();
+
+        Utility.writeJSONFile(HomeController.data,"data.json");
+
     }
 }
