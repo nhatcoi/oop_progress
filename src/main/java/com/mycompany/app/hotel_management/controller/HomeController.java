@@ -5,6 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,6 +33,14 @@ public class HomeController {
     private Button btnStatus;
     @FXML
     private Button btnGuest;
+    @FXML
+    private Button btnUs;
+
+
+    @FXML
+    void signOut() {
+        System.exit(0);
+    }
 
     @FXML
     void control(ActionEvent event) {
@@ -54,6 +68,24 @@ public class HomeController {
     void status(ActionEvent event) {
         if(event.getSource() == this.btnStatus) {
             show(status);
+        }
+    }
+
+    @FXML
+    void aboutUs(ActionEvent event) {
+        if(event.getSource() == this.btnUs) {
+            try {
+                // open link browser
+                URI uri = new URI("https://github.com/nhatcoi/project_java");
+                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                    Desktop.getDesktop().browse(uri);
+                } else {
+                    System.out.println("Desktop browsing is not supported on this platform.");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 

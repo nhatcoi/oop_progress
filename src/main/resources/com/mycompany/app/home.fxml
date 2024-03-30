@@ -18,7 +18,7 @@
          <left>
             <AnchorPane fx:id="paneHome" prefHeight="650.0" prefWidth="250.0" styleClass="nav-form" stylesheets="@home.css" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="39.0" styleClass="nav-btn" stylesheets="@home.css">
+                  <Button fx:id="btnOut" layoutY="1.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="39.0" styleClass="nav-btn" stylesheets="@home.css">
                      <graphic>
                         <FontAwesomeIcon glyphName="SIGN_OUT" />
                      </graphic>
@@ -32,14 +32,14 @@
                   <Button fx:id="btnEdit" layoutX="-2.0" layoutY="300.0" mnemonicParsing="false" onAction="#edit" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@home.css" text="Edit Room" />
                   <Button fx:id="btnStatus" layoutX="2.0" layoutY="349.0" mnemonicParsing="false" onAction="#status" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@home.css" text="Status" />
                   <Button fx:id="btnGuest" layoutX="-4.0" layoutY="398.0" mnemonicParsing="false" onAction="#guests" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@home.css" text="Guests" />
-                  <Button layoutX="83.0" layoutY="616.0" mnemonicParsing="false" styleClass="nav-btn" stylesheets="@home.css" text="About Us" />
+                  <Button fx:id="btnUs" layoutX="83.0" layoutY="616.0" mnemonicParsing="false" onAction="#aboutUs" styleClass="nav-btn" stylesheets="@home.css" text="About Us" />
                </children>
             </AnchorPane>
          </left>
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="control" layoutX="-3.0" layoutY="-3.0" prefHeight="652.0" prefWidth="855.0" visible="false">
+                  <AnchorPane fx:id="control" layoutX="-3.0" layoutY="-3.0" prefHeight="652.0" prefWidth="855.0">
                      <children>
                         <AnchorPane layoutX="40.0" layoutY="23.0" prefHeight="220.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@home.css" AnchorPane.leftAnchor="35.0">
                            <children>
@@ -104,7 +104,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="status" prefHeight="650.0" prefWidth="850.0">
+                  <AnchorPane fx:id="status" prefHeight="650.0" prefWidth="850.0" visible="false">
                      <children>
                         <ImageView fitHeight="425.0" fitWidth="577.0" layoutX="455.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
                            <image>
