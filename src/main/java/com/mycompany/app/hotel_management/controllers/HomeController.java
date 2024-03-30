@@ -1,18 +1,28 @@
 package com.mycompany.app.hotel_management.controllers;
 
+import com.mycompany.app.hotel_management.enums.RoomType;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class HomeController {
+    @FXML
+    public Button btnOut;
+    public ComboBox<String> cbTypeRoom;
+    public TextField rnameField;
+    public TextField rpriceField;
     @FXML
     private AnchorPane paneHome;
     @FXML
@@ -34,16 +44,23 @@ public class HomeController {
     @FXML
     private Button btnUs;
 
+    public void initialize() {
+        for (RoomType value : RoomType.values()) {
+            cbTypeRoom.getItems().add(value.getText());
+        }
 
+        if (!cbTypeRoom.getItems().isEmpty()) {
+            cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
+        }
+    }
     @FXML
     void signOut() throws IOException {
-        ToolFXML.openFXML("authForm.fxml", 600, 400);
+        ToolFXML.openFXML("views/authForm.fxml", 600, 400);
         ToolFXML.closeFXML(paneHome);
     }
 
     @FXML
     void control(ActionEvent event) {
-
         if(event.getSource() == this.btnControl) {
             show(control);
         }
@@ -97,5 +114,11 @@ public class HomeController {
                 pane.setVisible(true);
             }
         }
+    }
+
+    public void clearInput() {
+        rnameField.clear();
+        rpriceField.clear();
+
     }
 }
