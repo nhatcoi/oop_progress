@@ -39,6 +39,8 @@ public class HomeController {
     public Label lbName;
     public Button btnRoom;
     public Button btnEditStaff;
+    public Button btnSearch;
+    public TextField searchField;
     @FXML
     private AnchorPane paneHome;
     @FXML
@@ -73,7 +75,17 @@ public class HomeController {
             btnEditStaff.setVisible(false);
             control.setVisible(false);
         }else if(HomeController.user.getRole() == UserRole.STAFF.getValue()) {
+            btnEditStaff.setVisible(false);
+            for (RoomType value : RoomType.values()) {
+                cbTypeRoom.getItems().add(value.getText());
+            }
 
+            if (!cbTypeRoom.getItems().isEmpty()) {
+                cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
+            }
+
+            tableView.setItems(roomList);
+            fetchDataFromDatabase();
         }else if(HomeController.user.getRole() == UserRole.ADMIN.getValue()) {
             for (RoomType value : RoomType.values()) {
                 cbTypeRoom.getItems().add(value.getText());
@@ -196,5 +208,35 @@ public class HomeController {
             return;
         }
 
+    }
+
+    public void searchData() {
+        String search = searchField.getText();
+        if (search.isEmpty()) {
+            try {
+                fetchDataFromDatabase();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        } else {
+            try {
+                connect = database.connectDb();
+                String query = "SELECT * FROM rooms WHERE name LIKE '%" + search + "%'";
+                assert connect != null;
+                ResultSet resultSet = connect.createStatement().executeQuery(query);
+                roomList.clear();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String name = resultSet.getString("name");
+                    String type = RoomType.values()[resultSet.getInt("type")].getText();
+                    String status = RoomStatus.values()[resultSet.getInt("status")].getText();
+                    double price = resultSet.getDouble("price");
+
+                    roomList.add(new Room(id, name, type, status, price));
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 }
