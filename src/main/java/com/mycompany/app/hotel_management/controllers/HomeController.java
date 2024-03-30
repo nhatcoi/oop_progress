@@ -1,6 +1,6 @@
-package com.mycompany.app.hotel_management.controller;
+package com.mycompany.app.hotel_management.controllers;
 
-import com.mycompany.app.hotel_management.util.ToolFXML;
+import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,7 +37,7 @@ public class HomeController {
 
     @FXML
     void signOut() throws IOException {
-        ToolFXML.openFXML("login.fxml", 600, 400);
+        ToolFXML.openFXML("authForm.fxml", 600, 400);
         ToolFXML.closeFXML(paneHome);
     }
 

@@ -1,4 +1,4 @@
-package com.mycompany.app.hotel_management.enity;
+package com.mycompany.app.hotel_management.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +13,7 @@ import lombok.Setter;
 public class User {
     private int Id;
     private String username;
-    private String email;
     private String password;
-    private String type;
+    private int role;
 }
 

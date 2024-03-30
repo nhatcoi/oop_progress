@@ -92,7 +92,7 @@ public class AuthController implements Initializable {
                     result = prepare.executeQuery();
                     if (result.next()) {
                         Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
-                        ToolFXML.openFXML("home.fxml", 1100, 650);
+                        ToolFXML.openFXML("view/home.fxml", 1100, 650);
                         ToolFXML.closeFXML(stack_form);
                     } else {
                         Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");

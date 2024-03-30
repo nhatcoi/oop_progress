@@ -1,4 +1,4 @@
-package com.mycompany.app.hotel_management.util;
+package com.mycompany.app.hotel_management.utils;
 
 import javafx.scene.control.Alert;
 

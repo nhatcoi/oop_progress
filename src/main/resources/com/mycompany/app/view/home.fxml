@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="paneHome" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.HomeController">
+   <children>
+      <BorderPane layoutX="-3.0" prefHeight="650.0" prefWidth="1107.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <left>
+            <AnchorPane prefHeight="650.0" prefWidth="250.0" styleClass="nav-form" stylesheets="@../css/home.css" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnOut" layoutY="1.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="39.0" styleClass="nav-btn" stylesheets="@../css/home.css">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="SIGN_OUT" />
+                     </graphic>
+                  </Button>
+                  <ImageView fitHeight="116.0" fitWidth="88.0" layoutX="87.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="69.0">
+                     <image>
+                        <Image url="@../img/goku.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnControl" layoutX="-1.0" layoutY="252.0" mnemonicParsing="false" onAction="#control" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Control" />
+                  <Button fx:id="btnEdit" layoutX="-2.0" layoutY="300.0" mnemonicParsing="false" onAction="#edit" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Room" />
+                  <Button fx:id="btnStatus" layoutX="2.0" layoutY="349.0" mnemonicParsing="false" onAction="#status" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Status" />
+                  <Button fx:id="btnGuest" layoutX="-4.0" layoutY="398.0" mnemonicParsing="false" onAction="#guests" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Guests" />
+                  <Button fx:id="btnUs" layoutX="83.0" layoutY="616.0" mnemonicParsing="false" onAction="#aboutUs" styleClass="nav-btn" stylesheets="@../css/home.css" text="About Us" />
+               </children>
+            </AnchorPane>
+         </left>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane fx:id="control" layoutX="-3.0" layoutY="-3.0" prefHeight="652.0" prefWidth="855.0">
+                     <children>
+                        <AnchorPane layoutX="40.0" layoutY="23.0" prefHeight="220.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@../css/home.css" AnchorPane.leftAnchor="35.0">
+                           <children>
+                              <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card1" stylesheets="@../css/home.css">
+                                 <children>
+                                    <Label layoutX="82.0" layoutY="103.0" prefHeight="52.0" prefWidth="146.0" styleClass="font" stylesheets="@../css/home.css" text="AVAILABLE ROOM" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="275.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card2" stylesheets="@../css/home.css">
+                                 <children>
+                                    <Label layoutX="99.0" layoutY="111.0" prefHeight="41.0" prefWidth="135.0" styleClass="font" stylesheets="@../css/home.css" text="RENTED ROOM" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="535.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card3" stylesheets="@../css/home.css">
+                                 <children>
+                                    <Label layoutX="90.0" layoutY="106.0" prefHeight="56.0" prefWidth="129.0" styleClass="font" stylesheets="@../css/home.css" text="TOTAL INCOME" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="38.0" layoutY="265.0" prefHeight="366.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@../css/home.css" AnchorPane.leftAnchor="35.0">
+                           <children>
+                              <ImageView fitHeight="357.0" fitWidth="759.0" layoutX="16.0" layoutY="6.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../img/hotelbg.jpeg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="edit" prefHeight="650.0" prefWidth="850.0" visible="false">
+                     <children>
+                        <AnchorPane layoutX="18.0" layoutY="16.0" prefHeight="610.0" prefWidth="209.0" styleClass="bg-white" stylesheets="@../css/home.css">
+                           <children>
+                              <Button layoutX="33.0" layoutY="511.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="140.0" styleClass="btn" stylesheets="@../css/home.css" text="Add Room" />
+                              <TextField layoutX="25.0" layoutY="185.0" promptText="Room Name" styleClass="textField" stylesheets="@../css/home.css" />
+                              <TextField layoutX="25.0" layoutY="240.0" promptText="Type" styleClass="textField" stylesheets="@../css/home.css" />
+                              <TextField layoutX="25.0" layoutY="290.0" promptText="Price" styleClass="textField" stylesheets="@../css/home.css" />
+                              <Hyperlink layoutX="25.0" layoutY="332.0" text="Clear" />
+                              <ImageView fitHeight="111.0" fitWidth="158.0" layoutX="25.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true" />
+                              <Hyperlink layoutX="34.0" layoutY="471.0" text="Import photo" />
+                              <Label layoutX="28.0" layoutY="79.0" prefHeight="76.0" prefWidth="159.0" styleClass="font-room" stylesheets="@../css/home.css" text="ROOM MANAGE" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="240.0" layoutY="20.0" prefHeight="610.0" prefWidth="592.0" styleClass="bg-white" stylesheets="@../css/home.css">
+                           <children>
+                              <Button layoutX="37.0" layoutY="22.0" mnemonicParsing="false" styleClass="btn" stylesheets="@../css/home.css" text="Search" />
+                              <TextField layoutX="108.0" layoutY="22.0" prefHeight="27.0" prefWidth="431.0" promptText="Search Room" styleClass="textField" stylesheets="@../css/home.css" />
+                              <TreeTableView layoutX="25.0" layoutY="62.0" prefHeight="477.0" prefWidth="540.0" stylesheets="@../css/home.css">
+                                <columns>
+                                  <TreeTableColumn prefWidth="52.1688232421875" text="ID" />
+                                  <TreeTableColumn prefWidth="216.7203369140625" text="Rooms" />
+                                    <TreeTableColumn prefWidth="66.27960205078125" text="Type" />
+                                    <TreeTableColumn minWidth="1.1343994140625" prefWidth="92.337646484375" text="Price" />
+                                    <TreeTableColumn prefWidth="112.44305419921875" text="Status" />
+                                </columns>
+                              </TreeTableView>
+                              <Button layoutX="352.0" layoutY="567.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="110.0" styleClass="btn" stylesheets="@../css/home.css" text="Delete" />
+                              <Button layoutX="100.0" layoutY="566.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="122.0" styleClass="btn" stylesheets="@../css/home.css" text="Fix Room" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="status" prefHeight="650.0" prefWidth="850.0" visible="false">
+                     <children>
+                        <ImageView fitHeight="425.0" fitWidth="577.0" layoutX="455.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/backgr.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="guests" prefHeight="650.0" prefWidth="850.0" visible="false">
+                     <children>
+                        <TreeTableView layoutX="29.0" layoutY="39.0" prefHeight="577.0" prefWidth="781.0">
+                          <columns>
+                            <TreeTableColumn prefWidth="75.0" text="C1" />
+                            <TreeTableColumn prefWidth="227.55169677734375" text="Name" />
+                              <TreeTableColumn minWidth="0.0" prefWidth="140.3828125" text="gender" />
+                              <TreeTableColumn prefWidth="152.6170654296875" text="email" />
+                              <TreeTableColumn prefWidth="143.0" text="phone" />
+                          </columns>
+                        </TreeTableView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
