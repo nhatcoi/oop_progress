@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controller.HomeController">
+   <children>
+      <BorderPane layoutX="-3.0" prefHeight="650.0" prefWidth="1107.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <left>
+            <AnchorPane prefHeight="650.0" prefWidth="250.0" styleClass="nav-form" stylesheets="@home.css" BorderPane.alignment="CENTER">
+               <children>
+                  <Button layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="39.0" styleClass="nav-btn" stylesheets="@home.css">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="SIGN_OUT" />
+                     </graphic>
+                  </Button>
+                  <ImageView fitHeight="116.0" fitWidth="88.0" layoutX="87.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="69.0">
+                     <image>
+                        <Image url="@../../../../../../../../../../../Downloads/0BE5813D-5085-4B82-BA5E-57D5BD9E4571_1_201_a.jpeg" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="-1.0" layoutY="252.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@home.css" text="Control" />
+                  <Button layoutX="-2.0" layoutY="300.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@home.css" text="Edit Room" />
+                  <Button layoutX="2.0" layoutY="349.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@home.css" text="Status" />
+                  <Button layoutX="-4.0" layoutY="398.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@home.css" text="Guests" />
+               </children>
+            </AnchorPane>
+         </left>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane layoutX="-3.0" layoutY="-3.0" prefHeight="652.0" prefWidth="855.0" visible="false">
+                     <children>
+                        <AnchorPane layoutX="40.0" layoutY="23.0" prefHeight="220.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@home.css" AnchorPane.leftAnchor="35.0">
+                           <children>
+                              <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card1" stylesheets="@home.css">
+                                 <children>
+                                    <Label layoutX="82.0" layoutY="103.0" prefHeight="52.0" prefWidth="146.0" styleClass="font" stylesheets="@home.css" text="AVAILABLE ROOM" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="275.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card2" stylesheets="@home.css">
+                                 <children>
+                                    <Label layoutX="99.0" layoutY="111.0" prefHeight="41.0" prefWidth="135.0" styleClass="font" stylesheets="@home.css" text="RENTED ROOM" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="535.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card3" stylesheets="@home.css">
+                                 <children>
+                                    <Label layoutX="90.0" layoutY="106.0" prefHeight="56.0" prefWidth="129.0" styleClass="font" stylesheets="@home.css" text="TOTAL INCOME" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="38.0" layoutY="265.0" prefHeight="366.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@home.css" AnchorPane.leftAnchor="35.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="650.0" prefWidth="851.0">
+                     <children>
+                        <AnchorPane layoutX="18.0" layoutY="16.0" prefHeight="610.0" prefWidth="209.0" styleClass="bg-white" stylesheets="@home.css">
+                           <children>
+                              <Button layoutX="33.0" layoutY="511.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="140.0" styleClass="btn" stylesheets="@home.css" text="Add Room" />
+                              <TextField layoutX="25.0" layoutY="185.0" promptText="Room Name" styleClass="textField" stylesheets="@home.css" />
+                              <TextField layoutX="25.0" layoutY="240.0" promptText="Type" styleClass="textField" stylesheets="@home.css" />
+                              <TextField layoutX="25.0" layoutY="290.0" promptText="Price" styleClass="textField" stylesheets="@home.css" />
+                              <Hyperlink layoutX="25.0" layoutY="332.0" text="Clear" />
+                              <ImageView fitHeight="111.0" fitWidth="158.0" layoutX="25.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true" />
+                              <Hyperlink layoutX="34.0" layoutY="471.0" text="Import photo" />
+                              <Label layoutX="28.0" layoutY="79.0" prefHeight="76.0" prefWidth="159.0" styleClass="font-room" stylesheets="@home.css" text="ROOM MANAGE" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="240.0" layoutY="20.0" prefHeight="610.0" prefWidth="592.0" styleClass="bg-white" stylesheets="@home.css">
+                           <children>
+                              <Button layoutX="37.0" layoutY="22.0" mnemonicParsing="false" styleClass="btn" stylesheets="@home.css" text="Search" />
+                              <TextField layoutX="108.0" layoutY="22.0" prefHeight="27.0" prefWidth="431.0" promptText="Search Room" styleClass="textField" stylesheets="@home.css" />
+                              <TreeTableView layoutX="25.0" layoutY="62.0" prefHeight="477.0" prefWidth="540.0" stylesheets="@home.css">
+                                <columns>
+                                  <TreeTableColumn prefWidth="52.1688232421875" text="ID" />
+                                  <TreeTableColumn prefWidth="216.7203369140625" text="Rooms" />
+                                    <TreeTableColumn prefWidth="66.27960205078125" text="Type" />
+                                    <TreeTableColumn minWidth="1.1343994140625" prefWidth="92.337646484375" text="Price" />
+                                    <TreeTableColumn prefWidth="112.44305419921875" text="Status" />
+                                </columns>
+                              </TreeTableView>
+                              <Button layoutX="352.0" layoutY="567.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="110.0" styleClass="btn" stylesheets="@home.css" text="Delete" />
+                              <Button layoutX="100.0" layoutY="566.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="122.0" styleClass="btn" stylesheets="@home.css" text="Fix Room" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

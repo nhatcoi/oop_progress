@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -12,14 +13,26 @@ import java.util.Objects;
 public class App extends Application {
     //static Debug debug = new Debug();
 
+    private double x = 0.0;
+    private double y = 0.0;
     @Override
     public void start(Stage primaryStage) throws IOException {
-
-        Parent root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource("home-view.fxml"))));
-
-        Scene scene = new Scene(root, 1280, 720);
-        primaryStage.setTitle("Hotel Test");
-        primaryStage.setScene(scene);
+        Parent root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource("login.fxml"))));
+        primaryStage.setTitle("NVDEV - Hotel Management System");
+        primaryStage.setScene(new Scene(root, 592.0, 410.0));
+        root.setOnMousePressed((event) -> {
+            this.x = event.getSceneX();
+            this.y = event.getSceneY();
+        });
+        root.setOnMouseDragged((event) -> {
+            primaryStage.setX(event.getScreenX() - this.x);
+            primaryStage.setY(event.getScreenY() - this.y);
+            primaryStage.setOpacity(0.8);
+        });
+        root.setOnMouseReleased((event) -> {
+            primaryStage.setOpacity(1.0);
+        });
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.show();
     }
 
