@@ -32,13 +32,14 @@
                   <Button layoutX="-2.0" layoutY="300.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@home.css" text="Edit Room" />
                   <Button layoutX="2.0" layoutY="349.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@home.css" text="Status" />
                   <Button layoutX="-4.0" layoutY="398.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@home.css" text="Guests" />
+                  <Button layoutX="83.0" layoutY="616.0" mnemonicParsing="false" styleClass="nav-btn" stylesheets="@home.css" text="About Us" />
                </children>
             </AnchorPane>
          </left>
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane layoutX="-3.0" layoutY="-3.0" prefHeight="652.0" prefWidth="855.0" visible="false">
+                  <AnchorPane layoutX="-3.0" layoutY="-3.0" prefHeight="652.0" prefWidth="855.0">
                      <children>
                         <AnchorPane layoutX="40.0" layoutY="23.0" prefHeight="220.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@home.css" AnchorPane.leftAnchor="35.0">
                            <children>
@@ -59,10 +60,18 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="38.0" layoutY="265.0" prefHeight="366.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@home.css" AnchorPane.leftAnchor="35.0" />
+                        <AnchorPane layoutX="38.0" layoutY="265.0" prefHeight="366.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@home.css" AnchorPane.leftAnchor="35.0">
+                           <children>
+                              <ImageView fitHeight="357.0" fitWidth="759.0" layoutX="16.0" layoutY="6.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@hotelbg.jpeg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane prefHeight="650.0" prefWidth="851.0">
+                  <AnchorPane prefHeight="650.0" prefWidth="851.0" visible="false">
                      <children>
                         <AnchorPane layoutX="18.0" layoutY="16.0" prefHeight="610.0" prefWidth="209.0" styleClass="bg-white" stylesheets="@home.css">
                            <children>
