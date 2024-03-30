@@ -1,8 +1,10 @@
 package com.mycompany.app.hotel_management.controllers;
 
 import com.mycompany.app.hotel_management.entities.Room;
+import com.mycompany.app.hotel_management.entities.User;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.enums.RoomType;
+import com.mycompany.app.hotel_management.enums.UserRole;
 import com.mycompany.app.hotel_management.repositories.database;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
@@ -11,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -33,6 +36,9 @@ public class HomeController {
     public TextField rpriceField;
     public TableView<Room> tableView;
     public Button btnAdd;
+    public Label lbName;
+    public Button btnRoom;
+    public Button btnEditStaff;
     @FXML
     private AnchorPane paneHome;
     @FXML
@@ -55,18 +61,32 @@ public class HomeController {
     private Button btnUs;
     private Connection connect;
     private ObservableList<Room> roomList = FXCollections.observableArrayList();
-
+    public static User user;
     public void initialize() throws SQLException {
-        for (RoomType value : RoomType.values()) {
-            cbTypeRoom.getItems().add(value.getText());
-        }
+        lbName.setText("Xin Chào, " + HomeController.user.getUsername() + "!");
+        if(HomeController.user.getRole() == UserRole.GUEST.getValue()) {
+            btnControl.setVisible(false);
+            btnEdit.setVisible(false);
+            btnStatus.setVisible(false);
+            btnGuest.setVisible(false);
+            btnUs.setVisible(false);
+            btnEditStaff.setVisible(false);
+            control.setVisible(false);
+        }else if(HomeController.user.getRole() == UserRole.STAFF.getValue()) {
 
-        if (!cbTypeRoom.getItems().isEmpty()) {
-            cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
-        }
+        }else if(HomeController.user.getRole() == UserRole.ADMIN.getValue()) {
+            for (RoomType value : RoomType.values()) {
+                cbTypeRoom.getItems().add(value.getText());
+            }
 
-        tableView.setItems(roomList);
-        fetchDataFromDatabase();
+            if (!cbTypeRoom.getItems().isEmpty()) {
+                cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
+            }
+
+            tableView.setItems(roomList);
+            fetchDataFromDatabase();
+
+        }
     }
 
     private void fetchDataFromDatabase() throws SQLException {

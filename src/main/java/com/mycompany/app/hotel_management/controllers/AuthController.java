@@ -1,6 +1,8 @@
 package com.mycompany.app.hotel_management.controllers;
 
 
+import com.mycompany.app.hotel_management.entities.User;
+import com.mycompany.app.hotel_management.enums.UserRole;
 import com.mycompany.app.hotel_management.repositories.database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.Md5;
@@ -70,8 +72,6 @@ public class AuthController implements Initializable {
 
     public void login() {
         connect = database.connectDb();
-
-
         try {
 
 
@@ -91,9 +91,16 @@ public class AuthController implements Initializable {
                     prepare.setString(2, passLog);
                     result = prepare.executeQuery();
                     if (result.next()) {
+
+                        int id = result.getInt("id");
+                        int role = result.getInt("role");
+                        HomeController.user = new User(id, userLog, role);
+
+
                         Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
                         ToolFXML.openFXML("views/home.fxml", 1100, 650);
                         ToolFXML.closeFXML(stack_form);
+
                     } else {
                         Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
                     }

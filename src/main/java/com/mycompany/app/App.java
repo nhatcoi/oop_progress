@@ -1,9 +1,11 @@
 package com.mycompany.app;
 
+import com.mycompany.app.hotel_management.controllers.AuthController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -19,7 +21,8 @@ public class App extends Application {
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource("views/authForm.fxml"))));
         primaryStage.setTitle("NVDEV - Hotel Management System");
-        primaryStage.setScene(new Scene(root, 592.0, 410.0));
+        Scene scene = new Scene(root, 592.0, 410.0);
+        primaryStage.setScene(scene);
         root.setOnMousePressed((event) -> {
             this.x = event.getSceneX();
             this.y = event.getSceneY();
