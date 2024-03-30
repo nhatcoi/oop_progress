@@ -336,3 +336,4 @@ pom.xml
 
 .classpath
 .settings/*
+config.json

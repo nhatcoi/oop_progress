@@ -1,10 +1,10 @@
-package com.mycompany.app.hotel_management.controller;
+package com.mycompany.app.hotel_management.controllers;
 
 
-import com.mycompany.app.hotel_management.enity.User;
-import com.mycompany.app.hotel_management.repository.database;
-import com.mycompany.app.hotel_management.util.Dialog;
-import com.mycompany.app.hotel_management.util.ToolFXML;
+import com.mycompany.app.hotel_management.repositories.database;
+import com.mycompany.app.hotel_management.utils.Dialog;
+import com.mycompany.app.hotel_management.utils.Md5;
+import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -14,11 +14,9 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.*;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+public class AuthController implements Initializable {
 
     @javafx.fxml.FXML
     private StackPane stack_form;
@@ -71,15 +69,11 @@ public class LoginController implements Initializable {
     private ResultSet result;
 
     public void login() {
-        String sql = "SELECT * FROM admin";
         connect = database.connectDb();
 
-        List<User> users = new ArrayList<>();
 
         try {
-            // Fetch all user data from the database
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
+
 
             // add user to list
             String userLog = username.getText();
@@ -89,31 +83,45 @@ public class LoginController implements Initializable {
                 Dialog.showError("Đừng để trống", null, "Vui lòng nhập tên đăng nhập và mật khẩu");
             }
             else {
-                if(comboBox.getValue() == null || comboBox.getValue().equals("Guest")) {
-                    //TODO login guest
-                }
-                if (comboBox.getValue().equals("Manager")) {
-                    while (result.next()) {
-                        User staff = new User();
-                        staff.setUsername(result.getString("username"));
-                        staff.setEmail(result.getString("email"));
-                        staff.setPassword(result.getString("password"));
-                        users.add(staff);
-                    }
 
-                    for(User user : users) {
-                        if (user.getUsername().equals(userLog) || user.getEmail().equals(userLog)) {
-                            if (user.getPassword().equals(passLog)) {
-                                Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
-                                ToolFXML.openFXML("home.fxml", 1100, 650);
-                                ToolFXML.closeFXML(stack_form);
-                                break;
-                            }
-                        } else {
-                            Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
-                        }
+                    passLog = Md5.hashString(passLog);
+                    String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+                    prepare = connect.prepareStatement(sql);
+                    prepare.setString(1, userLog);
+                    prepare.setString(2, passLog);
+                    result = prepare.executeQuery();
+                    if (result.next()) {
+                        Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
+                        ToolFXML.openFXML("home.fxml", 1100, 650);
+                        ToolFXML.closeFXML(stack_form);
+                    } else {
+                        Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
                     }
-                }
+//                if(comboBox.getValue() == null || comboBox.getValue().equals("Guest")) {
+//                    //TODO login guest
+//                }
+//                if (comboBox.getValue().equals("Manager")) {
+//                    while (result.next()) {
+//                        User staff = new User();
+//                        staff.setUsername(result.getString("username"));
+//                        staff.setEmail(result.getString("email"));
+//                        staff.setPassword(result.getString("password"));
+//                        users.add(staff);
+//                    }
+//
+//                    for(User user : users) {
+//                        if (user.getUsername().equals(userLog) || user.getEmail().equals(userLog)) {
+//                            if (user.getPassword().equals(passLog)) {
+//                                Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
+//                                ToolFXML.openFXML("home.fxml", 1100, 650);
+//                                ToolFXML.closeFXML(stack_form);
+//                                break;
+//                            }
+//                        } else {
+//                            Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
+//                        }
+//                    }
+//                }
 
 //                // check if username and password exist
 //                boolean loggedIn = false;
@@ -154,13 +162,12 @@ public class LoginController implements Initializable {
 
         try {
             // get data from input fields
-            String email = signup_email.getText();
             String username = signup_username.getText();
             String password = signup_password.getText();
             String confirmPassword = signup_password2.getText();
 
             // check empty fields
-            if (email.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Dialog.showError("Đừng để trống", null, "Vui lòng điền đầy đủ thông tin");
                 return; // Exit the method as input validation failed
             }
@@ -170,12 +177,12 @@ public class LoginController implements Initializable {
                 Dialog.showError("Mật khẩu không khớp", null, "Mật khẩu và xác nhận mật khẩu không khớp");
                 return;
             }
+            password = Md5.hashString(password);
 
             // Check if the email or username is already registered
-            String checkSql = "SELECT * FROM admin WHERE email = ? OR username = ?";
+            String checkSql = "SELECT * FROM users WHERE username = ?";
             prepare = connect.prepareStatement(checkSql);
-            prepare.setString(1, email);
-            prepare.setString(2, username);
+            prepare.setString(1, username);
             ResultSet checkResult = prepare.executeQuery();
 
             if (checkResult.next()) {
@@ -184,11 +191,10 @@ public class LoginController implements Initializable {
             }
 
             // If everything is fine, proceed with the signup
-            String insertSql = "INSERT INTO admin (email, username, password) VALUES (?, ?, ?)";
+            String insertSql = "INSERT INTO users ( username, password) VALUES (?, ?)";
             prepare = connect.prepareStatement(insertSql);
-            prepare.setString(1, email);
-            prepare.setString(2, username);
-            prepare.setString(3, password);
+            prepare.setString(1, username);
+            prepare.setString(2, password);
             prepare.executeUpdate();
 
             Dialog.showInformation("Đăng ký thành công", null, "Tài khoản của bạn đã được tạo thành công");
@@ -204,23 +210,23 @@ public class LoginController implements Initializable {
 
     // forgot password
     public void forgot() {
-        String sql = "SELECT * FROM admin WHERE email = ?";
-        connect = database.connectDb();
-        try {
-            prepare = connect.prepareStatement(sql);
-            prepare.setString(1, forgot_email.getText());
-            result = prepare.executeQuery();
-
-            if(forgot_email.getText().isEmpty()) {
-                Dialog.showError("Đừng để trống", null, "Vui lòng nhập email");
-            } else {
-                // check if email is exist
-                if(result.next()) Dialog.showInformation("Kiểm tra email", null, "Một email đã được gửi đến " + forgot_email.getText() + " với mật khẩu của bạn");
-                else Dialog.showError("Email không tồn tại", null, "Email không tồn tại trong hệ thống");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        String sql = "SELECT * FROM admin WHERE email = ?";
+//        connect = database.connectDb();
+//        try {
+//            prepare = connect.prepareStatement(sql);
+//            prepare.setString(1, forgot_email.getText());
+//            result = prepare.executeQuery();
+//
+//            if(forgot_email.getText().isEmpty()) {
+//                Dialog.showError("Đừng để trống", null, "Vui lòng nhập email");
+//            } else {
+//                // check if email is exist
+//                if(result.next()) Dialog.showInformation("Kiểm tra email", null, "Một email đã được gửi đến " + forgot_email.getText() + " với mật khẩu của bạn");
+//                else Dialog.showError("Email không tồn tại", null, "Email không tồn tại trong hệ thống");
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
 
