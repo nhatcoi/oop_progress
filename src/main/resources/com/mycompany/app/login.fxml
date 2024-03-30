@@ -19,7 +19,6 @@
                 <AnchorPane layoutY="3.0" prefHeight="410.0" prefWidth="296.0" styleClass="left-form" stylesheets="@loginDesign.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="296.0" AnchorPane.topAnchor="0.0" />
                 <AnchorPane layoutX="296.0" prefHeight="410.0" prefWidth="296.0" styleClass="right-bg" stylesheets="@loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="296.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <FontAwesomeIcon glyphName="USER" layoutX="127.0" layoutY="76.0" size="4em" />
                         <Label layoutX="108.0" layoutY="93.0" text="Welcome">
                             <font>
                                 <Font name="Tahoma Bold" size="17.0" />
@@ -48,6 +47,7 @@
                                 </FXCollections>
                             </items>
                         </ComboBox>
+                  <FontAwesomeIcon glyphName="USER" layoutX="122.0" layoutY="84.0" size="5em" />
                     </children>
                 </AnchorPane>
             </children>
