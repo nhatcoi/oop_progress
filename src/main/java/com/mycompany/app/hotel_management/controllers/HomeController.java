@@ -194,7 +194,7 @@ public class HomeController {
         int type = cbTypeRoom.getSelectionModel().getSelectedIndex();
         try {
             double price = Double.parseDouble(rpriceField.getText());
-            String query = "INSERT INTO rooms (name, type, status, price) VALUES ('" + name + "', '" + type + "', 0, " + price + ")";
+            String query = "INSERT INTO rooms (name, type, status, price) VALUES (N'" + name + "', '" + type + "', 0, " + price + ")";
             try {
                 assert connect != null;
                 connect.createStatement().executeUpdate(query);
@@ -238,5 +238,23 @@ public class HomeController {
                 throwables.printStackTrace();
             }
         }
+    }
+
+    public void deleteData() {
+        Room room = tableView.getSelectionModel().getSelectedItem();
+        if (room == null) {
+            Dialog.showError("Error", "Error", "Chọn phòng cần xóa!");
+            return;
+        }
+        connect = database.connectDb();
+        String query = "DELETE FROM rooms WHERE id = " + room.getId();
+        try {
+            assert connect != null;
+            connect.createStatement().executeUpdate(query);
+            fetchDataFromDatabase();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Dialog.showInformation("Information", "Information", "Xóa" + room.getName() + " thành công!");
     }
 }
