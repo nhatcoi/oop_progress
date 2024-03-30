@@ -1,16 +1,12 @@
 package com.mycompany.app.hotel_management.controller;
 
 
-import com.mycompany.app.App;
 import com.mycompany.app.hotel_management.enity.User;
 import com.mycompany.app.hotel_management.repository.database;
 import com.mycompany.app.hotel_management.util.Dialog;
+import com.mycompany.app.hotel_management.util.ToolFXML;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -20,50 +16,52 @@ import java.net.URL;
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
-    @FXML
+    @javafx.fxml.FXML
     private StackPane stack_form;
-    @FXML
-    private AnchorPane main_form;
-    @FXML
+    @javafx.fxml.FXML
+    private AnchorPane login_form;
+    @javafx.fxml.FXML
     private TextField username;
-    @FXML
+    @javafx.fxml.FXML
     private PasswordField password;
-    @FXML
+    @javafx.fxml.FXML
     private Button loginBtn;
-    @FXML
+    @javafx.fxml.FXML
     private Hyperlink forgotPassword;
-    @FXML
+    @javafx.fxml.FXML
     private Hyperlink createAccount;
-    @FXML
+    @javafx.fxml.FXML
     private AnchorPane signup_form;
-    @FXML
+    @javafx.fxml.FXML
     private TextField signup_username;
-    @FXML
+    @javafx.fxml.FXML
     private TextField signup_email;
-    @FXML
+    @javafx.fxml.FXML
     private PasswordField signup_password;
-    @FXML
+    @javafx.fxml.FXML
     private PasswordField signup_password2;
-    @FXML
+    @javafx.fxml.FXML
     private Button signupBtn;
-    @FXML
+    @javafx.fxml.FXML
     private Hyperlink signup_forgot;
-    @FXML
+    @javafx.fxml.FXML
     private Hyperlink signup_login;
     // forgot
-    @FXML
+    @javafx.fxml.FXML
     private AnchorPane forgot_form;
-    @FXML
+    @javafx.fxml.FXML
     private TextField forgot_email;
-    @FXML
+    @javafx.fxml.FXML
     private Hyperlink forgot_login;
-    @FXML
+    @javafx.fxml.FXML
     private Hyperlink forgot_signup;
+
+    @javafx.fxml.FXML
+    private ComboBox comboBox;
 
 
     // db tools
@@ -84,40 +82,65 @@ public class LoginController implements Initializable {
             result = prepare.executeQuery();
 
             // add user to list
-            while (result.next()) {
-                User user = new User();
-                user.setUsername(result.getString("username"));
-                user.setEmail(result.getString("email"));
-                user.setPassword(result.getString("password"));
-                users.add(user);
-            }
-
             String userLog = username.getText();
-            String pass = password.getText();
+            String passLog = password.getText();
 
-            if (userLog.isEmpty() || pass.isEmpty()) {
+            if (userLog.isEmpty() || passLog.isEmpty()) {
                 Dialog.showError("Đừng để trống", null, "Vui lòng nhập tên đăng nhập và mật khẩu");
             }
             else {
-                // check if username and password exist
-                boolean loggedIn = false;
-                for (User user : users) {
-                    if (user.getUsername().equals(userLog) || user.getEmail().equals(userLog)) {
-                        if (user.getPassword().equals(pass)) {
-                            Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
+                if(comboBox.getValue() == null || comboBox.getValue().equals("Guest")) {
+                    //TODO login guest
+                }
+                if (comboBox.getValue().equals("Manager")) {
+                    while (result.next()) {
+                        User staff = new User();
+                        staff.setUsername(result.getString("username"));
+                        staff.setEmail(result.getString("email"));
+                        staff.setPassword(result.getString("password"));
+                        users.add(staff);
+                    }
 
-                            // Open dashboard.fxml
-                            Parent root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource("home.fxml"))));
-                            Stage stage = new Stage();
-                            stage.setScene(new Scene(root, 1100, 650));
-                            stage.show();
-
-                            loggedIn = true;
-                            break;
+                    for(User user : users) {
+                        if (user.getUsername().equals(userLog) || user.getEmail().equals(userLog)) {
+                            if (user.getPassword().equals(passLog)) {
+                                Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
+                                ToolFXML.openFXML("home.fxml", 1100, 650);
+                                ToolFXML.closeFXML(stack_form);
+                                break;
+                            }
+                        } else {
+                            Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
                         }
                     }
                 }
-                if (!loggedIn) Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
+
+//                // check if username and password exist
+//                boolean loggedIn = false;
+//                for (User user : users) {
+//                    if (user.getUsername().equals(userLog) || user.getEmail().equals(userLog)) {
+//                        if (user.getPassword().equals(passLog)) {
+//
+//                            // check comBox not true
+//                            if ((comboBox.getValue() == null || comboBox.getValue().equals("Guest"))) {
+//                                Dialog.showError("Chọn quyền", null, "Sai quyền truy cập");
+//                                return;
+//                            }
+//
+//                            Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
+//
+//                            // Open home.fxml
+//                            ToolFXML.openFXML("home.fxml", 1100, 650);
+//
+//                            // close login form
+//                            ToolFXML.closeFXML(stack_form);
+//
+//                            loggedIn = true;
+//                            break;
+//                        }
+//                    }
+//                }
+//                if (!loggedIn) Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -136,7 +159,7 @@ public class LoginController implements Initializable {
             String password = signup_password.getText();
             String confirmPassword = signup_password2.getText();
 
-            // check if any field is empty
+            // check empty fields
             if (email.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Dialog.showError("Đừng để trống", null, "Vui lòng điền đầy đủ thông tin");
                 return; // Exit the method as input validation failed
@@ -145,7 +168,7 @@ public class LoginController implements Initializable {
             // Check if passwords match
             if (!password.equals(confirmPassword)) {
                 Dialog.showError("Mật khẩu không khớp", null, "Mật khẩu và xác nhận mật khẩu không khớp");
-                return; // Exit the method as password confirmation failed
+                return;
             }
 
             // Check if the email or username is already registered
@@ -156,9 +179,8 @@ public class LoginController implements Initializable {
             ResultSet checkResult = prepare.executeQuery();
 
             if (checkResult.next()) {
-                // Either email or username already exists
                 Dialog.showError("Đăng ký thất bại", null, "Email hoặc tên đăng nhập đã tồn tại");
-                return; // Exit the method as signup failed
+                return;
             }
 
             // If everything is fine, proceed with the signup
@@ -169,8 +191,11 @@ public class LoginController implements Initializable {
             prepare.setString(3, password);
             prepare.executeUpdate();
 
-            // Show success message
             Dialog.showInformation("Đăng ký thành công", null, "Tài khoản của bạn đã được tạo thành công");
+
+            this.signup_form.setVisible(false);
+            this.login_form.setVisible(true);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -206,35 +231,35 @@ public class LoginController implements Initializable {
         System.exit(0);
     }
     public void minimize() {
-        Stage stage = (Stage) main_form.getScene().getWindow();
+        Stage stage = (Stage) stack_form.getScene().getWindow();
         stage.setIconified(true);
     }
 
     // switch form
     public void switchForm(ActionEvent event) {
         if (event.getSource() == this.createAccount) {
-            this.main_form.setVisible(false);
+            this.login_form.setVisible(false);
             this.forgot_form.setVisible(false);
             this.signup_form.setVisible(true);
         } else if (event.getSource() == this.forgotPassword) {
-            this.main_form.setVisible(false);
+            this.login_form.setVisible(false);
             this.signup_form.setVisible(false);
             this.forgot_form.setVisible(true);
         } else if (event.getSource() == this.signup_login) {
             this.signup_form.setVisible(false);
             this.forgot_form.setVisible(false);
-            this.main_form.setVisible(true);
+            this.login_form.setVisible(true);
         } else if (event.getSource() == this.signup_forgot) {
             this.signup_form.setVisible(false);
-            this.main_form.setVisible(false);
+            this.login_form.setVisible(false);
             this.forgot_form.setVisible(true);
         } else if (event.getSource() == this.forgot_login) {
             this.forgot_form.setVisible(false);
             this.signup_form.setVisible(false);
-            this.main_form.setVisible(true);
+            this.login_form.setVisible(true);
         } else if (event.getSource() == this.forgot_signup) {
             this.forgot_form.setVisible(false);
-            this.main_form.setVisible(false);
+            this.login_form.setVisible(false);
             this.signup_form.setVisible(true);
         }
     }

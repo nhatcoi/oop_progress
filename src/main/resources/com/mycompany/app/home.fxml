@@ -9,14 +9,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controller.HomeController">
+<AnchorPane fx:id="paneHome" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controller.HomeController">
    <children>
       <BorderPane layoutX="-3.0" prefHeight="650.0" prefWidth="1107.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <left>
-            <AnchorPane fx:id="paneHome" prefHeight="650.0" prefWidth="250.0" styleClass="nav-form" stylesheets="@home.css" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="650.0" prefWidth="250.0" styleClass="nav-form" stylesheets="@home.css" BorderPane.alignment="CENTER">
                <children>
                   <Button fx:id="btnOut" layoutY="1.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="39.0" styleClass="nav-btn" stylesheets="@home.css">
                      <graphic>

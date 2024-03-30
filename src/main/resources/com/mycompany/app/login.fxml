@@ -14,7 +14,7 @@
 
 <StackPane fx:id="stack_form" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controller.LoginController">
     <children>
-        <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
+        <AnchorPane fx:id="login_form" prefHeight="200.0" prefWidth="200.0">
             <children>
                 <AnchorPane layoutY="3.0" prefHeight="410.0" prefWidth="296.0" styleClass="left-form" stylesheets="@loginDesign.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="296.0" AnchorPane.topAnchor="0.0" />
                 <AnchorPane layoutX="296.0" prefHeight="410.0" prefWidth="296.0" styleClass="right-bg" stylesheets="@loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="296.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -39,7 +39,7 @@
                         </Button>
                         <Hyperlink fx:id="forgotPassword" layoutX="93.0" layoutY="339.0" onAction="#switchForm" text="Forgot password ?" />
                         <Hyperlink fx:id="createAccount" layoutX="85.0" layoutY="364.0" onAction="#switchForm" text="Create a new account" />
-                        <ComboBox fx:id="comboBox" layoutX="39.0" layoutY="142.0" prefHeight="27.0" prefWidth="218.0" promptText="Role" styleClass="textField" stylesheets="@loginDesign.css" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="39.0">
+                        <ComboBox fx:id="comboBox" layoutX="39.0" layoutY="142.0" prefHeight="27.0" prefWidth="218.0" promptText="Guest" styleClass="textField" stylesheets="@loginDesign.css" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="39.0">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <String fx:value="Guest" />

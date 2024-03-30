@@ -1,5 +1,6 @@
 package com.mycompany.app.hotel_management.controller;
 
+import com.mycompany.app.hotel_management.util.ToolFXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,10 +8,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.awt.*;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,8 +36,9 @@ public class HomeController {
 
 
     @FXML
-    void signOut() {
-        System.exit(0);
+    void signOut() throws IOException {
+        ToolFXML.openFXML("login.fxml", 600, 400);
+        ToolFXML.closeFXML(paneHome);
     }
 
     @FXML
