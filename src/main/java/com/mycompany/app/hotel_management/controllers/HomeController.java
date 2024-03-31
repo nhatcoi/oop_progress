@@ -31,11 +31,6 @@ import com.mycompany.app.hotel_management.utils.Dialog;
 public class HomeController {
     @FXML
     public Button btnOut;
-    public ComboBox<String> cbTypeRoom;
-    public TextField rnameField;
-    public TextField rpriceField;
-    public TableView<Room> tableView;
-    public Button btnAdd;
     public Label lbName;
     public Button btnRoom;
     public Button btnEditStaff;
@@ -62,7 +57,6 @@ public class HomeController {
     @FXML
     private Button btnUs;
     private Connection connect;
-    private ObservableList<Room> roomList = FXCollections.observableArrayList();
     public static User user;
     public void initialize() throws SQLException {
         lbName.setText("Xin Chào, " + HomeController.user.getUsername() + "!");
@@ -76,46 +70,6 @@ public class HomeController {
             control.setVisible(false);
         }else if(HomeController.user.getRole() == UserRole.STAFF.getValue()) {
             btnEditStaff.setVisible(false);
-            for (RoomType value : RoomType.values()) {
-                cbTypeRoom.getItems().add(value.getText());
-            }
-
-            if (!cbTypeRoom.getItems().isEmpty()) {
-                cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
-            }
-
-            tableView.setItems(roomList);
-            fetchDataFromDatabase();
-        }else if(HomeController.user.getRole() == UserRole.ADMIN.getValue()) {
-            for (RoomType value : RoomType.values()) {
-                cbTypeRoom.getItems().add(value.getText());
-            }
-
-            if (!cbTypeRoom.getItems().isEmpty()) {
-                cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
-            }
-
-            tableView.setItems(roomList);
-            fetchDataFromDatabase();
-
-        }
-    }
-
-    private void fetchDataFromDatabase() throws SQLException {
-
-        connect = database.connectDb();
-        String query = "SELECT * FROM rooms";
-        assert connect != null;
-        ResultSet resultSet = connect.createStatement().executeQuery(query);
-        roomList.clear();
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String name = resultSet.getString("name");
-            String type = RoomType.values()[resultSet.getInt("type")].getText();
-            String status = RoomStatus.values()[resultSet.getInt("status")].getText();
-            double price = resultSet.getDouble("price");
-
-            roomList.add(new Room(id, name, type, status, price));
         }
     }
 
@@ -182,79 +136,6 @@ public class HomeController {
         }
     }
 
-    public void clearInput() {
-        rnameField.clear();
-        rpriceField.clear();
 
-    }
 
-    public void addData(ActionEvent actionEvent) {
-        connect = database.connectDb();
-        String name = rnameField.getText();
-        int type = cbTypeRoom.getSelectionModel().getSelectedIndex();
-        try {
-            double price = Double.parseDouble(rpriceField.getText());
-            String query = "INSERT INTO rooms (name, type, status, price) VALUES (N'" + name + "', '" + type + "', 0, " + price + ")";
-            try {
-                assert connect != null;
-                connect.createStatement().executeUpdate(query);
-                fetchDataFromDatabase();
-                clearInput();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        } catch (NumberFormatException e) {
-            Dialog.showError("Error", "Error", "Price Phải là số!");
-            return;
-        }
-
-    }
-
-    public void searchData() {
-        String search = searchField.getText();
-        if (search.isEmpty()) {
-            try {
-                fetchDataFromDatabase();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        } else {
-            try {
-                connect = database.connectDb();
-                String query = "SELECT * FROM rooms WHERE name LIKE '%" + search + "%'";
-                assert connect != null;
-                ResultSet resultSet = connect.createStatement().executeQuery(query);
-                roomList.clear();
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String name = resultSet.getString("name");
-                    String type = RoomType.values()[resultSet.getInt("type")].getText();
-                    String status = RoomStatus.values()[resultSet.getInt("status")].getText();
-                    double price = resultSet.getDouble("price");
-
-                    roomList.add(new Room(id, name, type, status, price));
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-    }
-
-    public void deleteData() {
-        Room room = tableView.getSelectionModel().getSelectedItem();
-        if (room == null) {
-            Dialog.showError("Error", "Error", "Chọn phòng cần xóa!");
-            return;
-        }
-        connect = database.connectDb();
-        String query = "DELETE FROM rooms WHERE id = " + room.getId();
-        try {
-            assert connect != null;
-            connect.createStatement().executeUpdate(query);
-            fetchDataFromDatabase();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        Dialog.showInformation("Information", "Information", "Xóa" + room.getName() + " thành công!");
-    }
 }

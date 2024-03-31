@@ -98,7 +98,7 @@
                                 </AnchorPane>
                                 <AnchorPane layoutX="240.0" layoutY="20.0" prefHeight="610.0" prefWidth="592.0" styleClass="bg-white" stylesheets="@../css/home.css">
                                     <children>
-                                        <Button fx:id="btnSearch" onAction="#searchData" layoutX="37.0" layoutY="22.0" mnemonicParsing="false" styleClass="btn" stylesheets="@../css/home.css" text="Search" />
+                                        <Button fx:id="btnSearch" layoutX="37.0" layoutY="22.0" mnemonicParsing="false" onAction="#searchData" styleClass="btn" stylesheets="@../css/home.css" text="Search" />
                                         <TextField fx:id="searchField" layoutX="108.0" layoutY="22.0" prefHeight="27.0" prefWidth="431.0" promptText="Search Room" styleClass="textField" stylesheets="@../css/home.css" />
                                         <TableView fx:id="tableView" layoutX="25.0" layoutY="62.0" prefHeight="477.0" prefWidth="540.0" stylesheets="@../css/home.css">
                                             <columns>
@@ -129,7 +129,7 @@
                                                 </TableColumn>
                                             </columns>
                                         </TableView>
-                                        <Button onAction="#deleteData" layoutX="352.0" layoutY="567.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="110.0" styleClass="btn" stylesheets="@../css/home.css" text="Delete" />
+                                        <Button layoutX="352.0" layoutY="567.0" mnemonicParsing="false" onAction="#deleteData" prefHeight="34.0" prefWidth="110.0" styleClass="btn" stylesheets="@../css/home.css" text="Delete" />
                                         <Button layoutX="100.0" layoutY="566.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="122.0" styleClass="btn" stylesheets="@../css/home.css" text="Fix Room" />
                                     </children>
                                 </AnchorPane>
