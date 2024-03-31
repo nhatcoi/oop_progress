@@ -54,6 +54,7 @@ public class EditRoomController {
             try {
                 assert connect != null;
                 connect.createStatement().executeUpdate(query);
+
                 fetchDataFromDatabase();
                 clearInput();
             } catch (SQLException throwables) {
