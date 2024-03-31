@@ -56,7 +56,6 @@ public class HomeController {
     private Button btnGuest;
     @FXML
     private Button btnUs;
-    private Connection connect;
     public static User user;
     public void initialize() throws SQLException {
         lbName.setText("Xin Chào, " + HomeController.user.getUsername() + "!");
