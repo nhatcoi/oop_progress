@@ -10,6 +10,8 @@ import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -278,6 +280,11 @@ public class AuthController implements Initializable {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
+
+    public void loginEnter(KeyEvent keyEvent) {
+        if(keyEvent.getCode() == KeyCode.ENTER)
+            login();
     }
 }
 
