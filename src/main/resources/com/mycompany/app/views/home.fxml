@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="paneHome" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.HomeController">
+<AnchorPane fx:id="paneHome" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.HomeController">
     <children>
         <BorderPane layoutX="-3.0" prefHeight="650.0" prefWidth="1107.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
             <opaqueInsets>
@@ -30,20 +21,44 @@
                             <graphic>
                                 <FontAwesomeIcon glyphName="SIGN_OUT" />
                             </graphic>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
                         </Button>
-                        <ImageView fitHeight="116.0" fitWidth="88.0" layoutX="87.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="69.0">
+                        <ImageView fitHeight="116.0" fitWidth="88.0" layoutX="87.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="69.0">
                             <image>
                                 <Image url="@../img/goku.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#control" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Control" />
-                        <Button fx:id="btnEdit" layoutY="343.0" mnemonicParsing="false" onAction="#edit" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Room" />
-                        <Button fx:id="btnStatus" layoutY="393.0" mnemonicParsing="false" onAction="#status" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Status" />
-                        <Button fx:id="btnGuest" layoutY="443.0" mnemonicParsing="false" onAction="#guests" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Guests" />
-                        <Button fx:id="btnUs" layoutX="83.0" layoutY="616.0" mnemonicParsing="false" onAction="#aboutUs" styleClass="nav-btn" stylesheets="@../css/home.css" text="About Us" />
-                  <Label fx:id="lbName" layoutX="87.0" layoutY="203.0" text="Label" textFill="WHITE" wrapText="true" />
-                  <Button fx:id="btnRoom" layoutY="243.0" mnemonicParsing="false" onAction="#edit" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Room" />
-                  <Button fx:id="btnEditStaff" layoutX="3.0" layoutY="493.0" mnemonicParsing="false" onAction="#guests" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Staff" />
+                        <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#control" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Control">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                        <Button fx:id="btnEdit" layoutY="343.0" mnemonicParsing="false" onAction="#edit" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Room">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                        <Button fx:id="btnStatus" layoutY="393.0" mnemonicParsing="false" onAction="#status" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Status">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                        <Button fx:id="btnGuest" layoutY="443.0" mnemonicParsing="false" onAction="#guests" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Guests">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                        <Button fx:id="btnUs" layoutX="83.0" layoutY="616.0" mnemonicParsing="false" onAction="#aboutUs" styleClass="nav-btn" stylesheets="@../css/home.css" text="About Us">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                        <Label fx:id="lbName" layoutX="87.0" layoutY="203.0" text="Label" textFill="WHITE" wrapText="true" />
+                        <Button fx:id="btnRoom" layoutY="243.0" mnemonicParsing="false" onAction="#edit" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Room">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                        <Button fx:id="btnEditStaff" layoutX="3.0" layoutY="493.0" mnemonicParsing="false" onAction="#guests" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Staff">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
                     </children>
                 </AnchorPane>
             </left>
@@ -82,6 +97,7 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
+
                         <fx:include source="homeDetails/editRoom.fxml"  fx:id="edit"/>
                         <AnchorPane fx:id="status" prefHeight="650.0" prefWidth="850.0" visible="false">
                             <children>

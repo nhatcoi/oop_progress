@@ -8,7 +8,9 @@ import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.Md5;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -22,47 +24,47 @@ import java.util.ResourceBundle;
 
 public class AuthController implements Initializable {
 
-    @javafx.fxml.FXML
+    @FXML
     private StackPane stack_form;
-    @javafx.fxml.FXML
+    @FXML
     private AnchorPane login_form;
-    @javafx.fxml.FXML
+    @FXML
     private TextField username;
-    @javafx.fxml.FXML
+    @FXML
     private PasswordField password;
-    @javafx.fxml.FXML
+    @FXML
     private Button loginBtn;
-    @javafx.fxml.FXML
+    @FXML
     private Hyperlink forgotPassword;
-    @javafx.fxml.FXML
+    @FXML
     private Hyperlink createAccount;
-    @javafx.fxml.FXML
+    @FXML
     private AnchorPane signup_form;
-    @javafx.fxml.FXML
+    @FXML
     private TextField signup_username;
-    @javafx.fxml.FXML
+    @FXML
     private TextField signup_email;
-    @javafx.fxml.FXML
+    @FXML
     private PasswordField signup_password;
-    @javafx.fxml.FXML
+    @FXML
     private PasswordField signup_password2;
-    @javafx.fxml.FXML
+    @FXML
     private Button signupBtn;
-    @javafx.fxml.FXML
+    @FXML
     private Hyperlink signup_forgot;
-    @javafx.fxml.FXML
+    @FXML
     private Hyperlink signup_login;
     // forgot
-    @javafx.fxml.FXML
+    @FXML
     private AnchorPane forgot_form;
-    @javafx.fxml.FXML
+    @FXML
     private TextField forgot_email;
-    @javafx.fxml.FXML
+    @FXML
     private Hyperlink forgot_login;
-    @javafx.fxml.FXML
+    @FXML
     private Hyperlink forgot_signup;
 
-    @javafx.fxml.FXML
+    @FXML
     private ComboBox comboBox;
 
 
@@ -75,8 +77,6 @@ public class AuthController implements Initializable {
     public void login() {
         connect = database.connectDb();
         try {
-
-
             // add user to list
             String userLog = username.getText();
             String passLog = password.getText();
@@ -241,7 +241,7 @@ public class AuthController implements Initializable {
 
 
 
-
+    // exit and minimize
     public void exit() {
         System.exit(0);
     }
@@ -252,34 +252,21 @@ public class AuthController implements Initializable {
 
     // switch form
     public void switchForm(ActionEvent event) {
-        if (event.getSource() == this.createAccount) {
-            this.login_form.setVisible(false);
-            this.forgot_form.setVisible(false);
+        this.login_form.setVisible(false);
+        this.signup_form.setVisible(false);
+        this.forgot_form.setVisible(false);
+
+        if (event.getSource() == this.createAccount || event.getSource() == this.signup_login || event.getSource() == this.forgot_signup) {
             this.signup_form.setVisible(true);
-        } else if (event.getSource() == this.forgotPassword) {
-            this.login_form.setVisible(false);
-            this.signup_form.setVisible(false);
+        } else if (event.getSource() == this.forgotPassword || event.getSource() == this.forgot_login || event.getSource() == this.signup_forgot) {
             this.forgot_form.setVisible(true);
-        } else if (event.getSource() == this.signup_login) {
-            this.signup_form.setVisible(false);
-            this.forgot_form.setVisible(false);
+        } else {
             this.login_form.setVisible(true);
-        } else if (event.getSource() == this.signup_forgot) {
-            this.signup_form.setVisible(false);
-            this.login_form.setVisible(false);
-            this.forgot_form.setVisible(true);
-        } else if (event.getSource() == this.forgot_login) {
-            this.forgot_form.setVisible(false);
-            this.signup_form.setVisible(false);
-            this.login_form.setVisible(true);
-        } else if (event.getSource() == this.forgot_signup) {
-            this.forgot_form.setVisible(false);
-            this.login_form.setVisible(false);
-            this.signup_form.setVisible(true);
         }
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 
     public void loginEnter(KeyEvent keyEvent) {
