@@ -92,19 +92,7 @@
                                 </ImageView>
                             </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="guests" prefHeight="650.0" prefWidth="850.0" visible="false">
-                            <children>
-                                <TreeTableView layoutX="29.0" layoutY="39.0" prefHeight="577.0" prefWidth="781.0">
-                                    <columns>
-                                        <TreeTableColumn prefWidth="75.0" text="C1" />
-                                        <TreeTableColumn prefWidth="227.55169677734375" text="Name" />
-                                        <TreeTableColumn minWidth="0.0" prefWidth="140.3828125" text="gender" />
-                                        <TreeTableColumn prefWidth="152.6170654296875" text="email" />
-                                        <TreeTableColumn prefWidth="143.0" text="phone" />
-                                    </columns>
-                                </TreeTableView>
-                            </children>
-                        </AnchorPane>
+                        <fx:include source="homeDetails/editGuest.fxml" fx:id="guests"/>
                     </children>
                 </AnchorPane>
             </center>

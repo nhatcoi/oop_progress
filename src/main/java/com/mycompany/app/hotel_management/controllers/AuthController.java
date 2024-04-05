@@ -98,10 +98,24 @@ public class AuthController implements Initializable {
                         int role = result.getInt("role");
                         HomeController.user = new User(id, userLog, role);
 
-
+                        System.out.println(UserRole.ADMIN.getValue());
                         Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
-                        ToolFXML.openFXML("views/home.fxml", 1100, 650);
-                        ToolFXML.closeFXML(stack_form);
+                        System.out.println(HomeController.user.getRole() == UserRole.GUEST.getValue());
+                        if(HomeController.user.getRole() == UserRole.GUEST.getValue()) {
+                            ToolFXML.openFXML("views/guest/guestForm.fxml");
+                            ToolFXML.closeFXML(stack_form);
+                            return;
+                        }
+                        else if (HomeController.user.getRole() == UserRole.STAFF.getValue()) {
+                            ToolFXML.openFXML("views/staff/staffForm.fxml");
+                            ToolFXML.closeFXML(stack_form);
+                            return;
+                        }
+                        else if (HomeController.user.getRole() == UserRole.ADMIN.getValue()) {
+                            ToolFXML.openFXML("views/admin/adminForm.fxml");
+                            ToolFXML.closeFXML(stack_form);
+                            return;
+                        }
 
                     } else {
                         Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");

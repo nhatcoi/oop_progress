@@ -57,19 +57,8 @@ public class HomeController {
     @FXML
     private Button btnUs;
     public static User user;
-    public void initialize() throws SQLException {
-        lbName.setText("Xin Chào, " + HomeController.user.getUsername() + "!");
-        if(HomeController.user.getRole() == UserRole.GUEST.getValue()) {
-            btnControl.setVisible(false);
-            btnEdit.setVisible(false);
-            btnStatus.setVisible(false);
-            btnGuest.setVisible(false);
-            btnUs.setVisible(false);
-            btnEditStaff.setVisible(false);
-            control.setVisible(false);
-        }else if(HomeController.user.getRole() == UserRole.STAFF.getValue()) {
-            btnEditStaff.setVisible(false);
-        }
+    public void initialize() {
+
     }
 
     @FXML
