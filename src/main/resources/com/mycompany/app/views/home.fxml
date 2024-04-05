@@ -17,33 +17,54 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane fx:id="paneHome" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.HomeController">
+<AnchorPane fx:id="paneHome" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mycompany.app.hotel_management.controllers.HomeController">
     <children>
-        <BorderPane layoutX="-3.0" prefHeight="650.0" prefWidth="1107.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
+        <BorderPane layoutX="-3.0" prefHeight="650.0" prefWidth="1107.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
             <opaqueInsets>
-                <Insets />
+                <Insets/>
             </opaqueInsets>
             <left>
-                <AnchorPane prefHeight="650.0" prefWidth="250.0" styleClass="nav-form" stylesheets="@../css/home.css" BorderPane.alignment="CENTER">
+                <AnchorPane prefHeight="650.0" prefWidth="250.0" styleClass="nav-form" stylesheets="@../css/home.css"
+                            BorderPane.alignment="CENTER">
                     <children>
-                        <Button fx:id="btnOut" layoutY="1.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="39.0" styleClass="nav-btn" stylesheets="@../css/home.css">
+                        <Button fx:id="btnOut" layoutY="1.0" mnemonicParsing="false" onAction="#signOut"
+                                prefHeight="25.0" prefWidth="39.0" styleClass="nav-btn" stylesheets="@../css/home.css">
                             <graphic>
-                                <FontAwesomeIcon glyphName="SIGN_OUT" />
+                                <FontAwesomeIcon glyphName="SIGN_OUT"/>
                             </graphic>
                         </Button>
-                        <ImageView fitHeight="116.0" fitWidth="88.0" layoutX="87.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="69.0">
+                        <ImageView fitHeight="116.0" fitWidth="88.0" layoutX="87.0" layoutY="69.0" pickOnBounds="true"
+                                   preserveRatio="true" styleClass="imageView" AnchorPane.leftAnchor="87.0"
+                                   AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="69.0">
                             <image>
-                                <Image url="@../img/goku.png" />
+                                <Image url="@../img/goku.png"/>
                             </image>
                         </ImageView>
-                        <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#control" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Control" />
-                        <Button fx:id="btnEdit" layoutY="343.0" mnemonicParsing="false" onAction="#edit" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Room" />
-                        <Button fx:id="btnStatus" layoutY="393.0" mnemonicParsing="false" onAction="#status" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Status" />
-                        <Button fx:id="btnGuest" layoutY="443.0" mnemonicParsing="false" onAction="#guests" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Guests" />
-                        <Button fx:id="btnUs" layoutX="83.0" layoutY="616.0" mnemonicParsing="false" onAction="#aboutUs" styleClass="nav-btn" stylesheets="@../css/home.css" text="About Us" />
-                  <Label fx:id="lbName" layoutX="87.0" layoutY="203.0" text="Label" textFill="WHITE" wrapText="true" />
-                  <Button fx:id="btnRoom" layoutY="243.0" mnemonicParsing="false" onAction="#edit" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Room" />
-                  <Button fx:id="btnEditStaff" layoutX="3.0" layoutY="493.0" mnemonicParsing="false" onAction="#guests" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Staff" />
+                        <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#control"
+                                prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css"
+                                text="Control"/>
+                        <Button fx:id="btnEdit" layoutY="343.0" mnemonicParsing="false" onAction="#edit"
+                                prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css"
+                                text="Edit Room"/>
+                        <Button fx:id="btnStatus" layoutY="393.0" mnemonicParsing="false" onAction="#status"
+                                prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css"
+                                text="Status"/>
+                        <Button fx:id="btnGuest" layoutY="443.0" mnemonicParsing="false" onAction="#guests"
+                                prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css"
+                                text="Guests"/>
+                        <Button fx:id="btnUs" layoutX="83.0" layoutY="616.0" mnemonicParsing="false" onAction="#aboutUs"
+                                styleClass="nav-btn" stylesheets="@../css/home.css" text="About Us"/>
+                        <Label fx:id="lbName" layoutX="87.0" layoutY="203.0" text="Label" textFill="WHITE"
+                               wrapText="true"/>
+                        <Button fx:id="btnRoom" layoutY="243.0" mnemonicParsing="false" onAction="#edit"
+                                prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css"
+                                text="Room"/>
+                        <Button fx:id="btnEditStaff" layoutX="3.0" layoutY="493.0" mnemonicParsing="false"
+                                onAction="#guests" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn"
+                                stylesheets="@../css/home.css" text="Edit Staff"/>
                     </children>
                 </AnchorPane>
             </left>
@@ -52,42 +73,57 @@
                     <children>
                         <AnchorPane fx:id="control" layoutX="-3.0" layoutY="-3.0" prefHeight="652.0" prefWidth="855.0">
                             <children>
-                                <AnchorPane layoutX="40.0" layoutY="23.0" prefHeight="220.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@../css/home.css" AnchorPane.leftAnchor="35.0">
+                                <AnchorPane layoutX="40.0" layoutY="23.0" prefHeight="220.0" prefWidth="790.0"
+                                            styleClass="bg-white" stylesheets="@../css/home.css"
+                                            AnchorPane.leftAnchor="35.0">
                                     <children>
-                                        <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card1" stylesheets="@../css/home.css">
+                                        <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0"
+                                                    styleClass="card1" stylesheets="@../css/home.css">
                                             <children>
-                                                <Label layoutX="82.0" layoutY="103.0" prefHeight="52.0" prefWidth="146.0" styleClass="font" stylesheets="@../css/home.css" text="AVAILABLE ROOM" />
+                                                <Label layoutX="82.0" layoutY="103.0" prefHeight="52.0"
+                                                       prefWidth="146.0" styleClass="font"
+                                                       stylesheets="@../css/home.css" text="AVAILABLE ROOM"/>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane layoutX="275.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card2" stylesheets="@../css/home.css">
+                                        <AnchorPane layoutX="275.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0"
+                                                    styleClass="card2" stylesheets="@../css/home.css">
                                             <children>
-                                                <Label layoutX="99.0" layoutY="111.0" prefHeight="41.0" prefWidth="135.0" styleClass="font" stylesheets="@../css/home.css" text="RENTED ROOM" />
+                                                <Label layoutX="99.0" layoutY="111.0" prefHeight="41.0"
+                                                       prefWidth="135.0" styleClass="font"
+                                                       stylesheets="@../css/home.css" text="RENTED ROOM"/>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane layoutX="535.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card3" stylesheets="@../css/home.css">
+                                        <AnchorPane layoutX="535.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0"
+                                                    styleClass="card3" stylesheets="@../css/home.css">
                                             <children>
-                                                <Label layoutX="90.0" layoutY="106.0" prefHeight="56.0" prefWidth="129.0" styleClass="font" stylesheets="@../css/home.css" text="TOTAL INCOME" />
+                                                <Label layoutX="90.0" layoutY="106.0" prefHeight="56.0"
+                                                       prefWidth="129.0" styleClass="font"
+                                                       stylesheets="@../css/home.css" text="TOTAL INCOME"/>
                                             </children>
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane layoutX="38.0" layoutY="265.0" prefHeight="366.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@../css/home.css" AnchorPane.leftAnchor="35.0">
+                                <AnchorPane layoutX="38.0" layoutY="265.0" prefHeight="366.0" prefWidth="790.0"
+                                            styleClass="bg-white" stylesheets="@../css/home.css"
+                                            AnchorPane.leftAnchor="35.0">
                                     <children>
-                                        <ImageView fitHeight="357.0" fitWidth="759.0" layoutX="16.0" layoutY="6.0" pickOnBounds="true">
+                                        <ImageView fitHeight="357.0" fitWidth="759.0" layoutX="16.0" layoutY="6.0"
+                                                   pickOnBounds="true">
                                             <image>
-                                                <Image url="@../img/hotelbg.jpeg" />
+                                                <Image url="@../img/hotelbg.jpeg"/>
                                             </image>
                                         </ImageView>
                                     </children>
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                        <fx:include source="homeDetails/editRoom.fxml"  fx:id="edit"/>
+                        <fx:include source="homeDetails/editRoom.fxml" fx:id="edit"/>
                         <AnchorPane fx:id="status" prefHeight="650.0" prefWidth="850.0" visible="false">
                             <children>
-                                <ImageView fitHeight="425.0" fitWidth="577.0" layoutX="455.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="425.0" fitWidth="577.0" layoutX="455.0" layoutY="74.0"
+                                           pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../img/backgr.png" />
+                                        <Image url="@../img/backgr.png"/>
                                     </image>
                                 </ImageView>
                             </children>

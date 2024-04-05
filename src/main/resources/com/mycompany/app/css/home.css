@@ -8,9 +8,9 @@
     -fx-border-width: .2px .2px .4px .2px;
 }
 
-.imageView {
-    -fx-clip: circle(100px);
-}
+/*.imageView {*/
+/*    -fx-clip: circle(100px);*/
+/*}*/
 
 .close {
     -fx-background-color: transparent;

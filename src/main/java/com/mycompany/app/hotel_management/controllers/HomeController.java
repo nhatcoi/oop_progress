@@ -36,6 +36,7 @@ public class HomeController {
     public Button btnEditStaff;
     public Button btnSearch;
     public TextField searchField;
+    public AnchorPane guestFormPane;
     @FXML
     private AnchorPane paneHome;
     @FXML

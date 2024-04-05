@@ -9,33 +9,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane fx:id="paneHome" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.HomeController">
+<AnchorPane prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.GuestController">
     <children>
-        <BorderPane layoutX="-3.0" prefHeight="650.0" prefWidth="1107.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
-            <opaqueInsets>
-                <Insets />
-            </opaqueInsets>
-            <left>
-                <AnchorPane prefHeight="650.0" prefWidth="250.0" styleClass="nav-form" stylesheets="@../../css/home.css" BorderPane.alignment="CENTER">
-                    <children>
-                        <Button fx:id="btnOut" layoutY="1.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="39.0" styleClass="nav-btn" stylesheets="@../../css/home.css">
-                            <graphic>
-                                <FontAwesomeIcon glyphName="SIGN_OUT" />
-                            </graphic>
-                        </Button>
-                        <ImageView fitHeight="116.0" fitWidth="88.0" layoutX="87.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="69.0">
-                            <image>
-                                <Image url="@../../img/goku.png" />
-                            </image>
-                        </ImageView>
-                        <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#control" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../../css/home.css" text="Thanh Toán" />
-                        <Button fx:id="btnEdit" layoutY="343.0" mnemonicParsing="false" onAction="#edit" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../../css/home.css" text="Chỉnh Sửa Thông Tin Cá Nhân" />
-                        <Button fx:id="btnUs" layoutX="83.0" layoutY="616.0" mnemonicParsing="false" onAction="#aboutUs" styleClass="nav-btn" stylesheets="@../../css/home.css" text="About Us" />
-                        <Label fx:id="lbName" layoutX="87.0" layoutY="203.0" text="Label" textFill="WHITE" wrapText="true" />
-                        <Button fx:id="btnRoom" layoutY="243.0" mnemonicParsing="false" onAction="#edit" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../../css/home.css" text="Tìm Phòng" />
-                    </children>
-                </AnchorPane>
-            </left>
-        </BorderPane>
+        <!--                        <Button fx:id="btnOut" layoutY="1.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="39.0" styleClass="nav-btn" stylesheets="@../../css/home.css">-->
+        <!--                            <graphic>-->
+        <!--                                <FontAwesomeIcon glyphName="SIGN_OUT" />-->
+        <!--                            </graphic>-->
+        <!--                        </Button>-->
+        <ImageView fitHeight="116.0" fitWidth="88.0" layoutX="87.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="69.0">
+            <image>
+                <Image url="@../../img/goku.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#payment" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../../css/home.css" text="Thanh Toán" />
+        <Button fx:id="btnEdit" layoutY="343.0" mnemonicParsing="false" onAction="#edit" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../../css/home.css" text="Chỉnh Sửa Thông Tin Cá Nhân" />
+        <!--                        <Button fx:id="btnUs" layoutX="83.0" layoutY="616.0" mnemonicParsing="false" onAction="#aboutUs" styleClass="nav-btn" stylesheets="@../../css/home.css" text="About Us" />-->
+        <Label fx:id="lbName" layoutX="87.0" layoutY="203.0" text="Label" textFill="WHITE" wrapText="true" />
+        <Button fx:id="btnRoom" layoutY="243.0" mnemonicParsing="false" onAction="#room" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../../css/home.css" text="Tìm Phòng" />
     </children>
 </AnchorPane>
