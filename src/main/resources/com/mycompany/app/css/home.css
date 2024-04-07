@@ -170,3 +170,13 @@
 /*    -fx-background-color: #ffb680;*/
 /*}*/
 
+.transparent-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white; /* Màu chữ */
+    -fx-border-color: #ccc; /* Màu đường viền */
+    -fx-border-width: 1px; /* Độ dày của đường viền */
+    -fx-padding: 10px 20px; /* Khoảng cách giữa văn bản và biên nút */
+    -fx-font-size: 16px; /* Kích thước chữ */
+    -fx-cursor: hand; /* Con trỏ chuột */
+}
+
