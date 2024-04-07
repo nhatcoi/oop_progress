@@ -1,11 +1,9 @@
 package com.mycompany.app;
 
-import com.mycompany.app.hotel_management.controllers.AuthController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 

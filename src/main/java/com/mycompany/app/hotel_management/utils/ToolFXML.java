@@ -37,6 +37,12 @@ public class ToolFXML {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.show();
     }
+    public static void openFXML(String open) throws IOException {
+        Parent root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource(open))));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
     public static void closeFXML(AnchorPane form_close) {
         Stage stage = (Stage) form_close.getScene().getWindow();

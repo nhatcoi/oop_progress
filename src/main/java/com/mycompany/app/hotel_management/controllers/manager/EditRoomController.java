@@ -1,4 +1,4 @@
-package com.mycompany.app.hotel_management.controllers;
+package com.mycompany.app.hotel_management.controllers.manager;
 
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
@@ -35,17 +35,19 @@ public class EditRoomController {
     private Connection connect;
     private final ObservableList<Room> roomList = FXCollections.observableArrayList();
     public void initialize() throws SQLException {
+        // Add data to combobox
         for (RoomType value : RoomType.values()) {
             cbTypeRoom.getItems().add(value.getText());
         }
-
         if (!cbTypeRoom.getItems().isEmpty()) {
             cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
         }
+
+        // Add data to tableview
         tableView.setItems(roomList);
         fetchDataFromDatabase();
 
-
+        // Click to show data
         tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -80,7 +82,6 @@ public class EditRoomController {
     public void clearInput() {
         rnameField.clear();
         rpriceField.clear();
-
     }
 
     public void addData() {
@@ -216,7 +217,7 @@ public class EditRoomController {
         }
     }
 
-    public void changeRoom() {
+    public void changeData() {
         Room currRoom = tableView.getSelectionModel().getSelectedItem();
         Image currImg = imgView.getImage();
         if (currRoom == null) {

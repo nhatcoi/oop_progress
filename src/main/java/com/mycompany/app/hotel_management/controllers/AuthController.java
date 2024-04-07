@@ -10,7 +10,6 @@ import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -25,7 +24,7 @@ import java.util.ResourceBundle;
 public class AuthController implements Initializable {
 
     @FXML
-    private StackPane stack_form;
+    private StackPane authForm;
     @FXML
     private AnchorPane login_form;
     @FXML
@@ -96,12 +95,26 @@ public class AuthController implements Initializable {
 
                         int id = result.getInt("id");
                         int role = result.getInt("role");
-                        HomeController.user = new User(id, userLog, role);
-
+                        ManagerController.user = new User(id, userLog, role);
 
                         Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
-                        ToolFXML.openFXML("views/home.fxml", 1100, 650);
-                        ToolFXML.closeFXML(stack_form);
+                        if(ManagerController.user.getRole() == UserRole.GUEST.getValue()) {
+                            ToolFXML.openFXML("views/guestForm.fxml");
+                            ToolFXML.closeFXML(authForm);
+                            return;
+                        }
+                        else if (ManagerController.user.getRole() == UserRole.STAFF.getValue()) {
+                            ToolFXML.openFXML("views/manager.fxml");
+                            ToolFXML.closeFXML(authForm);
+                            return;
+                        }
+                        else if (ManagerController.user.getRole() == UserRole.ADMIN.getValue()) {
+                            ToolFXML.openFXML("views/manager.fxml");
+                            ToolFXML.closeFXML(authForm);
+                            return;
+                        }
+//                        ToolFXML.openFXML("views/manager.fxml");
+//                        ToolFXML.closeFXML(stack_form);
 
                     } else {
                         Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
@@ -122,7 +135,7 @@ public class AuthController implements Initializable {
 //                        if (user.getUsername().equals(userLog) || user.getEmail().equals(userLog)) {
 //                            if (user.getPassword().equals(passLog)) {
 //                                Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
-//                                ToolFXML.openFXML("home.fxml", 1100, 650);
+//                                ToolFXML.openFXML("manager.fxml", 1100, 650);
 //                                ToolFXML.closeFXML(stack_form);
 //                                break;
 //                            }
@@ -146,8 +159,8 @@ public class AuthController implements Initializable {
 //
 //                            Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
 //
-//                            // Open home.fxml
-//                            ToolFXML.openFXML("home.fxml", 1100, 650);
+//                            // Open manager.fxml
+//                            ToolFXML.openFXML("manager.fxml", 1100, 650);
 //
 //                            // close login form
 //                            ToolFXML.closeFXML(stack_form);
@@ -246,7 +259,7 @@ public class AuthController implements Initializable {
         System.exit(0);
     }
     public void minimize() {
-        Stage stage = (Stage) stack_form.getScene().getWindow();
+        Stage stage = (Stage) authForm.getScene().getWindow();
         stage.setIconified(true);
     }
 

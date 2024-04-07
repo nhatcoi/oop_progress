@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane prefHeight="650.0" prefWidth="250.0" styleClass="nav-form" stylesheets="@../css/home.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.NavigateBarController">
+    <children>
+        <Button fx:id="btnOut" layoutY="1.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="39.0" styleClass="nav-btn" stylesheets="@../css/home.css">
+            <graphic>
+                <FontAwesomeIcon glyphName="SIGN_OUT" />
+            </graphic>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+        <ImageView fitHeight="116.0" fitWidth="88.0" layoutX="87.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="69.0">
+            <image>
+                <Image url="@../img/goku.png" />
+            </image>
+        </ImageView>
+
+        <Label fx:id="lbName" layoutX="87.0" layoutY="203.0" text="Label" textFill="WHITE" wrapText="true" />
+        <Button fx:id="btnRoom" layoutY="243.0" mnemonicParsing="false" onAction="#showRoom" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Room" />
+        <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#control" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Control" />
+        <Button fx:id="btnManageRoom" layoutY="343.0" mnemonicParsing="false" onAction="#manageRoom" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Room" />
+        <Button fx:id="btnGuest" layoutX="2.0" layoutY="393.0" mnemonicParsing="false" onAction="#manageGuest" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Guests" />
+        <Button fx:id="btnEditStaff" layoutX="2.0" layoutY="443.0" mnemonicParsing="false" onAction="#manageStaff" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Staff" />
+        <Button fx:id="btnUs" layoutX="83.0" layoutY="616.0" mnemonicParsing="false" onAction="#aboutUs" styleClass="nav-btn" stylesheets="@../css/home.css" text="About Us" />
+
+    </children>
+</AnchorPane>

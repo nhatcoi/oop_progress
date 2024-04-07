@@ -9,11 +9,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-
-public class User {
+public class Guest {
     private int Id;
-    private String username;
-    private int role;
+    private String name;
+    private String phone;
+    private String address;
+
+
+
 
 }
-
