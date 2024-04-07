@@ -1,4 +1,4 @@
-package com.mycompany.app.hotel_management.controllers;
+package com.mycompany.app.hotel_management.controllers.manager;
 
 
 import com.mycompany.app.hotel_management.controllers.ManagerController;
@@ -43,40 +43,40 @@ public class NavigateBarController extends ManagerController {
     @FXML
     private Button btnRoom;
 
-    ManagerController mc;
-
-    public void initialize() {
-        show(control);
-    }
-
-
-    @FXML
-    void signOut() throws IOException {
-        ToolFXML.openFXML("views/authForm.fxml", 600, 400);
-        ToolFXML.closeFXML(mc.paneHome);
-    }
-
-    @FXML
-    void showRoom(ActionEvent actionEvent) {
-    }
-    @FXML
-    void control(ActionEvent event) {
-        show(mc.control);
-    }
-
-    @FXML
-    void manageRoom(ActionEvent event) {
-        show(mc.edit);
-    }
-
-    @FXML
-    void manageGuest(ActionEvent event) {
-        show(mc.guests);
-    }
-    @FXML
-    void manageStaff(ActionEvent actionEvent) {
-        show(mc.staff);
-    }
+//    ManagerController mc;
+//
+//    public void initialize() {
+//        show(control);
+//    }
+//
+//
+//    @FXML
+//    void signOut() throws IOException {
+//        ToolFXML.openFXML("views/authForm.fxml", 600, 400);
+//        ToolFXML.closeFXML(mc.paneHome);
+//    }
+//
+//    @FXML
+//    void showRoom(ActionEvent actionEvent) {
+//    }
+//    @FXML
+//    void control(ActionEvent event) {
+//        show(mc.control);
+//    }
+//
+//    @FXML
+//    void manageRoom(ActionEvent event) {
+//        show(mc.edit);
+//    }
+//
+//    @FXML
+//    void manageGuest(ActionEvent event) {
+//        show(mc.guests);
+//    }
+//    @FXML
+//    void manageStaff(ActionEvent actionEvent) {
+//        show(mc.staff);
+//    }
 
 
 //    @FXML

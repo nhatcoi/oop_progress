@@ -26,7 +26,7 @@ public class ManagerController {
 //    public AnchorPane navigateBar;
     public AnchorPane paneHome;
     public AnchorPane showRoomDetails;
-    public AnchorPane control;
+    public AnchorPane overview;
     public AnchorPane edit;
     public AnchorPane staff;
     public AnchorPane guests;
@@ -56,7 +56,7 @@ public class ManagerController {
             // phân quyền // cả font and back
             btnEditStaff.setVisible(user.getRole() == UserRole.ADMIN.getValue());
         }
-        show(control);
+        show(overview);
     }
 
     @FXML
@@ -70,8 +70,8 @@ public class ManagerController {
         show(showRoomDetails);
     }
     @FXML
-    void control(ActionEvent event) {
-        show(control);
+    void overview(ActionEvent event) {
+        show(overview);
     }
 
     @FXML
@@ -108,7 +108,7 @@ public class ManagerController {
 
     // Pane of each function
     void show(AnchorPane paneToShow) {
-        List<AnchorPane> allPanes = Arrays.asList(control, edit, guests, staff, showRoomDetails);
+        List<AnchorPane> allPanes = Arrays.asList(overview, edit, guests, staff, showRoomDetails);
         for (AnchorPane pane : allPanes) {
             if (pane != paneToShow) {
                 pane.setVisible(false);

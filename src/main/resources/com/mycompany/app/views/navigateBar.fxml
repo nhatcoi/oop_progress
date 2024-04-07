@@ -11,7 +11,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 
-<AnchorPane prefHeight="650.0" prefWidth="250.0" styleClass="nav-form" stylesheets="@../css/home.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.NavigateBarController">
+<AnchorPane prefHeight="650.0" prefWidth="250.0" styleClass="nav-form" stylesheets="@../css/home.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.NavigateBarController">
     <children>
         <Button fx:id="btnOut" layoutY="1.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="39.0" styleClass="nav-btn" stylesheets="@../css/home.css">
             <graphic>

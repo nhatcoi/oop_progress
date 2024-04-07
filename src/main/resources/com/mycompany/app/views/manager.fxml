@@ -37,7 +37,7 @@
 
                            <Label fx:id="lbName" layoutX="87.0" layoutY="203.0" text="Label" textFill="WHITE" wrapText="true" />
                            <Button fx:id="btnRoom" layoutY="243.0" mnemonicParsing="false" onAction="#showRoom" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Room" />
-                           <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#control" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Control" />
+                           <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#overview" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Overview" />
                            <Button fx:id="btnManageRoom" layoutY="343.0" mnemonicParsing="false" onAction="#manageRoom" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Room" />
                            <Button fx:id="btnGuest" layoutX="2.0" layoutY="393.0" mnemonicParsing="false" onAction="#manageGuest" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Guests" />
                            <Button fx:id="btnEditStaff" layoutX="2.0" layoutY="443.0" mnemonicParsing="false" onAction="#manageStaff" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Staff" />
@@ -94,69 +94,8 @@
                      </children>
                   </AnchorPane>
 
-<!--                    'control overall' function of manager -->
-                        <AnchorPane fx:id="control" layoutX="-3.0" layoutY="-3.0" prefHeight="652.0" prefWidth="855.0" visible="false">
-                            <children>
-                                <AnchorPane layoutX="40.0" layoutY="23.0" prefHeight="220.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@../css/home.css" AnchorPane.leftAnchor="35.0">
-                                    <children>
-                                        <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card1" stylesheets="@../css/home.css">
-                                            <children>
-                                                <Label layoutX="82.0" layoutY="103.0" prefHeight="52.0" prefWidth="146.0" styleClass="font" stylesheets="@../css/home.css" text="AVAILABLE ROOM" />
-                                    <FontAwesomeIcon fill="WHITE" glyphName="CHECK" layoutX="32.0" layoutY="101.0" size="5em" />
-                                    <Label contentDisplay="RIGHT" layoutX="190.0" layoutY="50.0" text="0" textFill="WHITE">
-                                       <font>
-                                          <Font size="30.0" />
-                                       </font>
-                                    </Label>
-                                            </children>
-                                        </AnchorPane>
-                                        <AnchorPane layoutX="275.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card2" stylesheets="@../css/home.css">
-                                            <children>
-                                                <Label layoutX="99.0" layoutY="111.0" prefHeight="41.0" prefWidth="135.0" styleClass="font" stylesheets="@../css/home.css" text="RENTED ROOM" />
-                                    <FontAwesomeIcon fill="WHITE" glyphName="CART_ARROW_DOWN" layoutX="35.0" layoutY="101.0" size="5em" />
-                                    <Label contentDisplay="RIGHT" layoutX="190.0" layoutY="50.0" text="0" textFill="WHITE">
-                                       <font>
-                                          <Font size="30.0" />
-                                       </font>
-                                    </Label>
-                                            </children>
-                                        </AnchorPane>
-                                        <AnchorPane layoutX="535.0" layoutY="15.0" prefHeight="190.0" prefWidth="240.0" styleClass="card3" stylesheets="@../css/home.css">
-                                            <children>
-                                                <Label layoutX="90.0" layoutY="106.0" prefHeight="56.0" prefWidth="129.0" styleClass="font" stylesheets="@../css/home.css" text="TOTAL INCOME" />
-                                    <FontAwesomeIcon fill="WHITE" glyphName="DOLLAR" layoutX="43.0" layoutY="108.0" size="5em" text="" />
-                                    <Label contentDisplay="RIGHT" layoutX="190.0" layoutY="50.0" text="0" textFill="WHITE">
-                                       <font>
-                                          <Font size="30.0" />
-                                       </font>
-                                    </Label>
-                                            </children>
-                                        </AnchorPane>
-                                    </children>
-                                </AnchorPane>
-                                <!--                                <fx:include source="managerDetails/slideHotel.fxml" />-->
-                                <AnchorPane fx:id="slidePane" layoutX="38.0" layoutY="265.0" prefHeight="366.0" prefWidth="790.0" styleClass="bg-white" stylesheets="@../css/home.css" AnchorPane.leftAnchor="35.0">
-                                    <children>
-                                        <ImageView fx:id="image1" fitHeight="355.0" fitWidth="760.0" layoutX="16.0" layoutY="6.0" pickOnBounds="true">
-                                            <image>
-                                                <Image url="@../img/hotelbg.jpeg" />
-                                            </image>
-                                        </ImageView>
-<!--                                        <ImageView fx:id="image2" fitHeight="355.0" fitWidth="760.0" layoutX="16.0" layoutY="6.0" pickOnBounds="true">-->
-<!--                                            <image>-->
-<!--                                                <Image url="@../img/hotel2.jpeg" />-->
-<!--                                            </image>-->
-<!--                                        </ImageView>-->
-<!--                                        <ImageView fx:id="image3" fitHeight="355.0" fitWidth="760.0" focusTraversable="true" layoutX="16.0" layoutY="6.0" pickOnBounds="true">-->
-<!--                                            <image>-->
-<!--                                                <Image url="@../img/hotel3.jpeg" />-->
-<!--                                            </image>-->
-<!--                                        </ImageView>-->
-                                    </children>
-                                </AnchorPane>
-
-                            </children>
-                        </AnchorPane>
+<!--                    'overview' function of manager -->
+                        <fx:include fx:id="overview" source="managerDetails/overview.fxml" />
 
 <!--                    'edit room' function of admin and staff -->
                         <fx:include fx:id="edit" source="managerDetails/editRoom.fxml" />
