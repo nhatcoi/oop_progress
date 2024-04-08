@@ -11,8 +11,9 @@ import lombok.Setter;
 @Setter
 public class Guest {
     private int Id;
+    private String username;
     private String name;
     private String phone;
     private String address;
-
+    private int user_id;
 }

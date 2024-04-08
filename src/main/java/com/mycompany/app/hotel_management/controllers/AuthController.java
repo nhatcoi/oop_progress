@@ -68,7 +68,8 @@ public class AuthController implements Initializable {
 
     @FXML
     private ComboBox comboBox;
-    @FXML ProgressIndicator progress;
+    @FXML
+    ProgressIndicator progress;
 
     // db tools
     private Connection connect;
@@ -76,7 +77,7 @@ public class AuthController implements Initializable {
     private Statement statement;
     private ResultSet result;
 
-    public void login(){
+    public void login() {
 
         connect = database.connectDb();
         try {
@@ -86,97 +87,32 @@ public class AuthController implements Initializable {
 
             if (userLog.isEmpty() || passLog.isEmpty()) {
                 Dialog.showError("Đừng để trống", null, "Vui lòng nhập tên đăng nhập và mật khẩu");
-            }
-            else {
+            } else {
 
-                    passLog = Md5.hashString(passLog);
-                    String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-                    prepare = connect.prepareStatement(sql);
-                    prepare.setString(1, userLog);
-                    prepare.setString(2, passLog);
-                    result = prepare.executeQuery();
-                    if (result.next()) {
+                passLog = Md5.hashString(passLog);
+                String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+                prepare = connect.prepareStatement(sql);
+                prepare.setString(1, userLog);
+                prepare.setString(2, passLog);
+                result = prepare.executeQuery();
+                if (result.next()) {
 
-                        int id = result.getInt("id");
-                        int role = result.getInt("role");
-                        ManagerController.user = new User(id, userLog, role);
+                    int id = result.getInt("id");
+                    int role = result.getInt("role");
+                    ManagerController.user = new User(id, userLog, role);
 
-                        Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
-
-                        // progress Indicator intermediate
-                        if(ManagerController.user.getRole() == UserRole.GUEST.getValue()) {
-                            ToolFXML.openFXML("views/guestForm.fxml");
-                            ToolFXML.closeFXML(authForm);
-                            return;
-                        }
-                        else if (ManagerController.user.getRole() == UserRole.STAFF.getValue()) {
-                            ToolFXML.openFXML("views/manager.fxml");
-                            ToolFXML.closeFXML(authForm);
-                            return;
-                        }
-                        else if (ManagerController.user.getRole() == UserRole.ADMIN.getValue()) {
-                            ToolFXML.openFXML("views/manager.fxml");
-                            ToolFXML.closeFXML(authForm);
-                            return;
-                        }
-//                        ToolFXML.openFXML("views/manager.fxml");
-//                        ToolFXML.closeFXML(stack_form);
-
-                    } else {
-                        Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
+                    Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
+                    if (ManagerController.user.getRole() == UserRole.GUEST.getValue()) {
+                        ToolFXML.openFXML("views/guestForm.fxml");
+                    } else if (ManagerController.user.getRole() == UserRole.STAFF.getValue()) {
+                        ToolFXML.openFXML("views/manager.fxml");
+                    } else if (ManagerController.user.getRole() == UserRole.ADMIN.getValue()) {
+                        ToolFXML.openFXML("views/manager.fxml");
                     }
-//                if(comboBox.getValue() == null || comboBox.getValue().equals("Guest")) {
-//                    //TODO login guest
-//                }
-//                if (comboBox.getValue().equals("Manager")) {
-//                    while (result.next()) {
-//                        User staff = new User();
-//                        staff.setUsername(result.getString("username"));
-//                        staff.setEmail(result.getString("email"));
-//                        staff.setPassword(result.getString("password"));
-//                        users.add(staff);
-//                    }
-//
-//                    for(User user : users) {
-//                        if (user.getUsername().equals(userLog) || user.getEmail().equals(userLog)) {
-//                            if (user.getPassword().equals(passLog)) {
-//                                Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
-//                                ToolFXML.openFXML("manager.fxml", 1100, 650);
-//                                ToolFXML.closeFXML(stack_form);
-//                                break;
-//                            }
-//                        } else {
-//                            Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
-//                        }
-//                    }
-//                }
-
-//                // check if username and password exist
-//                boolean loggedIn = false;
-//                for (User user : users) {
-//                    if (user.getUsername().equals(userLog) || user.getEmail().equals(userLog)) {
-//                        if (user.getPassword().equals(passLog)) {
-//
-//                            // check comBox not true
-//                            if ((comboBox.getValue() == null || comboBox.getValue().equals("Guest"))) {
-//                                Dialog.showError("Chọn quyền", null, "Sai quyền truy cập");
-//                                return;
-//                            }
-//
-//                            Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
-//
-//                            // Open manager.fxml
-//                            ToolFXML.openFXML("manager.fxml", 1100, 650);
-//
-//                            // close login form
-//                            ToolFXML.closeFXML(stack_form);
-//
-//                            loggedIn = true;
-//                            break;
-//                        }
-//                    }
-//                }
-//                if (!loggedIn) Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
+                    ToolFXML.closeFXML(authForm);
+                } else {
+                    Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -258,12 +194,11 @@ public class AuthController implements Initializable {
     }
 
 
-
-
     // exit and minimize
     public void exit() {
         System.exit(0);
     }
+
     public void minimize() {
         Stage stage = (Stage) authForm.getScene().getWindow();
         stage.setIconified(true);
@@ -289,7 +224,7 @@ public class AuthController implements Initializable {
     }
 
     public void loginEnter(KeyEvent keyEvent) {
-        if(keyEvent.getCode() == KeyCode.ENTER)
+        if (keyEvent.getCode() == KeyCode.ENTER)
             login();
     }
 }

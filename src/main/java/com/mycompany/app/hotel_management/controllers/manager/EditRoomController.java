@@ -136,10 +136,10 @@ public class EditRoomController extends OverviewController{
         }
     }
 
-    public void searchData() {
+    public void searchData() throws SQLException {
         String search = searchField.getText();
         if (search.isEmpty()) {
-            //                fetchDataFromDatabase();
+            fetchDataFromDatabase();
         } else {
             try {
                 connect = database.connectDb();
@@ -179,23 +179,23 @@ public class EditRoomController extends OverviewController{
         Dialog.showInformation("Information", "Information", "Xóa" + room.getName() + " thành công!");
     }
 
-//    private void fetchDataFromDatabase() throws SQLException {
-//
-//        connect = database.connectDb();
-//        String query = "SELECT * FROM rooms";
-//        assert connect != null;
-//        ResultSet resultSet = connect.createStatement().executeQuery(query);
-//        roomList.clear();
-//        while (resultSet.next()) {
-//            int id = resultSet.getInt("id");
-//            String name = resultSet.getString("name");
-//            String type = RoomType.values()[resultSet.getInt("type")].getText();
-//            String status = RoomStatus.values()[resultSet.getInt("status")].getText();
-//            double price = resultSet.getDouble("price");
-//
-//            roomList.add(new Room(id, name, type, status, price));
-//        }
-//    }
+    private void fetchDataFromDatabase() throws SQLException {
+
+        connect = database.connectDb();
+        String query = "SELECT * FROM rooms";
+        assert connect != null;
+        ResultSet resultSet = connect.createStatement().executeQuery(query);
+        roomList.clear();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String name = resultSet.getString("name");
+            String type = RoomType.values()[resultSet.getInt("type")].getText();
+            String status = RoomStatus.values()[resultSet.getInt("status")].getText();
+            double price = resultSet.getDouble("price");
+
+            roomList.add(new Room(id, name, type, status, price));
+        }
+    }
 
 
     public void openSelectFile() {

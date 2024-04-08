@@ -4,6 +4,7 @@ import com.mycompany.app.hotel_management.entities.Guest;
 import com.mycompany.app.hotel_management.repositories.database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
@@ -52,5 +53,31 @@ public class EditGuestController {
                 }
             }
         });
+
+        fetchData();
+    }
+
+    public void fetchData(){
+        try {
+            connect = database.connectDb();
+            ResultSet rs = connect.createStatement().executeQuery("SELECT guests.*,users.username FROM guests LEFT JOIN users ON users.id = guests.user_id");
+            while (rs.next()) {
+                guestsList.add(new Guest(rs.getInt("id"),rs.getString("username"), rs.getString("name"), rs.getString("phone"), rs.getString("address"),rs.getInt("user_id")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void RemoveData(ActionEvent actionEvent) {
+        Guest guest = tableViewUser.getSelectionModel().getSelectedItem();
+        if(guest != null) {
+            try {
+                connect.createStatement().executeUpdate("DELETE FROM guests WHERE id = " + guest.getId());
+                guestsList.remove(guest);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
