@@ -7,6 +7,7 @@ import com.mycompany.app.hotel_management.repositories.database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.Md5;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +17,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -65,7 +68,7 @@ public class AuthController implements Initializable {
 
     @FXML
     private ComboBox comboBox;
-
+    @FXML ProgressIndicator progress;
 
     // db tools
     private Connection connect;
@@ -73,7 +76,8 @@ public class AuthController implements Initializable {
     private Statement statement;
     private ResultSet result;
 
-    public void login() {
+    public void login(){
+
         connect = database.connectDb();
         try {
             // add user to list
@@ -98,6 +102,8 @@ public class AuthController implements Initializable {
                         ManagerController.user = new User(id, userLog, role);
 
                         Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
+
+                        // progress Indicator intermediate
                         if(ManagerController.user.getRole() == UserRole.GUEST.getValue()) {
                             ToolFXML.openFXML("views/guestForm.fxml");
                             ToolFXML.closeFXML(authForm);
