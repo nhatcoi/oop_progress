@@ -36,10 +36,8 @@ public class EditGuestController {
         // code display username of staff from db
 
 
-
         // add display data to the table
         tableViewUser.setItems(guestsList);
-        fetchDataFromDatabase();
 
 
         // Set up the columns in the table
@@ -51,28 +49,8 @@ public class EditGuestController {
                     tfName.setText(guest.getName());
                     tfPhoneNumber.setText(guest.getPhone());
                     tfAddress.setText(guest.getAddress());
-
                 }
             }
         });
-    }
-
-
-
-    private void fetchDataFromDatabase() throws SQLException {
-
-        connect = database.connectDb();
-        String query = "SELECT * FROM guests";
-        assert connect != null;
-        ResultSet resultSet = connect.createStatement().executeQuery(query);
-        guestsList.clear();
-        while (resultSet.next()) {
-            int id = resultSet.getInt("Id");
-            String name = resultSet.getString("name");
-            String phone = resultSet.getString("phone");
-            String address = resultSet.getString("address");
-
-            guestsList.add(new Guest(id, name, phone, address));
-        }
     }
 }

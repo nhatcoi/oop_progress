@@ -13,7 +13,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,11 +20,6 @@ public class RoomServiceImpl implements RoomService {
     Connection connect;
     @Override
     public ObservableList<Room> getAllRoom() throws SQLException {
-//        List<User> users = userRepository.findAll();
-//        if (users.isEmpty()) {
-//            System.out.println("Danh sách trống!");
-//        }
-//        return users;
 
         ObservableList<Room> roomList = FXCollections.observableArrayList();
 
@@ -49,10 +43,10 @@ public class RoomServiceImpl implements RoomService {
     // get Image from database
     @Override
     public ObservableList<Image> getImage() throws SQLException {
-            // Lấy danh sách các phòng có ảnh
-            // java stream api
-            ObservableList<Room> roomList = getAllRoom();
-            ObservableList<Image> images = FXCollections.observableArrayList();
+        // Lấy danh sách các phòng có ảnh
+        // java stream api
+        ObservableList<Room> roomList = getAllRoom();
+        ObservableList<Image> images = FXCollections.observableArrayList();
         List<Integer> roomIds = roomList.stream().map(Room::getId).collect(Collectors.toList());
 
         try {
@@ -80,4 +74,6 @@ public class RoomServiceImpl implements RoomService {
         }
         return images;
     }
+
+
 }

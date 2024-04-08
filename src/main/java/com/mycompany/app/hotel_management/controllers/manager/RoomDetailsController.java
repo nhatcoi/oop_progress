@@ -36,43 +36,22 @@ public class RoomDetailsController extends OverviewController {
     private AnchorPane showRoomDetails;
 
     RoomServiceImpl roomService = new RoomServiceImpl();
-    ObservableList<Room> roomList;
-    ObservableList<Image> images;
-    public void initialize() throws SQLException {
-        this.roomList = roomService.getAllRoom();
-        this.images = roomService.getImage();
-
-        lbName.setText("Template");
-        lbType.setText("Template");
-        lbPrice.setText("Template");
-        lbStatus.setText("Template");
-    }
 
 
     public int currentImageIndex = 0;
     @FXML
     void switchRight(ActionEvent event) {
-        if (!images.isEmpty()) {
-            currentImageIndex = (currentImageIndex + 1) % images.size();
-            imageRoom.setImage(images.get(currentImageIndex));
-
-            lbName.setText(roomList.get(currentImageIndex).getName());
-            lbType.setText(roomList.get(currentImageIndex).getType());
-            lbPrice.setText(String.valueOf(roomList.get(currentImageIndex).getPrice()));
-            lbStatus.setText(roomList.get(currentImageIndex).getStatus());
-
-
-//            currentImageIndex++;
-//            if(currentImageIndex == images.size()) {
-//                currentImageIndex = 0;
-//            }
-        }
+        switchImage(1);
     }
 
     @FXML
     void switchLeft(ActionEvent event) {
-        if (!images.isEmpty()) {
-            currentImageIndex = (currentImageIndex - 1 + images.size()) % images.size();
+        switchImage(-1);
+    }
+
+    void switchImage(int i) {
+        if (!roomList.isEmpty()) {
+            currentImageIndex = (currentImageIndex - i + images.size()) % images.size();
 
             imageRoom.setImage(images.get(currentImageIndex));
 
@@ -85,6 +64,13 @@ public class RoomDetailsController extends OverviewController {
 //            currentImageIndex--;
 //            if(currentImageIndex == 0) {
 //                currentImageIndex = images.size()-1;
+        } else {
+            imageRoom.setImage(new Image("img/goku.png"));
+
+            lbName.setText(roomList.get(currentImageIndex).getName());
+            lbType.setText(roomList.get(currentImageIndex).getType());
+            lbPrice.setText(String.valueOf(roomList.get(currentImageIndex).getPrice()));
+            lbStatus.setText(roomList.get(currentImageIndex).getStatus());
         }
     }
 }

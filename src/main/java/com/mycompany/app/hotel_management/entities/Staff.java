@@ -9,10 +9,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Guest {
+public class Staff {
     private int Id;
     private String name;
-    private String phone;
     private String address;
-
+    private String phone;
 }

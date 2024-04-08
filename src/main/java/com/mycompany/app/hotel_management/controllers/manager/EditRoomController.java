@@ -23,7 +23,9 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.sql.*;
 
-public class EditRoomController {
+import static com.mycompany.app.hotel_management.controllers.manager.OverviewController.roomList;
+
+public class EditRoomController extends OverviewController{
     public Button btnAdd;
     public TextField rnameField;
     public ComboBox<String> cbTypeRoom;
@@ -34,7 +36,7 @@ public class EditRoomController {
     public ImageView imgView;
 
     Connection connect;
-    private final ObservableList<Room> roomList = FXCollections.observableArrayList();
+//    private final ObservableList<Room> roomList = FXCollections.observableArrayList();
 
 
     public void initialize() throws SQLException {
@@ -48,7 +50,6 @@ public class EditRoomController {
 
         // Add data to tableview
         tableView.setItems(roomList);
-        fetchDataFromDatabase();
 
         // Click to show data
         tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -109,7 +110,7 @@ public class EditRoomController {
                 if (generatedKeys.next()) {
                     roomId = generatedKeys.getInt(1);
                 }
-                fetchDataFromDatabase();
+//                fetchDataFromDatabase();
                 clearInput();
 
                 Image image = imgView.getImage();
@@ -125,7 +126,7 @@ public class EditRoomController {
                         preparedStatement.executeUpdate();
                     }
                     //System.out.println(base64);
-                }
+                } Dialog.showInformation("Information", "Information", "Thêm phòng thành công!");
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -138,11 +139,7 @@ public class EditRoomController {
     public void searchData() {
         String search = searchField.getText();
         if (search.isEmpty()) {
-            try {
-                fetchDataFromDatabase();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            //                fetchDataFromDatabase();
         } else {
             try {
                 connect = database.connectDb();
@@ -175,30 +172,30 @@ public class EditRoomController {
         try {
             assert connect != null;
             connect.createStatement().executeUpdate(query);
-            fetchDataFromDatabase();
+//            fetchDataFromDatabase();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         Dialog.showInformation("Information", "Information", "Xóa" + room.getName() + " thành công!");
     }
 
-    private void fetchDataFromDatabase() throws SQLException {
-
-        connect = database.connectDb();
-        String query = "SELECT * FROM rooms";
-        assert connect != null;
-        ResultSet resultSet = connect.createStatement().executeQuery(query);
-        roomList.clear();
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String name = resultSet.getString("name");
-            String type = RoomType.values()[resultSet.getInt("type")].getText();
-            String status = RoomStatus.values()[resultSet.getInt("status")].getText();
-            double price = resultSet.getDouble("price");
-
-            roomList.add(new Room(id, name, type, status, price));
-        }
-    }
+//    private void fetchDataFromDatabase() throws SQLException {
+//
+//        connect = database.connectDb();
+//        String query = "SELECT * FROM rooms";
+//        assert connect != null;
+//        ResultSet resultSet = connect.createStatement().executeQuery(query);
+//        roomList.clear();
+//        while (resultSet.next()) {
+//            int id = resultSet.getInt("id");
+//            String name = resultSet.getString("name");
+//            String type = RoomType.values()[resultSet.getInt("type")].getText();
+//            String status = RoomStatus.values()[resultSet.getInt("status")].getText();
+//            double price = resultSet.getDouble("price");
+//
+//            roomList.add(new Room(id, name, type, status, price));
+//        }
+//    }
 
 
     public void openSelectFile() {
@@ -244,7 +241,7 @@ public class EditRoomController {
                 preparedStatement.setDouble(3, price);
                 preparedStatement.setInt(4, currRoom.getId());
                 preparedStatement.executeUpdate();
-                fetchDataFromDatabase();
+//                fetchDataFromDatabase();
 
                 Image image = imgView.getImage();
                 if(image != null)
@@ -286,5 +283,10 @@ public class EditRoomController {
             Dialog.showError("Error", "Error", "Price Phải là số!");
             return;
         }
+    }
+
+    public void refreshTable(ActionEvent actionEvent) throws SQLException {
+        super.initialize();
+        initialize();
     }
 }

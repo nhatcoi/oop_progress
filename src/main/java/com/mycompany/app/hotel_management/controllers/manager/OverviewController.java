@@ -44,35 +44,28 @@ public class OverviewController {
     private AnchorPane slidePane;
     @FXML
     private Button btnChangeImage;
+//    @FXML
+//    private Button refresh;
 
 
     RoomServiceImpl roomService = new RoomServiceImpl();
     public int currentImageIndex = 0;
 
-    ObservableList<Image> images;
-    ObservableList<Room> roomList;
+    public static ObservableList<Image> images = FXCollections.observableArrayList();
+    public static ObservableList<Room> roomList = FXCollections.observableArrayList();
 
 
     public void initialize() throws SQLException {
         // Lấy danh sách phòng từ database
-        this.roomList = roomService.getAllRoom();
+        roomList = roomService.getAllRoom();
         // Lấy danh sách ảnh từ database
-        this.images = roomService.getImage();
-
-
-        lbAvailable.setText(String.valueOf(this.roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.AVAILABLE.getText())).count()));
-
-        lbRented.setText(String.valueOf(this.roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.OCCUPIED.getText())).count()));
-        // Tổng tổng tiền của các phòng đã cho thuê
-        lbTotalIncome.setText(String.valueOf(this.roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.OCCUPIED.getText())).mapToDouble(Room::getPrice).sum()));
-
+        images = roomService.getImage();
     }
 
 
 
 
     public void changeImage(ActionEvent actionEvent) throws SQLException {
-
         if (!images.isEmpty()) {
 
             image1.setImage(images.get(currentImageIndex));
@@ -81,34 +74,16 @@ public class OverviewController {
         }
     }
 
+    @FXML
+    void refresh() throws SQLException {
+        roomList = roomService.getAllRoom();
+        // Lấy danh sách ảnh từ database
+        images = roomService.getImage();
 
-//    void fetchImageFromDb(){
-//        // Lấy danh sách các phòng có ảnh
-//        // java stream api
-//        List<Integer> roomIds = roomList.stream().map(Room::getId).collect(Collectors.toList());
-//
-//        try {
-//            String query = "SELECT * FROM pictures WHERE room_id IN (";
-//            for (int i = 0; i < roomIds.size(); i++) {
-//                query += "?"; // Thêm tham số "?"
-//                if (i < roomIds.size() - 1) {
-//                    query += ", "; // Thêm dấu phẩy sau mỗi tham số, trừ tham số cuối cùng
-//                }
-//            }
-//            query += ")";
-//            PreparedStatement preparedStatement = connect.prepareStatement(query);
-//            for (int i = 0; i < roomList.size(); i++) {
-//                preparedStatement.setInt(i + 1, roomIds.get(i)); // Gán giá trị cho tham số
-//            }
-//            ResultSet rs = preparedStatement.executeQuery();
-//
-//            while (rs.next()) {
-//                String base64 = rs.getString("base64");
-//                Image image = imgTool.base64ToImage(base64);
-//                images.add(image);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
+        lbAvailable.setText(String.valueOf(roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.AVAILABLE.getText())).count()));
+
+        lbRented.setText(String.valueOf(roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.OCCUPIED.getText())).count()));
+        // Tổng tổng tiền của các phòng đã cho thuê
+        lbTotalIncome.setText(String.valueOf(roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.OCCUPIED.getText())).mapToDouble(Room::getPrice).sum()));
+    }
 }

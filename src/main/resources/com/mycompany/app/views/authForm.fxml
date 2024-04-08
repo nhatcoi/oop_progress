@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 <StackPane fx:id="authForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#loginEnter" prefHeight="410.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.AuthController">
     <children>
         <AnchorPane fx:id="login_form" prefHeight="200.0" prefWidth="200.0">

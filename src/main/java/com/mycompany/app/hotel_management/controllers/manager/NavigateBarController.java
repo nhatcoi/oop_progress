@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,6 +43,9 @@ public class NavigateBarController extends ManagerController {
 
     @FXML
     private Button btnRoom;
+
+    public NavigateBarController() throws SQLException {
+    }
 
 //    ManagerController mc;
 //

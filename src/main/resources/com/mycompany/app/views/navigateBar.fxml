@@ -29,7 +29,7 @@
 
         <Label fx:id="lbName" layoutX="87.0" layoutY="203.0" text="Label" textFill="WHITE" wrapText="true" />
         <Button fx:id="btnRoom" layoutY="243.0" mnemonicParsing="false" onAction="#showRoom" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Room" />
-        <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#control" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Control" />
+        <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#overview" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Control" />
         <Button fx:id="btnManageRoom" layoutY="343.0" mnemonicParsing="false" onAction="#manageRoom" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Room" />
         <Button fx:id="btnGuest" layoutX="2.0" layoutY="393.0" mnemonicParsing="false" onAction="#manageGuest" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Guests" />
         <Button fx:id="btnEditStaff" layoutX="2.0" layoutY="443.0" mnemonicParsing="false" onAction="#manageStaff" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Staff" />

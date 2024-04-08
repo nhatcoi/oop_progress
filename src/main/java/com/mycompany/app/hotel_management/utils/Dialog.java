@@ -2,6 +2,8 @@ package com.mycompany.app.hotel_management.utils;
 
 import javafx.scene.control.Alert;
 
+import java.io.IOException;
+
 public class Dialog {
     public static void showAlert(Alert.AlertType type, String title, String headerText, String contentText) {
         Alert alert = new Alert(type);
@@ -25,6 +27,10 @@ public class Dialog {
 
     public static void showConfirmation(String title, String headerText, String contentText) {
         showAlert(Alert.AlertType.CONFIRMATION, title, headerText, contentText);
+    }
+
+    public static void load() throws IOException {
+
     }
 }
 
