@@ -11,7 +11,7 @@ import java.sql.Connection;
 public class EditStaffController {
 
     private Connection connect;
-    private ObservableList<User> users = FXCollections.observableArrayList();
+    private final ObservableList<User> users = FXCollections.observableArrayList();
 
     public void initialize() {
         // how to get all staff from user table has foregion key ID staff from database

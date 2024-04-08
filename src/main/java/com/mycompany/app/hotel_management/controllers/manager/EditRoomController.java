@@ -34,7 +34,9 @@ public class EditRoomController {
     public ImageView imgView;
 
     Connection connect;
-    final ObservableList<Room> roomList = FXCollections.observableArrayList();
+    private final ObservableList<Room> roomList = FXCollections.observableArrayList();
+
+
     public void initialize() throws SQLException {
         // Add data to combobox
         for (RoomType value : RoomType.values()) {
@@ -180,7 +182,7 @@ public class EditRoomController {
         Dialog.showInformation("Information", "Information", "Xóa" + room.getName() + " thành công!");
     }
 
-    public void fetchDataFromDatabase() throws SQLException {
+    private void fetchDataFromDatabase() throws SQLException {
 
         connect = database.connectDb();
         String query = "SELECT * FROM rooms";

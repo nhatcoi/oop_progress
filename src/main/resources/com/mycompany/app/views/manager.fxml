@@ -50,49 +50,8 @@
             <center>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-                  <AnchorPane fx:id="showRoomDetails" layoutX="10.0" layoutY="13.0" prefHeight="627.0" prefWidth="830.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="13.0">
-                     <children>
-                        <AnchorPane fx:id="slidePane1" layoutX="26.0" layoutY="30.0" prefHeight="571.0" prefWidth="792.0" styleClass="bg-white" stylesheets="@../css/home.css">
-                           <children>
-                              <ImageView fx:id="image11" fitHeight="355.0" fitWidth="760.0" layoutX="16.0" layoutY="6.0" pickOnBounds="true">
-                                 <image>
-                                    <Image url="@../img/hotelbg.jpeg" />
-                                 </image>
-                              </ImageView>
-                              <Label layoutX="89.0" layoutY="384.0" prefHeight="52.0" prefWidth="285.0" text="Room Name: ">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="91.0" layoutY="460.0" prefHeight="52.0" prefWidth="295.0" text="Status">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="413.0" layoutY="384.0" prefHeight="52.0" prefWidth="266.0" text="Type of Room">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="413.0" layoutY="460.0" prefHeight="52.0" prefWidth="266.0" text="Price :">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Button layoutX="407.0" layoutY="515.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="63.0">
-                                 <graphic>
-                                    <FontAwesomeIcon glyphName="ARROW_RIGHT" />
-                                 </graphic>
-                              </Button>
-                              <Button layoutX="292.0" layoutY="515.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0">
-                                 <graphic>
-                                    <FontAwesomeIcon glyphName="ARROW_LEFT" />
-                                 </graphic>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
+<!--                    'room details' function of manager-->
+                        <fx:include fx:id="showRoomDetails" source="managerDetails/roomDetails.fxml" />
 
 <!--                    'overview' function of manager -->
                         <fx:include fx:id="overview" source="managerDetails/overview.fxml" />
