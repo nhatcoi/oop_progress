@@ -15,5 +15,4 @@ public class Guest {
     private String name;
     private String phone;
     private String address;
-    private int user_id;
 }
