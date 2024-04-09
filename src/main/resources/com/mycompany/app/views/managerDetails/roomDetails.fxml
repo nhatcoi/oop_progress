@@ -12,12 +12,12 @@
     <children>
         <AnchorPane fx:id="slidePane1" layoutX="26.0" layoutY="30.0" prefHeight="571.0" prefWidth="792.0" styleClass="bg-white" stylesheets="@../../css/home.css">
             <children>
-                <ImageView fx:id="imageRoom" fitHeight="355.0" fitWidth="760.0" layoutX="16.0" layoutY="6.0" pickOnBounds="true">
+                <ImageView fx:id="imageRoom" fitHeight="330.0" fitWidth="649.0" layoutX="73.0" layoutY="31.0" pickOnBounds="true">
                     <image>
                         <Image url="@../../img/hotelbg.jpeg" />
                     </image>
                 </ImageView>
-                <Label fx:id="lbName" layoutX="89.0" layoutY="384.0" prefHeight="52.0" prefWidth="285.0" text="Room Name : ">
+                <Label fx:id="lbName" layoutX="90.0" layoutY="397.0" prefHeight="52.0" prefWidth="285.0" text="Room Name : ">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -27,7 +27,7 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <Label fx:id="lbType" layoutX="413.0" layoutY="384.0" prefHeight="52.0" prefWidth="266.0" text="Type of Room : ">
+                <Label fx:id="lbType" layoutX="415.0" layoutY="396.0" prefHeight="52.0" prefWidth="266.0" text="Type of Room : ">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -47,6 +47,11 @@
                         <FontAwesomeIcon glyphName="ARROW_LEFT" />
                     </graphic>
                 </Button>
+            <ImageView fitHeight="394.0" fitWidth="709.0" layoutX="51.0" layoutY="9.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../img/amz2yaib.png" />
+               </image>
+            </ImageView>
             </children>
         </AnchorPane>
     </children>

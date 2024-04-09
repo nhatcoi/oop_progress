@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="603.0" prefWidth="1100.0" visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.FindController">
+<AnchorPane prefHeight="603.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.FindController">
    <children>
       <ImageView fitHeight="132.0" fitWidth="116.0" layoutX="30.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -30,7 +30,7 @@
       </Label>
       <AnchorPane layoutX="30.0" layoutY="240.0" prefHeight="339.0" prefWidth="332.0" styleClass="bg-white" stylesheets="@../../css/home.css">
          <children>
-            <ImageView fitHeight="204.0" fitWidth="327.0" layoutX="3.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="204.0" fitWidth="327.0" layoutX="3.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../img/hotelbg.jpeg" />
                </image>
@@ -53,8 +53,8 @@
                   <Font size="25.0" />
                </font>
             </Label>
-            <Button layoutX="218.0" layoutY="284.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="104.0" text="Booking" />
-            <Button layoutX="174.0" layoutY="289.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="32.0" />
+            <Button layoutX="218.0" layoutY="284.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="104.0" styleClass="btn" stylesheets="@../../css/home.css" text="Booking" />
+            <Button layoutX="174.0" layoutY="289.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="32.0" styleClass="nav-btn" stylesheets="@../../css/home.css" />
             <FontAwesomeIcon glyphName="HEART" layoutX="184.0" layoutY="307.0" />
          </children>
       </AnchorPane>
@@ -62,7 +62,7 @@
          <children>
             <ImageView fitHeight="204.0" fitWidth="327.0" layoutX="5.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../img/hotelbg.jpeg" />
+                  <Image url="@../../img/hotel3.jpeg" />
                </image>
             </ImageView>
             <FontAwesomeIcon fill="#ffd119" glyphName="STAR" layoutX="19.0" layoutY="227.0" />
@@ -72,12 +72,12 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Button layoutX="182.0" layoutY="296.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="32.0">
+            <Button layoutX="182.0" layoutY="296.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="32.0" styleClass="nav-btn" stylesheets="@../../css/home.css">
                <graphic>
                   <FontAwesomeIcon glyphName="HEART" />
                </graphic>
             </Button>
-            <Button layoutX="226.0" layoutY="291.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="104.0" text="Booking" />
+            <Button layoutX="226.0" layoutY="291.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="104.0" styleClass="btn" text="Booking" />
             <Label alignment="CENTER_RIGHT" layoutX="137.0" layoutY="293.0" prefHeight="30.0" prefWidth="8.0" text="\$">
                <font>
                   <Font size="25.0" />
@@ -95,7 +95,7 @@
          <children>
             <ImageView fitHeight="204.0" fitWidth="327.0" layoutX="5.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../img/hotelbg.jpeg" />
+                  <Image url="@../../img/hotel2.jpeg" />
                </image>
             </ImageView>
             <FontAwesomeIcon fill="#ffd119" glyphName="STAR" layoutX="19.0" layoutY="227.0" />
@@ -105,12 +105,12 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Button layoutX="172.0" layoutY="289.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="32.0">
+            <Button layoutX="172.0" layoutY="289.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="32.0" styleClass="nav-btn" stylesheets="@../../css/home.css">
                <graphic>
                   <FontAwesomeIcon glyphName="HEART" />
                </graphic>
             </Button>
-            <Button layoutX="216.0" layoutY="284.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="104.0" text="Booking" />
+            <Button layoutX="216.0" layoutY="284.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="104.0" styleClass="btn" text="Booking" />
             <Label alignment="CENTER_RIGHT" layoutX="127.0" layoutY="286.0" prefHeight="30.0" prefWidth="8.0" text="\$">
                <font>
                   <Font size="25.0" />

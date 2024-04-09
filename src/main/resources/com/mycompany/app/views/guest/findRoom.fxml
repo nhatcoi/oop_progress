@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import java.lang.*?>
@@ -14,17 +15,9 @@
 
 <AnchorPane prefHeight="603.0" prefWidth="1100.0" visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.FindController">
    <children>
-      <Button layoutX="23.0" layoutY="26.0" mnemonicParsing="false" onAction="#search" prefHeight="27.0" prefWidth="67.0" text="Search" />
-      <TextField layoutX="117.0" layoutY="26.0" prefHeight="27.0" prefWidth="911.0" promptText="Search" />
-      <MenuButton layoutX="24.0" layoutY="71.0" mnemonicParsing="false" onAction="#typeRoom" text="Type">
-        <items>
-          <MenuItem mnemonicParsing="false" onAction="#single" text="single" />
-          <MenuItem mnemonicParsing="false" onAction="#doubleRoom" text="double" />
-            <MenuItem mnemonicParsing="false" onAction="#tripleRoom" text="triple" />
-            <MenuItem mnemonicParsing="false" onAction="#kingRoom" text="king" />
-        </items>
-      </MenuButton>
-      <TableView fx:id="tableRoom" layoutX="18.0" layoutY="115.0" prefHeight="476.0" prefWidth="399.0">
+      <Button layoutX="23.0" layoutY="26.0" mnemonicParsing="false" onAction="#search" prefHeight="27.0" prefWidth="67.0" styleClass="btn" stylesheets="@../../css/home.css" text="Search" />
+      <TextField fx:id="txSearch" layoutX="101.0" layoutY="26.0" prefHeight="27.0" prefWidth="927.0" promptText="Search" styleClass="textField" stylesheets="@../../css/home.css" />
+      <TableView fx:id="tableRoom" layoutX="18.0" layoutY="115.0" prefHeight="476.0" prefWidth="399.0" stylesheets="@../../css/home.css">
         <columns>
           <TableColumn prefWidth="140.78146839141846" text="Room Name" />
           <TableColumn prefWidth="70.06520080566406" text="Type" />
@@ -37,10 +30,22 @@
             <Image url="@../../img/hotel3.jpeg" />
          </image>
       </ImageView>
-      <Button layoutX="549.0" layoutY="519.0" mnemonicParsing="false" onAction="#booking" prefHeight="50.0" prefWidth="155.0" text="Booking" />
-      <Button layoutX="788.0" layoutY="520.0" mnemonicParsing="false" onAction="#addtoCart" prefHeight="50.0" prefWidth="155.0" text="Add to Cart" />
-      <Button layoutX="719.0" layoutY="530.0" mnemonicParsing="false" onAction="#favoriteRoom" prefHeight="33.0" prefWidth="41.0" />
-      <FontAwesomeIcon glyphName="HEART" layoutX="733.0" layoutY="551.0" />
-      <Label layoutX="455.0" layoutY="90.0" prefHeight="17.0" prefWidth="109.0" text="Room illustration" />
+      <Button layoutX="535.0" layoutY="538.0" mnemonicParsing="false" onAction="#booking" prefHeight="50.0" prefWidth="155.0" styleClass="btn" stylesheets="@../../css/home.css" text="Booking" />
+      <Button layoutX="784.0" layoutY="538.0" mnemonicParsing="false" onAction="#addtoCart" prefHeight="50.0" prefWidth="155.0" styleClass="btn" stylesheets="@../../css/home.css" text="Add to Cart" />
+      <Button layoutX="724.0" layoutY="547.0" mnemonicParsing="false" onAction="#favoriteRoom" prefHeight="33.0" prefWidth="41.0" stylesheets="@../../css/home.css">
+         <graphic>
+            <FontAwesomeIcon fill="RED" glyphName="HEART" />
+         </graphic></Button>
+      <Label layoutX="437.0" layoutY="54.0" prefHeight="33.0" prefWidth="113.0" text="Room illustration">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <ComboBox layoutX="26.0" layoutY="64.0" prefHeight="27.0" prefWidth="88.0" promptText="type" styleClass="textField" stylesheets="@../../css/home.css" />
+      <ComboBox layoutX="143.0" layoutY="64.0" prefHeight="27.0" prefWidth="88.0" promptText="price" styleClass="textField" stylesheets="@../../css/home.css" />
+      <ImageView fitHeight="441.0" fitWidth="643.0" layoutX="427.0" layoutY="88.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../img/amz2yaib.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
