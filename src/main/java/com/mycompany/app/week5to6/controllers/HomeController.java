@@ -33,6 +33,10 @@ public class HomeController {
     public Button btnSearch;
     public TextField idSearchField;
 
+
+    private EditRoomController editRoomController;
+
+
     public void initialize() {
         tableRoom.setItems(data);
         tableRoom.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -50,6 +54,7 @@ public class HomeController {
 
         // Thêm các cột vào TableView
         tableRoom.getColumns().addAll(idColumn, typeColumn, statusColumn, priceColumn);
+
     }
 
     public void refreshTable() {

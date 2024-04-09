@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane prefHeight="650.0" prefWidth="850.0" stylesheets="@../../../css/home.css" visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.admin.EditStaffController">
+
+    <children>
+        <AnchorPane layoutX="18.0" layoutY="16.0" prefHeight="610.0" prefWidth="209.0" styleClass="bg-white">
+            <children>
+                <Button fx:id="btnAdd" layoutX="33.0" layoutY="511.0" mnemonicParsing="false" onAction="#addData" prefHeight="70.0" prefWidth="140.0" styleClass="btn" stylesheets="@../../../css/home.css" text="Add Staff" />
+                <TextField fx:id="rnameField" layoutX="25.0" layoutY="185.0" promptText="Staff Name" styleClass="textField" stylesheets="@../../../css/home.css" />
+                <TextField fx:id="remailField" layoutX="25.0" layoutY="290.0" promptText="email" styleClass="textField" stylesheets="@../../../css/home.css" />
+                <Hyperlink layoutX="25.0" layoutY="332.0" onAction="#clearInput" text="Clear" />
+                <ImageView fx:id="imgView" fitHeight="111.0" fitWidth="158.0" layoutX="25.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true" />
+                <Hyperlink layoutX="34.0" layoutY="471.0" onAction="#openSelectFile" text="Import Avatar" />
+                <Label layoutX="28.0" layoutY="79.0" prefHeight="76.0" prefWidth="159.0" styleClass="font-room" stylesheets="@../../../css/home.css" text="STAFF MANAGE" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="240.0" layoutY="20.0" prefHeight="610.0" prefWidth="592.0" styleClass="bg-white" stylesheets="@../../../css/home.css">
+            <children>
+                <Button fx:id="btnSearch" layoutX="37.0" layoutY="22.0" mnemonicParsing="false" onAction="#searchData" styleClass="btn" stylesheets="@../../../css/home.css" text="Search" />
+                <TextField fx:id="searchField" layoutX="108.0" layoutY="22.0" prefHeight="27.0" prefWidth="431.0" promptText="Search Employee" styleClass="textField" stylesheets="@../../../css/home.css" />
+                <TableView fx:id="tableView" layoutX="25.0" layoutY="62.0" prefHeight="477.0" prefWidth="540.0" stylesheets="@../../../css/home.css">
+                    <columns>
+                        <TableColumn prefWidth="52.1688232421875" text="ID">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="id" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="140.88916015625" text="Username">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="name" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="143.11077880859375" text="Name">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="type" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn minWidth="1.1343994140625" prefWidth="92.337646484375" text="Address">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="price" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="112.44305419921875" text="Phone">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="status" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+                <Button layoutX="352.0" layoutY="567.0" mnemonicParsing="false" onAction="#deleteData" prefHeight="34.0" prefWidth="110.0" styleClass="btn" stylesheets="@../../../css/home.css" text="Delete" />
+                <Button layoutX="100.0" layoutY="566.0" mnemonicParsing="false" onAction="#changeData" prefHeight="35.0" prefWidth="122.0" styleClass="btn" stylesheets="@../../../css/home.css" text="Change Staff" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

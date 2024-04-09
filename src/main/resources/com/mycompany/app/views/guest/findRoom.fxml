@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="603.0" prefWidth="1100.0" visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.FindController">
+   <children>
+      <Button layoutX="23.0" layoutY="26.0" mnemonicParsing="false" onAction="#search" prefHeight="27.0" prefWidth="67.0" text="Search" />
+      <TextField layoutX="117.0" layoutY="26.0" prefHeight="27.0" prefWidth="911.0" promptText="Search" />
+      <MenuButton layoutX="24.0" layoutY="71.0" mnemonicParsing="false" onAction="#typeRoom" text="Type">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#single" text="single" />
+          <MenuItem mnemonicParsing="false" onAction="#doubleRoom" text="double" />
+            <MenuItem mnemonicParsing="false" onAction="#tripleRoom" text="triple" />
+            <MenuItem mnemonicParsing="false" onAction="#kingRoom" text="king" />
+        </items>
+      </MenuButton>
+      <TableView fx:id="tableRoom" layoutX="18.0" layoutY="115.0" prefHeight="476.0" prefWidth="399.0">
+        <columns>
+          <TableColumn prefWidth="140.78146839141846" text="Room Name" />
+          <TableColumn prefWidth="70.06520080566406" text="Type" />
+            <TableColumn prefWidth="75.93479919433594" text="status" />
+            <TableColumn prefWidth="111.11383056640625" text="price" />
+        </columns>
+      </TableView>
+      <ImageView fx:id="imageRoom" fitHeight="365.0" fitWidth="582.0" layoutX="453.0" layoutY="116.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../img/hotel3.jpeg" />
+         </image>
+      </ImageView>
+      <Button layoutX="549.0" layoutY="519.0" mnemonicParsing="false" onAction="#booking" prefHeight="50.0" prefWidth="155.0" text="Booking" />
+      <Button layoutX="788.0" layoutY="520.0" mnemonicParsing="false" onAction="#addtoCart" prefHeight="50.0" prefWidth="155.0" text="Add to Cart" />
+      <Button layoutX="719.0" layoutY="530.0" mnemonicParsing="false" onAction="#favoriteRoom" prefHeight="33.0" prefWidth="41.0" />
+      <FontAwesomeIcon glyphName="HEART" layoutX="733.0" layoutY="551.0" />
+      <Label layoutX="455.0" layoutY="90.0" prefHeight="17.0" prefWidth="109.0" text="Room illustration" />
+   </children>
+</AnchorPane>
