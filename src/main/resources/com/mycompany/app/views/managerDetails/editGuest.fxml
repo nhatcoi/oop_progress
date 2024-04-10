@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-<AnchorPane fx:id="guests" prefHeight="650.0" prefWidth="850.0" styleClass="bg-white" stylesheets="@../../css/home.css"
+<AnchorPane fx:id="guests" prefHeight="650.0" prefWidth="850.0"  styleClass="bg-white" stylesheets="@../../css/home.css"
             visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.mycompany.app.hotel_management.controllers.manager.EditGuestController">
 

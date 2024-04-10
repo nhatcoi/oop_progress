@@ -1,7 +1,8 @@
 package com.mycompany.app.hotel_management.controllers.manager;
 
 import com.mycompany.app.hotel_management.entities.Guest;
-import com.mycompany.app.hotel_management.repositories.database;
+import com.mycompany.app.hotel_management.intefaces.GuestServiceImpl;
+import com.mycompany.app.hotel_management.repositories.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

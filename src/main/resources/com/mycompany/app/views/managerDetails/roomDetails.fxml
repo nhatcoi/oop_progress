@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="showRoomDetails" layoutX="10.0" layoutY="13.0" prefHeight="627.0" prefWidth="830.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="13.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.RoomDetailsController">
+<AnchorPane fx:id="showRoomDetails" layoutX="10.0" layoutY="13.0" prefHeight="627.0" prefWidth="830.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="13.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.RoomDetailsController">
     <children>
         <AnchorPane fx:id="slidePane1" layoutX="26.0" layoutY="30.0" prefHeight="571.0" prefWidth="792.0" styleClass="bg-white" stylesheets="@../../css/home.css">
             <children>
@@ -47,11 +47,6 @@
                         <FontAwesomeIcon glyphName="ARROW_LEFT" />
                     </graphic>
                 </Button>
-            <ImageView fitHeight="394.0" fitWidth="709.0" layoutX="51.0" layoutY="9.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../../img/amz2yaib.png" />
-               </image>
-            </ImageView>
             </children>
         </AnchorPane>
     </children>
