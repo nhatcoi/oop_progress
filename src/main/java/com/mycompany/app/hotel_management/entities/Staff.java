@@ -11,7 +11,8 @@ import lombok.Setter;
 @Setter
 public class Staff {
     private int Id;
+    private String username;
     private String name;
-    private String address;
-    private String phone;
+    private String position;
+    private double salary;
 }
