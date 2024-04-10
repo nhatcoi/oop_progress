@@ -82,4 +82,40 @@ public class EditGuestController {
     public void changeData() {
 
     }
+
+
+   public void addData(ActionEvent actionEvent) {
+//        String userName = tfUserName.getText();
+//        String name = tfName.getText();
+//        String phone = tfPhoneNumber.getText();
+//        String address = tfAddress.getText();
+//
+//        String sql = "SELECT id FROM users WHERE username = '" + userName + "'";
+//        try {
+//            ResultSet rs = connect.createStatement().executeQuery(sql);
+//            if (rs.next()) {
+//                int user_id = rs.getInt("id");
+//
+//                String findGuest = "SELECT * FROM guests WHERE user_id = " + user_id;
+//                ResultSet rsGuest = connect.createStatement().executeQuery(findGuest);
+//                if (rsGuest.next()) {
+//                    Dialog.showError("Guest already exists", "This user already has a guest", "Please choose another user");
+//                    return;
+//                }
+//                String insertSql = "INSERT INTO guests (name, phone, address,user_id) VALUES (?, ?, ?, ?)";
+//                PreparedStatement preparedStatement = connect.prepareStatement(insertSql);
+//                preparedStatement.setString(1, name);
+//                preparedStatement.setString(2, phone);
+//                preparedStatement.setString(3, address);
+//                preparedStatement.setInt(4, user_id);
+//                preparedStatement.executeUpdate();
+//
+//                guestsList.clear();
+//                fetchData();
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+   }
 }

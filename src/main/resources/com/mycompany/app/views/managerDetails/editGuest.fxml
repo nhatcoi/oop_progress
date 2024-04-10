@@ -58,9 +58,9 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
             </columnResizePolicy>
         </TableView>
-        <Button layoutX="64.0" layoutY="585.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0"
+        <Button onAction="#addData" layoutX="64.0" layoutY="585.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0"
                 styleClass="btn" stylesheets="@../../css/home.css" text="Add"/>
-        <Button layoutX="194.0" layoutY="585.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0"
+        <Button onAction="#changeData" layoutX="194.0" layoutY="585.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0"
                 styleClass="btn" stylesheets="@../../css/home.css" text="Change"/>
         <Button onAction="#removeData" layoutX="321.0" layoutY="585.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0"
                 styleClass="btn" stylesheets="@../../css/home.css" text="Remove"/>

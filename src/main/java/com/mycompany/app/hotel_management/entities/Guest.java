@@ -16,4 +16,7 @@ public class Guest {
     private String phone;
     private String address;
     private int user_id;
+
+    public Guest(int id, String username, String name, String phone, String address) {
+    }
 }
