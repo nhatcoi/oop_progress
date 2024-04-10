@@ -30,6 +30,7 @@ public class GuestController {
 
     public void initialize() {
         //show(home);
+
     }
 
     public void search(ActionEvent actionEvent) {

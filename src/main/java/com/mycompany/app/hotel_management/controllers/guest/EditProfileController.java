@@ -2,13 +2,17 @@ package com.mycompany.app.hotel_management.controllers.guest;
 
 
 import com.mycompany.app.hotel_management.controllers.GuestController;
+import com.mycompany.app.hotel_management.controllers.ManagerController;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+
+import static com.mycompany.app.hotel_management.controllers.ManagerController.user;
 
 public class EditProfileController extends GuestController {
 
@@ -32,6 +36,13 @@ public class EditProfileController extends GuestController {
 
     @FXML
     private Label lbUsername;
+
+    public void initialize()  {
+        super.initialize();
+        if (lbUsername != null) {
+            lbUsername.setText("123");
+        }
+    }
 
     @FXML
     void openPassword(ActionEvent event) {

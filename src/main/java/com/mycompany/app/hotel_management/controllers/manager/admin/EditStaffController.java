@@ -4,7 +4,7 @@ import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.entities.Staff;
 import com.mycompany.app.hotel_management.entities.User;
 import com.mycompany.app.hotel_management.enums.UserRole;
-import com.mycompany.app.hotel_management.repositories.database;
+import com.mycompany.app.hotel_management.repositories.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,7 +35,7 @@ public class EditStaffController {
 
     void fetchData() throws SQLException {
         staff.clear();
-        connect = database.connectDb();
+        connect = Database.connectDb();
         String sql = "SELECT staff.*,users.username FROM staff LEFT JOIN users ON users.id = staff.user_id WHERE users.role = " + UserRole.STAFF.getValue();
         Statement statement = connect.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
@@ -61,7 +61,7 @@ public class EditStaffController {
     }
 
     public void addData(ActionEvent actionEvent) {
-        connect = database.connectDb();
+        connect = Database.connectDb();
 
 
         String name = nameField.getText();
@@ -90,7 +90,7 @@ public class EditStaffController {
     }
 
     public void deleteData(ActionEvent actionEvent) {
-        connect = database.connectDb();
+        connect = Database.connectDb();
         Staff selectedStaff = tableView.getSelectionModel().getSelectedItem();
         String sql = "DELETE FROM staff WHERE id = " + selectedStaff.getId();
         try {
@@ -103,7 +103,7 @@ public class EditStaffController {
     }
 
     public void changeData(ActionEvent actionEvent) {
-        connect = database.connectDb();
+        connect = Database.connectDb();
         Staff selectedStaff = tableView.getSelectionModel().getSelectedItem();
         String name = nameField.getText();
         String position = positionField.getText();
