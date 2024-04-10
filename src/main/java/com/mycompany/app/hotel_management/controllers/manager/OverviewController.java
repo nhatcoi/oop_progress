@@ -4,7 +4,7 @@ import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.enums.RoomType;
 import com.mycompany.app.hotel_management.intefaces.RoomServiceImpl;
-import com.mycompany.app.hotel_management.repositories.database;
+import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.imgTool;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,16 +16,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.security.Provider;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
-public class OverviewController {
+public class OverviewController extends Database {
     @FXML
     private AnchorPane overview;
     @FXML
@@ -44,44 +40,43 @@ public class OverviewController {
     private AnchorPane slidePane;
     @FXML
     private Button btnChangeImage;
-//    @FXML
-//    private Button refresh;
 
 
-    RoomServiceImpl roomService = new RoomServiceImpl();
     public int currentImageIndex = 0;
+    Connection connect;
 
-    public static ObservableList<Image> images = FXCollections.observableArrayList();
-    public static ObservableList<Room> roomList = FXCollections.observableArrayList();
-
-
+    RoomServiceImpl sv = new RoomServiceImpl();
+    public final ObservableList<Image> images = FXCollections.observableArrayList();
+    public final ObservableList<Room> roomList = FXCollections.observableArrayList();
     public void initialize() throws SQLException {
-        // Lấy danh sách phòng từ database
-        roomList = roomService.getAllRoom();
-        // Lấy danh sách ảnh từ database
-        images = roomService.getImage();
+        long startTime = System.nanoTime();
+
+        connect = Database.connectDb();
+        sv.getAllRoom(connect, roomList, "rooms");
+        sv.getImage(connect, roomList, images);
+        setTag();
+
+        long endTime = System.nanoTime();
+        long elapsedTime = endTime - startTime;
+        System.out.println("Initialization time: " + elapsedTime + " nanoseconds");
     }
 
-
-
-
-    public void changeImage(ActionEvent actionEvent) throws SQLException {
+    @FXML
+    void changeImage(ActionEvent actionEvent) throws SQLException {
         if (!images.isEmpty()) {
-
             image1.setImage(images.get(currentImageIndex));
-
             currentImageIndex = (currentImageIndex + 1) % images.size();
         }
     }
 
     @FXML
     void refresh() throws SQLException {
-        roomList = roomService.getAllRoom();
-        // Lấy danh sách ảnh từ database
-        images = roomService.getImage();
+        sv.getAllRoom(connect, roomList, "rooms");
+        setTag();
+    }
 
+    void setTag() {
         lbAvailable.setText(String.valueOf(roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.AVAILABLE.getText())).count()));
-
         lbRented.setText(String.valueOf(roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.OCCUPIED.getText())).count()));
         // Tổng tổng tiền của các phòng đã cho thuê
         lbTotalIncome.setText(String.valueOf(roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.OCCUPIED.getText())).mapToDouble(Room::getPrice).sum()));

@@ -3,11 +3,10 @@ package com.mycompany.app.hotel_management.controllers;
 
 import com.mycompany.app.hotel_management.entities.User;
 import com.mycompany.app.hotel_management.enums.UserRole;
-import com.mycompany.app.hotel_management.repositories.database;
+import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.Md5;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,9 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -79,7 +76,7 @@ public class AuthController implements Initializable {
 
     public void login() {
 
-        connect = database.connectDb();
+        connect = Database.connectDb();
         try {
             // add user to list
             String userLog = username.getText();
@@ -122,7 +119,7 @@ public class AuthController implements Initializable {
     // sign up
     public void signup() {
         // connect to db
-        connect = database.connectDb();
+        connect = Database.connectDb();
 
         try {
             // get data from input fields
@@ -155,11 +152,38 @@ public class AuthController implements Initializable {
             }
 
             // If everything is fine, proceed with the signup
-            String insertSql = "INSERT INTO users ( username, password) VALUES (?, ?)";
+//            String insertSql = "INSERT INTO users ( username, password) VALUES (?, ?)";
+//            prepare = connect.prepareStatement(insertSql);
+//            prepare.setString(1, username);
+//            prepare.setString(2, password);
+//            prepare.executeUpdate();
+
+            // Thêm người dùng vào bảng users
+            String insertSql = "INSERT INTO users (username, password) VALUES (?, ?)";
             prepare = connect.prepareStatement(insertSql);
             prepare.setString(1, username);
             prepare.setString(2, password);
             prepare.executeUpdate();
+
+
+            String selectIdSql = "SELECT id FROM users WHERE username = ?";
+            prepare = connect.prepareStatement(selectIdSql);
+            prepare.setString(1, username);
+            ResultSet idResult = prepare.executeQuery();
+
+            int userId = -1; // Default value if no ID is found
+            if (idResult.next()) {
+                userId = idResult.getInt("id");
+            }
+
+// Now you have the ID of the newly inserted user in the userId variable
+//            System.out.println("The ID of the newly created user is: " + userId);
+//
+//            String insertGuestSql = "INSERT INTO guests (user_id) VALUES (?)";
+//            prepare = connect.prepareStatement(insertGuestSql);
+//            prepare.setInt(1, userId);
+//            prepare.executeUpdate();
+
 
             Dialog.showInformation("Đăng ký thành công", null, "Tài khoản của bạn đã được tạo thành công");
 

@@ -62,7 +62,7 @@
                 styleClass="btn" stylesheets="@../../css/home.css" text="Add"/>
         <Button layoutX="194.0" layoutY="585.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0"
                 styleClass="btn" stylesheets="@../../css/home.css" text="Change"/>
-        <Button onAction="#RemoveData" layoutX="321.0" layoutY="585.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0"
+        <Button onAction="#removeData" layoutX="321.0" layoutY="585.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0"
                 styleClass="btn" stylesheets="@../../css/home.css" text="Remove"/>
     </children>
 

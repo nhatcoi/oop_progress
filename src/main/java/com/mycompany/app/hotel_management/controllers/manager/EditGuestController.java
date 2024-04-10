@@ -1,7 +1,8 @@
 package com.mycompany.app.hotel_management.controllers.manager;
 
 import com.mycompany.app.hotel_management.entities.Guest;
-import com.mycompany.app.hotel_management.repositories.database;
+import com.mycompany.app.hotel_management.intefaces.GuestServiceImpl;
+import com.mycompany.app.hotel_management.repositories.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,10 +34,9 @@ public class EditGuestController {
     private TextField tfName;
     private Connection connect;
     private final ObservableList<Guest> guestsList = FXCollections.observableArrayList();
+    GuestServiceImpl sv = new GuestServiceImpl();
     public void initialize() throws SQLException {
         // code display username of staff from db
-
-
         // add display data to the table
         tableViewUser.setItems(guestsList);
 
@@ -54,30 +54,32 @@ public class EditGuestController {
             }
         });
 
-        fetchData();
+        sv.getData(connect, guestsList);
     }
 
-    public void fetchData(){
-        try {
-            connect = database.connectDb();
-            ResultSet rs = connect.createStatement().executeQuery("SELECT guests.*,users.username FROM guests LEFT JOIN users ON users.id = guests.user_id");
-            while (rs.next()) {
-                guestsList.add(new Guest(rs.getInt("id"),rs.getString("username"), rs.getString("name"), rs.getString("phone"), rs.getString("address"),rs.getInt("user_id")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void fetchData(){
+//        try {
+//            connect = Database.connectDb();
+//            assert connect != null;
+//            ResultSet rs = connect.createStatement().executeQuery("SELECT guests.*,users.username FROM guests LEFT JOIN users ON users.id = guests.user_id");
+//            while (rs.next()) {
+//                guestsList.add(new Guest(rs.getInt("id"),rs.getString("username"), rs.getString("name"), rs.getString("phone"), rs.getString("address"),rs.getInt("user_id")));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    public void RemoveData(ActionEvent actionEvent) {
+    public void removeData(ActionEvent actionEvent) {
         Guest guest = tableViewUser.getSelectionModel().getSelectedItem();
         if(guest != null) {
-            try {
-                connect.createStatement().executeUpdate("DELETE FROM guests WHERE id = " + guest.getId());
-                guestsList.remove(guest);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            connect = Database.connectDb();
+            assert connect != null;
+            sv.deleteData(connect, guestsList, guest);
         }
+    }
+
+    public void changeData() {
+
     }
 }

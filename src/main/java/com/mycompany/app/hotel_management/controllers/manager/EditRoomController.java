@@ -3,7 +3,7 @@ package com.mycompany.app.hotel_management.controllers.manager;
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.enums.RoomType;
-import com.mycompany.app.hotel_management.repositories.database;
+import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.imgTool;
 import javafx.collections.FXCollections;
@@ -23,7 +23,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.sql.*;
 
-import static com.mycompany.app.hotel_management.controllers.manager.OverviewController.roomList;
+//import static com.mycompany.app.hotel_management.controllers.manager.OverviewController.roomList;
 
 public class EditRoomController extends OverviewController{
     public Button btnAdd;
@@ -36,7 +36,7 @@ public class EditRoomController extends OverviewController{
     public ImageView imgView;
 
     Connection connect;
-//    private final ObservableList<Room> roomList = FXCollections.observableArrayList();
+    private final ObservableList<Room> roomList = FXCollections.observableArrayList();
 
 
     public void initialize() throws SQLException {
@@ -47,6 +47,7 @@ public class EditRoomController extends OverviewController{
         if (!cbTypeRoom.getItems().isEmpty()) {
             cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
         }
+        fetchDataFromDatabase();
 
         // Add data to tableview
         tableView.setItems(roomList);
@@ -62,7 +63,7 @@ public class EditRoomController extends OverviewController{
                         rnameField.setText(room.getName());
                         cbTypeRoom.setValue(room.getType());
                         rpriceField.setText(String.valueOf(room.getPrice()));
-                        connect = database.connectDb();
+                        connect = Database.connectDb();
                         String query = "SELECT * FROM pictures WHERE room_id = " + room.getId();
                         try {
                             assert connect != null;
@@ -89,7 +90,7 @@ public class EditRoomController extends OverviewController{
     }
 
     public void addData() {
-        connect = database.connectDb();
+        connect = Database.connectDb();
         String name = rnameField.getText();
         int type = cbTypeRoom.getSelectionModel().getSelectedIndex();
 
@@ -110,7 +111,7 @@ public class EditRoomController extends OverviewController{
                 if (generatedKeys.next()) {
                     roomId = generatedKeys.getInt(1);
                 }
-//                fetchDataFromDatabase();
+                fetchDataFromDatabase();
                 clearInput();
 
                 Image image = imgView.getImage();
@@ -142,7 +143,7 @@ public class EditRoomController extends OverviewController{
             fetchDataFromDatabase();
         } else {
             try {
-                connect = database.connectDb();
+                connect = Database.connectDb();
                 String query = "SELECT * FROM rooms WHERE name LIKE '%" + search + "%'";
                 assert connect != null;
                 ResultSet resultSet = connect.createStatement().executeQuery(query);
@@ -167,21 +168,21 @@ public class EditRoomController extends OverviewController{
             Dialog.showError("Error", "Error", "Chọn phòng cần xóa!");
             return;
         }
-        connect = database.connectDb();
+        connect = Database.connectDb();
         String query = "DELETE FROM rooms WHERE id = " + room.getId();
         try {
             assert connect != null;
             connect.createStatement().executeUpdate(query);
-//            fetchDataFromDatabase();
+            fetchDataFromDatabase();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         Dialog.showInformation("Information", "Information", "Xóa" + room.getName() + " thành công!");
     }
 
-    private void fetchDataFromDatabase() throws SQLException {
+    public void fetchDataFromDatabase() throws SQLException {
 
-        connect = database.connectDb();
+        connect = Database.connectDb();
         String query = "SELECT * FROM rooms";
         assert connect != null;
         ResultSet resultSet = connect.createStatement().executeQuery(query);
@@ -225,7 +226,7 @@ public class EditRoomController extends OverviewController{
             return;
         }
 
-        connect = database.connectDb();
+        connect = Database.connectDb();
 
         String name = rnameField.getText();
         int type = cbTypeRoom.getSelectionModel().getSelectedIndex();
@@ -241,7 +242,7 @@ public class EditRoomController extends OverviewController{
                 preparedStatement.setDouble(3, price);
                 preparedStatement.setInt(4, currRoom.getId());
                 preparedStatement.executeUpdate();
-//                fetchDataFromDatabase();
+                fetchDataFromDatabase();
 
                 Image image = imgView.getImage();
                 if(image != null)
