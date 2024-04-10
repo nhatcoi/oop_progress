@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class App extends Application {
-    //static Debug debug = new Debug();
 
     private double x = 0.0;
     private double y = 0.0;
