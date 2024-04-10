@@ -106,7 +106,7 @@ public class ManagerController {
         }
     }
 
-    // Pane of each function
+
     void show(AnchorPane paneToShow) {
         List<AnchorPane> allPanes = Arrays.asList(overview, edit, guests, staff, showRoomDetails);
         for (AnchorPane pane : allPanes) {
