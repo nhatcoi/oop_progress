@@ -100,6 +100,15 @@ public class AuthController implements Initializable {
 
                     Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
                     if (ManagerController.user.getRole() == UserRole.GUEST.getValue()) {
+                        String sql2 = "SELECT * FROM guests WHERE user_id = ?";
+                        prepare = connect.prepareStatement(sql2);
+                        prepare.setInt(1, ManagerController.user.getId());
+                        result = prepare.executeQuery();
+                        if (result.next()) {
+                            GuestController.guest.setName(result.getString("name"));
+                            GuestController.guest.setPhone(result.getString("phone"));
+                            GuestController.guest.setAddress(result.getString("address"));
+                        }
                         ToolFXML.openFXML("views/guestForm.fxml");
                     } else if (ManagerController.user.getRole() == UserRole.STAFF.getValue()) {
                         ToolFXML.openFXML("views/manager.fxml");

@@ -1,5 +1,6 @@
 package com.mycompany.app.hotel_management.controllers;
 
+import com.mycompany.app.hotel_management.entities.Guest;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import com.mycompany.app.week3.code1.Transmogrify;
 import javafx.event.ActionEvent;
@@ -27,6 +28,7 @@ public class GuestController {
     private AnchorPane payment;
     @FXML
     private AnchorPane favorite;
+    public static Guest guest = new Guest();
 
     public void initialize() {
         //show(home);
