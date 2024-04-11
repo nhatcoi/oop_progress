@@ -1,8 +1,6 @@
 package com.mycompany.app.week5to6.models;
 
-import com.mycompany.app.week5to6.enums.Status;
 import com.mycompany.app.week5to6.util.Utility;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
