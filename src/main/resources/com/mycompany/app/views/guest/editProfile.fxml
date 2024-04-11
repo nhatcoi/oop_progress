@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane fx:id="editProfileScreen" prefHeight="603.0" prefWidth="1100.0" visible="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.EditProfileController">
    <children>
       <AnchorPane layoutX="9.0" layoutY="9.0" prefHeight="450.0" prefWidth="289.0" styleClass="bg-white" stylesheets="@../../css/home.css">
@@ -48,20 +49,20 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="310.0" layoutY="9.0" prefHeight="449.0" prefWidth="777.0" styleClass="bg-white" stylesheets="@../../css/home.css">
+      <AnchorPane fx:id="passwordPane" layoutX="310.0" layoutY="9.0" prefHeight="449.0" prefWidth="777.0" styleClass="bg-white" stylesheets="@../../css/home.css">
          <children>
             <Label layoutX="57.0" layoutY="20.0" prefHeight="42.0" prefWidth="212.0" text="Change password">
                <font>
                   <Font size="26.0" />
                </font>
             </Label>
-            <TextField layoutX="250.0" layoutY="136.0" prefHeight="34.0" prefWidth="169.0" promptText="old password" />
-            <TextField layoutX="250.0" layoutY="205.0" prefHeight="34.0" prefWidth="169.0" promptText="new password" />
-            <TextField layoutX="250.0" layoutY="276.0" prefHeight="34.0" prefWidth="169.0" promptText="authen 2th password" />
-            <Button layoutX="295.0" layoutY="363.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="76.0" text="Save" />
+            <PasswordField fx:id="tfPassword" layoutX="250.0" layoutY="136.0" prefHeight="34.0" prefWidth="169.0" promptText="password" styleClass="textField" stylesheets="@../../css/home.css" />
+            <PasswordField fx:id="tfNewPassword" layoutX="250.0" layoutY="205.0" prefHeight="34.0" prefWidth="169.0" promptText="new password" styleClass="textField" stylesheets="@../../css/home.css" />
+            <PasswordField fx:id="tfConfirmPassword" layoutX="250.0" layoutY="276.0" prefHeight="34.0" prefWidth="169.0" promptText="authen 2th password" styleClass="textField" stylesheets="@../../css/home.css" />
+            <Button layoutX="295.0" layoutY="363.0" mnemonicParsing="false" onAction="#updatePassword" prefHeight="43.0" prefWidth="76.0" styleClass="btn" stylesheets="@../../css/home.css" text="Save" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="310.0" layoutY="9.0" prefHeight="449.0" prefWidth="777.0" styleClass="bg-white" stylesheets="@../../css/home.css">
+      <AnchorPane fx:id="infoPane" layoutX="310.0" layoutY="9.0" prefHeight="449.0" prefWidth="777.0" styleClass="bg-white" stylesheets="@../../css/home.css">
          <children>
             <Label layoutX="52.0" layoutY="15.0" prefHeight="42.0" prefWidth="153.0" text="Informative">
                <font>

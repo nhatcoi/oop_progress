@@ -15,5 +15,13 @@ public class User {
     private String username;
     private int role;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "Id=" + Id +
+                ", username='" + username + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }
 

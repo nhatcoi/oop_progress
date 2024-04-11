@@ -30,9 +30,10 @@ public class GuestController {
     private AnchorPane favorite;
     public static Guest guest = new Guest();
 
-    public void initialize() {
-        //show(home);
 
+    public void initialize() throws IOException {
+        //show(home);
+        System.out.println(guest.toString());
     }
 
     public void search(ActionEvent actionEvent) {

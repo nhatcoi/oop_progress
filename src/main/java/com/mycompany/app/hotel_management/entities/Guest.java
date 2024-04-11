@@ -17,6 +17,15 @@ public class Guest {
     private String address;
     private int user_id;
 
-    public Guest(int id, String username, String name, String phone, String address) {
+    @Override
+    public String toString() {
+        return "Guest{" +
+                "Id=" + Id +
+                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", user_id=" + user_id +
+                '}';
     }
 }
