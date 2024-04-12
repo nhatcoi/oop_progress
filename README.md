@@ -1,6 +1,7 @@
-# Group 17
+# Lập trình hướng đôi tượgn - OOP
 
-# Member
+# Group 17
+## Member
 1. Nguyen Van Nhat
    - ID: 23010887
    - Signature: NhatCoiii
