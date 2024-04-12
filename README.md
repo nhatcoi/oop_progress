@@ -45,7 +45,7 @@ public class App {
 
 ```
 
-# Final Project: Exercices 01
+# Final Project: Hotel Management System
 Nội dung:
   Yêu cầu:
 - Giao diện cửa sổ JavaFX.
