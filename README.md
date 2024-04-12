@@ -16,6 +16,9 @@
   -  Assignment Week 1 : Done
   -  Assignment Week 2 : Done
   -  Assignment Week 3 : Done
+  -  Assignment Week 4 : Done
+  -  Assignment Week 5 : Done
+  -  Assignment Week 6 : Done
 
 # Lecturer's Feedback
 
