@@ -16,4 +16,10 @@ public class Room {
     private String type;
     private String status;
     private double price;
+    public Room(String name, String type, String status, double price) {
+        this.name = name;
+        this.type = type;
+        this.status = status;
+        this.price = price;
+    }
 }
