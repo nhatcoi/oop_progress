@@ -1,4 +1,4 @@
-# Lập trình hướng đôi tượgn - OOP
+# Lập trình hướng đôi tượng - OOP
 
 # Group 17
 ## Member
