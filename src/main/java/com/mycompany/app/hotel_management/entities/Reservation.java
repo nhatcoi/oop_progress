@@ -10,11 +10,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Payment {
-    // info booked room
+public class Reservation {
+    // info booking
     int id;
-    int reservationId;
-    double totalPrice;
-    String paymentMethod;
-    Date paymentDate;
+    int user_id;
+    int room_id;
+    Date checkInDate;
+    Date checkoutDate;
 }
