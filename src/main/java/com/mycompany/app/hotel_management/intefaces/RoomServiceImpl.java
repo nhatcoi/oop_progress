@@ -44,16 +44,29 @@ public class RoomServiceImpl extends Database implements RoomService {
             }
             ResultSet rs = preparedStatement.executeQuery();
 
-            while (rs.next()) {
-                String base64 = rs.getString("base64");
-                Image image = imgTool.base64ToImage(base64);
-                images.add(image);
+            for (int i = 0; i < roomList.size(); i++) {
+                if(rs.next()) {
+                    String base64 = rs.getString("base64");
+                    Image image = imgTool.base64ToImage(base64);
+                    images.add(image);
+                } else {
+                    images.add(new Image("file:emptyImg.png"));
+                }
             }
+
+//            while (rs.next()) {
+//                String base64 = rs.getString("base64");
+//                Image image = imgTool.base64ToImage(base64);
+//                images.add(image);
+//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return images;
     }
+
+
 
 
     public ObservableList<Image> getImage(Connection connect, ObservableList<Room> roomList) throws SQLException {
@@ -92,11 +105,12 @@ public class RoomServiceImpl extends Database implements RoomService {
             Image image = roomImages.get(room.getId());
             if (image == null) {
                 // Nếu không có hình ảnh cho phòng này, thêm hình ảnh mặc định
-                image = new Image("file:emptyImg.png");
+                image = new Image("https://via.placeholder.com/150");
             }
             images.add(image);
         }
 
         return images;
     }
+
 }

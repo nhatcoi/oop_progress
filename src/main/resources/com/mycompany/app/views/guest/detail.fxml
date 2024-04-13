@@ -46,7 +46,7 @@
         <TextField layoutX="23.0" layoutY="405.0" prefHeight="27.0" prefWidth="313.0" promptText="Feedback" styleClass="textField" stylesheets="@../../css/home.css" />
         <ImageView fitHeight="112.0" fitWidth="307.0" layoutX="24.0" layoutY="254.0" pickOnBounds="true">
             <image>
-                <Image url="@../../img/facilities.png" />
+                <Image url="@../../img/facilities-removebg-preview.png" />
             </image>
         </ImageView>
     </children>

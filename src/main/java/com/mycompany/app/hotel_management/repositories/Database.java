@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.enums.RoomType;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.FileReader;
@@ -40,6 +41,7 @@ public class Database {
     public void findAll(Connection connect, ObservableList<Room> roomList, String table) throws SQLException {
         long startTime = System.nanoTime();
 
+
         connect = connectDb();
         String query = "SELECT * FROM " + table;
 
@@ -67,6 +69,7 @@ public class Database {
         long endTime = System.nanoTime();
         long elapsedTime = endTime - startTime;
         System.out.println("Initialization time: " + elapsedTime + " nanoseconds");
+
     }
 
 

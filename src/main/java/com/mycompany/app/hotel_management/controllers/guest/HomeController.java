@@ -7,9 +7,6 @@ import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.enums.RoomType;
 import com.mycompany.app.hotel_management.intefaces.RoomServiceImpl;
 import com.mycompany.app.hotel_management.repositories.Database;
-import com.mycompany.app.hotel_management.utils.Dialog;
-import com.mycompany.app.hotel_management.utils.Md5;
-import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,10 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-
-import java.awt.*;
-import java.io.IOException;
+import javafx.scene.image.ImageView;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +27,13 @@ public class HomeController {
 
     @FXML
     private Button search;
+    @FXML
+    private ImageView image1;
+    @FXML
+    private ImageView image2;
+    @FXML
+    private ImageView image3;
+
 
     @FXML
     private Label lbPrice2;
@@ -60,39 +61,57 @@ public class HomeController {
     private final ObservableList<Room> rooms = FXCollections.observableArrayList();
     private ObservableList<Image> images = FXCollections.observableArrayList();
 
+
     RoomServiceImpl sv = new RoomServiceImpl();
 
     public void initialize() throws SQLException {
+
         connect = Database.connectDb();
         sv.getAllRoom(connect, rooms, "rooms");
-        images = sv.getImage(connect, rooms);
+        images = sv.getImage(connect, rooms, images);
 
         randomRoom();
     }
 
     private List<Room> getRandomSublist(List<Room> list, int size) {
+
         List<Room> sublist = new ArrayList<>(list);
         Collections.shuffle(sublist, new Random());
         return sublist.subList(0, size);
     }
 
-    private void randomRoom() {
+    private void randomRoom() throws SQLException {
         List<Label> names = List.of(lbName1, lbName2, lbName3);
         List<Label> prices = List.of(lbPrice1, lbPrice2, lbPrice3);
-        List<Room> selectedRooms = rooms.size() <= 3 ? rooms : getRandomSublist(rooms, 3);
+        List<Room> selectedRooms = rooms.size() <= names.size() ? rooms : getRandomSublist(rooms, names.size());
+        int[] id = new int[selectedRooms.size()];
 
         for (int i = 0; i < selectedRooms.size(); i++) {
             names.get(i).setText(selectedRooms.get(i).getName());
             prices.get(i).setText(String.valueOf(selectedRooms.get(i).getPrice()));
+
+
+            id[i] = rooms.indexOf(selectedRooms.get(i));
+            matchImg(id);
+
+
+        }
+    }
+
+    // choose list image match room random
+    private void matchImg(int[] id) {
+        List<ImageView> imageList = List.of(image1, image2, image3);
+        for (int i = 0; i < 3; i++) {
+            imageList.get(i).setImage(images.get(id[i]));
         }
     }
 
     @FXML
-    void otherRoom(ActionEvent actionEvent) {
+    void otherRoom() throws SQLException {
         randomRoom();
     }
     @FXML
-    void searchRoom(ActionEvent actionEvent) throws SQLException {
+    void searchRoom() throws SQLException {
         String search = tfSearch.getText();
         if (search.isEmpty()) {
             sv.getAllRoom(connect, rooms, "rooms");
@@ -119,15 +138,15 @@ public class HomeController {
         }
     }
 
-    public void booking1(ActionEvent event) {
+    public void booking1() {
+        // add room  into roomBooking
+
     }
 
-    public void booking2(ActionEvent actionEvent) {
+    public void booking2() {
     }
 
-    public void booking3(ActionEvent actionEvent) {
+    public void booking3() {
     }
-
-
 
 }
