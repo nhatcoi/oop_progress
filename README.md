@@ -1,6 +1,7 @@
-# Group 17
+# Lập trình hướng đôi tượng - OOP
 
-# Member
+# Group 17
+## Member
 1. Nguyen Van Nhat
    - ID: 23010887
    - Signature: NhatCoiii
@@ -15,6 +16,9 @@
   -  Assignment Week 1 : Done
   -  Assignment Week 2 : Done
   -  Assignment Week 3 : Done
+  -  Assignment Week 4 : Done
+  -  Assignment Week 5 : Done
+  -  Assignment Week 6 : Done
 
 # Lecturer's Feedback
 
@@ -41,7 +45,7 @@ public class App {
 
 ```
 
-# Final Project: Exercices 01
+# Final Project: Hotel Management System
 Nội dung:
   Yêu cầu:
 - Giao diện cửa sổ JavaFX.
