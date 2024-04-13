@@ -49,7 +49,7 @@ public class EditProfileController extends GuestController {
     private Label lbUsername;
     public Connection connect;
 
-    public void initialize() throws IOException {
+    public void initialize() throws IOException, SQLException {
         super.initialize();
         if (lbUsername != null) {
             lbUsername.setText(user.getUsername());

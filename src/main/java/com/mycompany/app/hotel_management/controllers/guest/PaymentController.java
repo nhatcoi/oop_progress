@@ -9,18 +9,22 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class PaymentController {
 
     @FXML
     private TableView<?> tableViewPay;
+    @FXML
+    private TableView<Room> tableViewBooking;
 
     @FXML
     private Label lbTotal;
     @FXML
     private ComboBox<String> cbPaymentMethod;
 
-    private static final ObservableList<Room> roomBooking = FXCollections.observableArrayList();
+    public static ObservableList<Room> roomBooking = FXCollections.observableArrayList();
 
     private final ObservableList<Payment> payments = FXCollections.observableArrayList();
 
@@ -29,13 +33,26 @@ public class PaymentController {
             cbPaymentMethod.getItems().add(paymentMethod.getText());
         }
 
+        if(!cbPaymentMethod.getItems().isEmpty()) {
+            cbPaymentMethod.getSelectionModel().select(0);
+        }
+
+        tableViewBooking.setItems(roomBooking);
+
+        tableViewBooking.setOnMouseClicked(e -> {
+            Room room = tableViewBooking.getSelectionModel().getSelectedItem();
+            if(room != null) {
+                lbTotal.setText(String.valueOf(room.getPrice()));
+            }
+        });
     }
 
-    // fetch Data from room click booking
+    // fetch Data from roomlick booking
 
 
     @FXML
     void payment() {
+        // conduct payment
 
     }
 

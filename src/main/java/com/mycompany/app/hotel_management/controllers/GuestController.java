@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,13 +26,13 @@ public class GuestController {
     @FXML
     private AnchorPane home;
     @FXML
-    private AnchorPane payment;
+    protected AnchorPane payment;
     @FXML
     private AnchorPane favorite;
     public static Guest guest = new Guest();
 
 
-    public void initialize() throws IOException {
+    public void initialize() throws IOException, SQLException {
         //show(home);
         System.out.println(guest.toString());
     }
@@ -48,7 +49,7 @@ public class GuestController {
         show(home);
     }
 
-    public void cartBooking(ActionEvent actionEvent) {
+    public void cartBooking() {
         show(payment);
     }
 
@@ -57,14 +58,10 @@ public class GuestController {
         signoutpane.setVisible(true);
     }
 
-    void show(AnchorPane paneToShow) {
+    public void show(AnchorPane paneToShow) {
         List<AnchorPane> allPanes = Arrays.asList(home, payment, favorite, findRoom, editProfile, signoutpane);
         for (AnchorPane pane : allPanes) {
-            if (pane != paneToShow) {
-                pane.setVisible(false);
-            } else {
-                pane.setVisible(true);
-            }
+            pane.setVisible(pane == paneToShow);
         }
     }
 
