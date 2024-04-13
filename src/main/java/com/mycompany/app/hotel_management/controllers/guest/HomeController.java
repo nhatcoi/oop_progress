@@ -59,7 +59,7 @@ public class HomeController extends GuestController {
 
     Connection connect;
 
-    private final ObservableList<Room> rooms = FXCollections.observableArrayList();
+    final ObservableList<Room> rooms = FXCollections.observableArrayList();
     private ObservableList<Image> images = FXCollections.observableArrayList();
     int[] id = new int[3];
 
@@ -154,7 +154,7 @@ public class HomeController extends GuestController {
             return;
         }
         if(roomBooking.contains(rooms.get(id[idxTag]))) {
-            Dialog.showError("Room is already in cart", null, "Room " + rooms.get(id[idxTag]).getName() + " is already in cart, please choose another room");
+            Dialog.showError("Room is already in cart", null, "Room " + rooms.get(id[idxTag]).getName() + " is already in cart, please open cart to check in room");
             return;
         }
 

@@ -56,9 +56,9 @@
                   <Font size="26.0" />
                </font>
             </Label>
-            <PasswordField fx:id="tfPassword" layoutX="250.0" layoutY="136.0" prefHeight="34.0" prefWidth="169.0" promptText="password" styleClass="textField" stylesheets="@../../css/home.css" />
-            <PasswordField fx:id="tfNewPassword" layoutX="250.0" layoutY="205.0" prefHeight="34.0" prefWidth="169.0" promptText="new password" styleClass="textField" stylesheets="@../../css/home.css" />
-            <PasswordField fx:id="tfConfirmPassword" layoutX="250.0" layoutY="276.0" prefHeight="34.0" prefWidth="169.0" promptText="authen 2th password" styleClass="textField" stylesheets="@../../css/home.css" />
+            <PasswordField fx:id="pfPassword" layoutX="250.0" layoutY="136.0" prefHeight="34.0" prefWidth="169.0" promptText="password" styleClass="textField" stylesheets="@../../css/home.css" />
+            <PasswordField fx:id="pfNewPassword" layoutX="250.0" layoutY="205.0" prefHeight="34.0" prefWidth="169.0" promptText="new password" styleClass="textField" stylesheets="@../../css/home.css" />
+            <PasswordField fx:id="pfConfirmPassword" layoutX="250.0" layoutY="276.0" prefHeight="34.0" prefWidth="169.0" promptText="authen 2th password" styleClass="textField" stylesheets="@../../css/home.css" />
             <Button layoutX="295.0" layoutY="363.0" mnemonicParsing="false" onAction="#updatePassword" prefHeight="43.0" prefWidth="76.0" styleClass="btn" stylesheets="@../../css/home.css" text="Save" />
          </children>
       </AnchorPane>

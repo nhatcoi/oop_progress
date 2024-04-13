@@ -2,12 +2,9 @@ package com.mycompany.app.hotel_management.controllers.guest;
 
 
 import com.mycompany.app.hotel_management.controllers.GuestController;
-import com.mycompany.app.hotel_management.controllers.ManagerController;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.Md5;
-import com.mycompany.app.hotel_management.utils.ToolFXML;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -26,11 +23,11 @@ public class EditProfileController extends GuestController {
     public AnchorPane passwordPane;
     public AnchorPane infoPane;
     @FXML
-    private PasswordField tfPassword;
+    private PasswordField pfPassword;
     @FXML
-    private PasswordField tfNewPassword;
+    private PasswordField pfNewPassword;
     @FXML
-    private PasswordField tfConfirmPassword;
+    private PasswordField pfConfirmPassword;
     @FXML
     private TextField tfPhone;
 
@@ -68,24 +65,24 @@ public class EditProfileController extends GuestController {
     }
 
     @FXML
-    void openPassword(ActionEvent event) {
+    void openPassword() {
         passwordPane.setVisible(true);
         infoPane.setVisible(false);
     }
 
     @FXML
-    void changeAvatar(ActionEvent event) {
+    void changeAvatar() {
 
     }
 
     @FXML
-    void openInfo(ActionEvent event) {
+    void openInfo() {
         infoPane.setVisible(true);
         passwordPane.setVisible(false);
     }
 
 
-    public void updateInfo(ActionEvent actionEvent) throws SQLException {
+    public void updateInfo() throws SQLException {
         if (!tfPhone.getText().isEmpty()) {
             guest.setPhone(tfPhone.getText());
         }
@@ -117,34 +114,34 @@ public class EditProfileController extends GuestController {
         lbAddress.setText(tfAddress.getText());
     }
 
-    public void updatePassword(ActionEvent event) throws SQLException {
-        if(tfPassword.getText().isEmpty()) {
+    public void updatePassword() throws SQLException {
+        if(pfPassword.getText().isEmpty()) {
             Dialog.showError("Error", null, "Please enter your current password");
             return;
         }
-        if(tfNewPassword.getText().isEmpty()) {
+        if(pfNewPassword.getText().isEmpty()) {
             Dialog.showError("Error", null, "Please enter new password");
             return;
         }
-        if(tfConfirmPassword.getText().isEmpty()) {
+        if(pfConfirmPassword.getText().isEmpty()) {
             Dialog.showError("Error", null, "Please enter confirm password");
             return;
         }
-        if(tfNewPassword.equals(tfConfirmPassword)) {
+        if(pfNewPassword.equals(pfConfirmPassword)) {
             Dialog.showError("Error", null, "Confirm password is not match with new password");
             return;
         }
-        if(tfNewPassword.equals(tfPassword)) {
+        if(pfNewPassword.equals(pfPassword)) {
             Dialog.showError("Error", null, "New password is the same as the old password");
             return;
         }
-        if(tfNewPassword.getText().length() < 6) {
+        if(pfNewPassword.getText().length() < 6) {
             Dialog.showError("Error", null, "Password must be at least 6 characters");
             return;
         }
 
-        String password = Md5.hashString(tfPassword.getText());
-        String newPassword = Md5.hashString(tfNewPassword.getText());
+        String password = Md5.hashString(pfPassword.getText());
+        String newPassword = Md5.hashString(pfNewPassword.getText());
 
         connect = Database.connectDb();
 
@@ -168,6 +165,8 @@ public class EditProfileController extends GuestController {
             Dialog.showError("Error", null, "Current password is incorrect");
             return;
         }
+    }
+    void auThen() {
 
     }
 }

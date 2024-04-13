@@ -12,9 +12,11 @@ import lombok.Setter;
 @Setter
 public class Reservation {
     // info booking
-    int id;
+    int Id;
     int user_id;
     int room_id;
     Date checkInDate;
     Date checkoutDate;
+
+
 }
