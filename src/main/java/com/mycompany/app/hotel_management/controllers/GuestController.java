@@ -37,15 +37,15 @@ public class GuestController {
         System.out.println(guest.toString());
     }
 
-    public void search(ActionEvent actionEvent) {
+    public void search() {
         show(findRoom);
     }
 
-    public void favorite(ActionEvent actionEvent) {
+    public void favorite() {
         show(favorite);
     }
 
-    public void home(ActionEvent actionEvent) {
+    public void home() {
         show(home);
     }
 
@@ -53,7 +53,7 @@ public class GuestController {
         show(payment);
     }
 
-    public void userAccount(ActionEvent actionEvent) throws IOException {
+    public void userAccount() throws IOException {
         show(editProfile);
         signoutpane.setVisible(true);
     }

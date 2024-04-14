@@ -125,6 +125,7 @@ public class AuthController implements Initializable {
         }
     }
 
+
     // sign up
     public void signup() {
         // connect to db
@@ -139,10 +140,12 @@ public class AuthController implements Initializable {
             // check empty fields
             if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Dialog.showError("Đừng để trống", null, "Vui lòng điền đầy đủ thông tin");
-                return; // Exit the method as input validation failed
+                return;
             }
-
-            // Check if passwords match
+            if(password.length() < 6){
+                Dialog.showError("Mật khẩu quá ngắn", null, "Mật khẩu phải chứa ít nhất 6 ký tự");
+                return;
+            }
             if (!password.equals(confirmPassword)) {
                 Dialog.showError("Mật khẩu không khớp", null, "Mật khẩu và xác nhận mật khẩu không khớp");
                 return;
@@ -159,13 +162,6 @@ public class AuthController implements Initializable {
                 Dialog.showError("Đăng ký thất bại", null, "Email hoặc tên đăng nhập đã tồn tại");
                 return;
             }
-
-            // If everything is fine, proceed with the signup
-//            String insertSql = "INSERT INTO users ( username, password) VALUES (?, ?)";
-//            prepare = connect.prepareStatement(insertSql);
-//            prepare.setString(1, username);
-//            prepare.setString(2, password);
-//            prepare.executeUpdate();
 
             // Thêm người dùng vào bảng users
             String insertSql = "INSERT INTO users (username, password) VALUES (?, ?)";
@@ -184,15 +180,6 @@ public class AuthController implements Initializable {
             if (idResult.next()) {
                 userId = idResult.getInt("id");
             }
-
-// Now you have the ID of the newly inserted user in the userId variable
-//            System.out.println("The ID of the newly created user is: " + userId);
-//
-//            String insertGuestSql = "INSERT INTO guests (user_id) VALUES (?)";
-//            prepare = connect.prepareStatement(insertGuestSql);
-//            prepare.setInt(1, userId);
-//            prepare.executeUpdate();
-
 
             Dialog.showInformation("Đăng ký thành công", null, "Tài khoản của bạn đã được tạo thành công");
 

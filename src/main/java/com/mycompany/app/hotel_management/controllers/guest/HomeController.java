@@ -60,7 +60,7 @@ public class HomeController extends GuestController {
     Connection connect;
 
     final ObservableList<Room> rooms = FXCollections.observableArrayList();
-    private ObservableList<Image> images = FXCollections.observableArrayList();
+    ObservableList<Image> images = FXCollections.observableArrayList();
     int[] id = new int[3];
 
     RoomServiceImpl sv = new RoomServiceImpl();
@@ -108,7 +108,7 @@ public class HomeController extends GuestController {
         randomRoom();
     }
     @FXML
-    void searchRoom() throws SQLException {
+    public void searchRoom() throws SQLException {
         String search = tfSearch.getText();
         if (search.isEmpty()) {
             sv.getAllRoom(connect, rooms, "rooms");
@@ -149,10 +149,10 @@ public class HomeController extends GuestController {
 
     private void booking(int idxTag) {
         idxTag = idxTag - 1;
-        if(rooms.get(id[idxTag]).getStatus().equals(RoomStatus.OCCUPIED.getText())) {
-            Dialog.showError("Room is occupied", null, "Room " + rooms.get(id[idxTag]).getName() + " is occupied, please choose another room");
-            return;
-        }
+//        if(rooms.get(id[idxTag]).getStatus().equals(RoomStatus.OCCUPIED.getText())) {
+//            Dialog.showError("Room is occupied", null, "Room " + rooms.get(id[idxTag]).getName() + " is occupied, please choose another room");
+//            return;
+//        }
         if(roomBooking.contains(rooms.get(id[idxTag]))) {
             Dialog.showError("Room is already in cart", null, "Room " + rooms.get(id[idxTag]).getName() + " is already in cart, please open cart to check in room");
             return;

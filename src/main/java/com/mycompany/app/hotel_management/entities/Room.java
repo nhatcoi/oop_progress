@@ -22,4 +22,15 @@ public class Room {
         this.status = status;
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", status='" + status + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

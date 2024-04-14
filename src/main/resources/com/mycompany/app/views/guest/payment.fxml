@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<AnchorPane prefHeight="603.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.PaymentController">
+<AnchorPane prefHeight="603.0" prefWidth="1100.0" visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.PaymentController">
     <children>
       <TableView fx:id="tableViewBooking" layoutX="9.0" layoutY="78.0" prefHeight="355.0" prefWidth="516.0" stylesheets="@../../css/home.css" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="575.0" AnchorPane.topAnchor="78.0">
         <columns>
@@ -115,9 +115,9 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Button layoutX="884.0" layoutY="484.0" mnemonicParsing="false" onAction="#payment" prefHeight="45.0" prefWidth="166.0" styleClass="btn" stylesheets="@../../css/home.css">
+      <Button layoutX="884.0" layoutY="484.0" mnemonicParsing="false" onAction="#cancel" prefHeight="45.0" prefWidth="166.0" styleClass="btn" stylesheets="@../../css/home.css">
          <graphic>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cancel Resetvation">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cancel Reservation">
                <font>
                   <Font size="18.0" />
                </font>

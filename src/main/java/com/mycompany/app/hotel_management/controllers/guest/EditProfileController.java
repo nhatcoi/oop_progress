@@ -5,13 +5,17 @@ import com.mycompany.app.hotel_management.controllers.GuestController;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.Md5;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.*;
 
 import static com.mycompany.app.hotel_management.controllers.ManagerController.user;
@@ -44,9 +48,12 @@ public class EditProfileController extends GuestController {
 
     @FXML
     private Label lbUsername;
+
     public Connection connect;
 
     public void initialize() throws IOException, SQLException {
+
+
         super.initialize();
         if (lbUsername != null) {
             lbUsername.setText(user.getUsername());
@@ -115,33 +122,37 @@ public class EditProfileController extends GuestController {
     }
 
     public void updatePassword() throws SQLException {
-        if(pfPassword.getText().isEmpty()) {
+        String pass = pfPassword.getText();
+        String newPass = pfNewPassword.getText();
+        String confirmPass = pfConfirmPassword.getText();
+
+        if(pass.isEmpty()) {
             Dialog.showError("Error", null, "Please enter your current password");
             return;
         }
-        if(pfNewPassword.getText().isEmpty()) {
+        if(newPass.isEmpty()) {
             Dialog.showError("Error", null, "Please enter new password");
             return;
         }
-        if(pfConfirmPassword.getText().isEmpty()) {
+        if(confirmPass.isEmpty()) {
             Dialog.showError("Error", null, "Please enter confirm password");
             return;
         }
-        if(pfNewPassword.equals(pfConfirmPassword)) {
+        if(!(newPass.equals(confirmPass))) {
             Dialog.showError("Error", null, "Confirm password is not match with new password");
             return;
         }
-        if(pfNewPassword.equals(pfPassword)) {
+        if(newPass.equals(pass)) {
             Dialog.showError("Error", null, "New password is the same as the old password");
             return;
         }
-        if(pfNewPassword.getText().length() < 6) {
+        if(newPass.length() < 6) {
             Dialog.showError("Error", null, "Password must be at least 6 characters");
             return;
         }
 
-        String password = Md5.hashString(pfPassword.getText());
-        String newPassword = Md5.hashString(pfNewPassword.getText());
+        String password = Md5.hashString(pass);
+        String newPassword = Md5.hashString(newPass);
 
         connect = Database.connectDb();
 
@@ -168,5 +179,55 @@ public class EditProfileController extends GuestController {
     }
     void auThen() {
 
+    }
+
+    public void phoneSupport() {
+        String phoneNumber = "0376696037";
+        String facetimeURL = "facetime://" + phoneNumber;
+
+        try {
+            Desktop.getDesktop().browse(new URI(facetimeURL));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void cusSupport() {
+        String mail = "23010887@st.phenikaa-uni.edu.vn";
+        String cusSupport = "mailto:" + mail;
+        try{
+            Desktop.getDesktop().browse(new URI(cusSupport));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void contactSupport() {
+        String mail = "23010636@st.phenikaa-uni.edu.vn";
+        String cusSupport = "mailto:" + mail;
+        try{
+            Desktop.getDesktop().browse(new URI(cusSupport));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void aboutUs() {
+        String url = "https://github.com/nhatcoi/project_java";
+        openBrowser(url);
+    }
+
+    public void address() {
+        String url = "https://s.net.vn/D9Nc";
+        openBrowser(url);
+    }
+
+    private void openBrowser(String url) {
+        try {
+            Desktop.getDesktop().browse(new URI(url));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 }
