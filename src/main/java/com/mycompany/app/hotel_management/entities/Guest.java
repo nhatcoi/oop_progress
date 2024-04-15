@@ -15,6 +15,7 @@ public class Guest {
     private String name;
     private String phone;
     private String address;
+    private String email;
     private int user_id;
 
     @Override
@@ -25,6 +26,7 @@ public class Guest {
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
                 ", user_id=" + user_id +
                 '}';
     }

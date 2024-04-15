@@ -18,7 +18,7 @@ public class GuestServiceImpl implements GuestService {
             assert connect != null;
             ResultSet rs = connect.createStatement().executeQuery("SELECT guests.*,users.username FROM guests LEFT JOIN users ON users.id = guests.user_id");
             while (rs.next()) {
-                guestsList.add(new Guest(rs.getInt("id"),rs.getString("username"), rs.getString("name"), rs.getString("phone"), rs.getString("address"),rs.getInt("user_id")));
+                guestsList.add(new Guest(rs.getInt("id"),rs.getString("username"), rs.getString("name"), rs.getString("phone"), rs.getString("address"), rs.getString("email") ,rs.getInt("user_id")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -28,6 +28,8 @@ public class GuestServiceImpl implements GuestService {
     // delete
     public void deleteData(Connection connect, ObservableList<Guest> guestsList, Guest guest) {
         try {
+            connect = Database.connectDb();
+            assert connect != null;
             connect.createStatement().executeUpdate("DELETE FROM guests WHERE id = " + guest.getId());
             guestsList.remove(guest);
         } catch (SQLException e) {
@@ -35,6 +37,14 @@ public class GuestServiceImpl implements GuestService {
         }
     }
 
-    // update
-
+    public void updateData(Connection connect, ObservableList<Guest> guestsList, Guest guest) {
+        try {
+            connect = Database.connectDb();
+            assert connect != null;
+            connect.createStatement().executeUpdate("UPDATE guests SET name = '" + guest.getName() + "', phone = '" + guest.getPhone() + "', address = '" + guest.getAddress() + "', email = '" + guest.getEmail() + "' WHERE id = " + guest.getId());
+            guestsList.set(guestsList.indexOf(guest), guest);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

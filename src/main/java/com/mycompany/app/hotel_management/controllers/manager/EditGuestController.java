@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EditGuestController {
+
     @FXML
     private TextField tfPhoneNumber;
 
@@ -32,6 +33,9 @@ public class EditGuestController {
 
     @FXML
     private TextField tfName;
+    @FXML
+    private TextField tfEmail;
+
     private Connection connect;
     private final ObservableList<Guest> guestsList = FXCollections.observableArrayList();
     GuestServiceImpl sv = new GuestServiceImpl();
@@ -50,6 +54,7 @@ public class EditGuestController {
                     tfName.setText(guest.getName());
                     tfPhoneNumber.setText(guest.getPhone());
                     tfAddress.setText(guest.getAddress());
+                    tfEmail.setText(guest.getEmail());
                 }
             }
         });
@@ -57,65 +62,21 @@ public class EditGuestController {
         sv.getData(connect, guestsList);
     }
 
-//    public void fetchData(){
-//        try {
-//            connect = Database.connectDb();
-//            assert connect != null;
-//            ResultSet rs = connect.createStatement().executeQuery("SELECT guests.*,users.username FROM guests LEFT JOIN users ON users.id = guests.user_id");
-//            while (rs.next()) {
-//                guestsList.add(new Guest(rs.getInt("id"),rs.getString("username"), rs.getString("name"), rs.getString("phone"), rs.getString("address"),rs.getInt("user_id")));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public void removeData(ActionEvent actionEvent) {
         Guest guest = tableViewUser.getSelectionModel().getSelectedItem();
         if(guest != null) {
-            connect = Database.connectDb();
-            assert connect != null;
             sv.deleteData(connect, guestsList, guest);
         }
     }
 
     public void changeData() {
-
+        Guest guest = tableViewUser.getSelectionModel().getSelectedItem();
+        if (guest != null) {
+            guest.setName(tfName.getText());
+            guest.setPhone(tfPhoneNumber.getText());
+            guest.setAddress(tfAddress.getText());
+            guest.setEmail(tfEmail.getText());
+            sv.updateData(connect, guestsList, guest);
+        }
     }
-
-
-   public void addData(ActionEvent actionEvent) {
-//        String userName = tfUserName.getText();
-//        String name = tfName.getText();
-//        String phone = tfPhoneNumber.getText();
-//        String address = tfAddress.getText();
-//
-//        String sql = "SELECT id FROM users WHERE username = '" + userName + "'";
-//        try {
-//            ResultSet rs = connect.createStatement().executeQuery(sql);
-//            if (rs.next()) {
-//                int user_id = rs.getInt("id");
-//
-//                String findGuest = "SELECT * FROM guests WHERE user_id = " + user_id;
-//                ResultSet rsGuest = connect.createStatement().executeQuery(findGuest);
-//                if (rsGuest.next()) {
-//                    Dialog.showError("Guest already exists", "This user already has a guest", "Please choose another user");
-//                    return;
-//                }
-//                String insertSql = "INSERT INTO guests (name, phone, address,user_id) VALUES (?, ?, ?, ?)";
-//                PreparedStatement preparedStatement = connect.prepareStatement(insertSql);
-//                preparedStatement.setString(1, name);
-//                preparedStatement.setString(2, phone);
-//                preparedStatement.setString(3, address);
-//                preparedStatement.setInt(4, user_id);
-//                preparedStatement.executeUpdate();
-//
-//                guestsList.clear();
-//                fetchData();
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-   }
 }

@@ -5,7 +5,7 @@ import com.mycompany.app.hotel_management.controllers.GuestController;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.Md5;
-import javafx.event.ActionEvent;
+import com.mycompany.app.hotel_management.utils.Validate;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -18,14 +18,20 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
 
+
 import static com.mycompany.app.hotel_management.controllers.ManagerController.user;
 
+
 public class EditProfileController extends GuestController {
+
+
 
     public Label lbName;
     public TextField tfName;
     public AnchorPane passwordPane;
     public AnchorPane infoPane;
+    public TextField tfEmail;
+    public Label lbEmail;
     @FXML
     private PasswordField pfPassword;
     @FXML
@@ -68,6 +74,10 @@ public class EditProfileController extends GuestController {
             if (lbName != null) {
                 lbName.setText(guest.getName());
             }
+            if (lbEmail != null) {
+                lbEmail.setText(guest.getEmail());
+            }
+            System.out.println(guest.toString());
         }
     }
 
@@ -99,6 +109,13 @@ public class EditProfileController extends GuestController {
         if (!tfName.getText().isEmpty()) {
             guest.setName(tfName.getText());
         }
+        if(!tfEmail.getText().isEmpty()) {
+            guest.setEmail(tfEmail.getText());
+            if(Validate.validateEmail(tfEmail.getText())) {
+                Dialog.showError("Error", null, "Email is invalid");
+                return;
+            }
+        }
 
         connect = Database.connectDb();
         String sql = "SELECT * FROM guests WHERE user_id = '" + user.getId() + "'";
@@ -108,11 +125,11 @@ public class EditProfileController extends GuestController {
         ResultSet resultSet = statement.executeQuery(sql);
         if(resultSet.next())
         {
-            sql = "UPDATE guests SET name = '" + guest.getName() + "', phone = '" + guest.getPhone() + "', address = '" + guest.getAddress() + "' WHERE user_id = '" + user.getId() + "'";
+            sql = "UPDATE guests SET name = '" + guest.getName() + "', phone = '" + guest.getPhone() + "', address = '" + guest.getAddress() + "', email = '" + guest.getEmail() + "' WHERE user_id = '" + user.getId() + "'";
             statement.executeUpdate(sql);
         }
         else{
-            sql = "INSERT INTO guests (user_id, name, phone, address) VALUES ('" + user.getId() + "', '" + guest.getName() + "', '" + guest.getPhone() + "', '" + guest.getAddress() + "')";
+            sql = "INSERT INTO guests (user_id, name, phone, address, email) VALUES ('" + user.getId() + "', '" + guest.getName() + "', '" + guest.getPhone() + "', '" + guest.getAddress() + "', '" + guest.getEmail() + "')";
             statement.executeUpdate(sql);
         }
 
@@ -176,9 +193,6 @@ public class EditProfileController extends GuestController {
             Dialog.showError("Error", null, "Current password is incorrect");
             return;
         }
-    }
-    void auThen() {
-
     }
 
     public void phoneSupport() {

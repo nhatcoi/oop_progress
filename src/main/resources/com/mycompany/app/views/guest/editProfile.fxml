@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import de.jensd.fx.glyphs.fontawesome.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.control.PasswordField?>
 
 <AnchorPane fx:id="editProfileScreen" prefHeight="603.0" prefWidth="1100.0" visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.EditProfileController">
    <children>
@@ -151,49 +140,60 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Label layoutX="30.0" layoutY="81.0" prefHeight="53.0" prefWidth="99.0" text="username : ">
+            <Label layoutX="30.0" layoutY="64.0" prefHeight="53.0" prefWidth="99.0" text="username : ">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label fx:id="lbUsername" layoutX="137.0" layoutY="80.0" prefHeight="53.0" prefWidth="403.0" text="metadata">
+            <Label fx:id="lbUsername" layoutX="137.0" layoutY="63.0" prefHeight="53.0" prefWidth="403.0" text="metadata">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <TextField fx:id="tfName" layoutX="366.0" layoutY="173.0" promptText="change Name" styleClass="textField" stylesheets="@../../css/home.css" />
-            <Label fx:id="lbName" layoutX="135.0" layoutY="160.0" prefHeight="53.0" prefWidth="224.0" text="metadata">
+            <TextField fx:id="tfName" layoutX="361.0" layoutY="137.0" promptText="change Name" styleClass="textField" stylesheets="@../../css/home.css" />
+            <Label fx:id="lbName" layoutX="135.0" layoutY="123.0" prefHeight="53.0" prefWidth="224.0" text="metadata">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label layoutX="30.0" layoutY="160.0" prefHeight="53.0" prefWidth="99.0" text="Name :">
+            <Label layoutX="30.0" layoutY="123.0" prefHeight="53.0" prefWidth="99.0" text="Name :">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label layoutX="30.0" layoutY="223.0" prefHeight="53.0" prefWidth="99.0" text="Phone :">
+            <Label layoutX="30.0" layoutY="186.0" prefHeight="53.0" prefWidth="99.0" text="Phone :">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label fx:id="lbPhone" layoutX="137.0" layoutY="222.0" prefHeight="53.0" prefWidth="224.0" text="metadata">
+            <Label fx:id="lbPhone" layoutX="137.0" layoutY="185.0" prefHeight="53.0" prefWidth="224.0" text="metadata">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label fx:id="lbAddress" layoutX="137.0" layoutY="283.0" prefHeight="53.0" prefWidth="224.0" text="metadata">
+            <Label fx:id="lbAddress" layoutX="137.0" layoutY="246.0" prefHeight="53.0" prefWidth="224.0" text="metadata">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label layoutX="30.0" layoutY="284.0" prefHeight="53.0" prefWidth="99.0" text="Address :">
+            <Label layoutX="30.0" layoutY="247.0" prefHeight="53.0" prefWidth="99.0" text="Address :">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <TextField fx:id="tfPhone" layoutX="366.0" layoutY="236.0" promptText="change phone" styleClass="textField" stylesheets="@../../css/home.css" />
-            <TextField fx:id="tfAddress" layoutX="366.0" layoutY="295.0" promptText="change address" styleClass="textField" stylesheets="@../../css/home.css" />
+            <TextField fx:id="tfPhone" layoutX="361.0" layoutY="200.0" promptText="change phone" styleClass="textField" stylesheets="@../../css/home.css" />
+            <TextField fx:id="tfAddress" layoutX="361.0" layoutY="259.0" promptText="change address" styleClass="textField" stylesheets="@../../css/home.css" />
+            <TextField fx:id="tfEmail" layoutX="361.0" layoutY="313.0" promptText="change address" styleClass="textField" stylesheets="@../../css/home.css" />
+            <Label layoutX="30.0" layoutY="301.0" prefHeight="53.0" prefWidth="99.0" text="Email :">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbEmail" layoutX="137.0" layoutY="300.0" prefHeight="53.0" prefWidth="224.0" text="metadata">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

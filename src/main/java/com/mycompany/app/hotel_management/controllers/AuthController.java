@@ -4,9 +4,8 @@ package com.mycompany.app.hotel_management.controllers;
 import com.mycompany.app.hotel_management.entities.User;
 import com.mycompany.app.hotel_management.enums.UserRole;
 import com.mycompany.app.hotel_management.repositories.Database;
+import com.mycompany.app.hotel_management.utils.*;
 import com.mycompany.app.hotel_management.utils.Dialog;
-import com.mycompany.app.hotel_management.utils.Md5;
-import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,10 +18,15 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class AuthController implements Initializable {
 
+    public TextField tfEmail;
+    public TextField tfUsername;
     @FXML
     private StackPane authForm;
     @FXML
@@ -56,8 +60,7 @@ public class AuthController implements Initializable {
     // forgot
     @FXML
     private AnchorPane forgot_form;
-    @FXML
-    private TextField forgot_email;
+
     @FXML
     private Hyperlink forgot_login;
     @FXML
@@ -105,9 +108,12 @@ public class AuthController implements Initializable {
                         prepare.setInt(1, ManagerController.user.getId());
                         result = prepare.executeQuery();
                         if (result.next()) {
+                            GuestController.guest.setId(result.getInt("id"));
                             GuestController.guest.setName(result.getString("name"));
                             GuestController.guest.setPhone(result.getString("phone"));
                             GuestController.guest.setAddress(result.getString("address"));
+                            GuestController.guest.setEmail(result.getString("email"));
+                            GuestController.guest.setUser_id(result.getInt("user_id"));
                         }
                         ToolFXML.openFXML("views/guestForm.fxml");
                     } else if (ManagerController.user.getRole() == UserRole.STAFF.getValue()) {
@@ -140,6 +146,10 @@ public class AuthController implements Initializable {
             // check empty fields
             if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Dialog.showError("Đừng để trống", null, "Vui lòng điền đầy đủ thông tin");
+                return;
+            }
+            if(username.length() < 6) {
+                Dialog.showError("Tên đăng nhập quá ngắn", null, "Tên đăng nhập phải chứa ít nhất 6 ký tự");
                 return;
             }
             if(password.length() < 6){
@@ -193,24 +203,54 @@ public class AuthController implements Initializable {
 
 
     // forgot password
-    public void forgot() {
-//        String sql = "SELECT * FROM admin WHERE email = ?";
-//        connect = database.connectDb();
-//        try {
-//            prepare = connect.prepareStatement(sql);
-//            prepare.setString(1, forgot_email.getText());
-//            result = prepare.executeQuery();
-//
-//            if(forgot_email.getText().isEmpty()) {
-//                Dialog.showError("Đừng để trống", null, "Vui lòng nhập email");
-//            } else {
-//                // check if email is exist
-//                if(result.next()) Dialog.showInformation("Kiểm tra email", null, "Một email đã được gửi đến " + forgot_email.getText() + " với mật khẩu của bạn");
-//                else Dialog.showError("Email không tồn tại", null, "Email không tồn tại trong hệ thống");
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+    public void requestPassword() {
+        String username = tfUsername.getText();
+        String email = tfEmail.getText();
+        if(Validate.validateEmail(email)) {
+            Dialog.showError("Error", null, "Email is invalid");
+            return;
+        }
+        try {
+            connect = Database.connectDb();
+            assert connect != null;
+            String sql = "SELECT * FROM guests WHERE email = ?";
+            prepare = connect.prepareStatement(sql);
+            prepare.setString(1, email);
+            result = prepare.executeQuery();
+            if(result.next()) {
+                String newPassword = generateRandomString(6);
+                String hashedPassword = Md5.hashString(newPassword);
+
+                String updateSql = "UPDATE users " +
+                        "SET password = ? " +
+                        "WHERE id = (SELECT id FROM users WHERE username = ?)";
+                prepare = connect.prepareStatement(updateSql);
+                prepare.setString(1, hashedPassword);
+                prepare.setString(2, username);
+                prepare.executeUpdate();
+
+                MailSender.sendEmail(email, "New password", "Your new password is: " + newPassword);
+                Dialog.showInformation("Success", null, "Your new password has been sent to your email");
+            } else {
+                Dialog.showError("Error", null, "Email not found");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String generateRandomString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        Random random = new Random();
+        // Khởi tạo chuỗi kết quả
+        StringBuilder stringBuilder = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            // chọn kí tự ran đầm
+            char randomChar = characters.charAt(random.nextInt(characters.length()));
+            stringBuilder.append(randomChar);
+        }
+        return stringBuilder.toString();
     }
 
 
@@ -230,14 +270,25 @@ public class AuthController implements Initializable {
         this.signup_form.setVisible(false);
         this.forgot_form.setVisible(false);
 
-        if (event.getSource() == this.createAccount || event.getSource() == this.signup_login || event.getSource() == this.forgot_signup) {
-            this.signup_form.setVisible(true);
-        } else if (event.getSource() == this.forgotPassword || event.getSource() == this.forgot_login || event.getSource() == this.signup_forgot) {
-            this.forgot_form.setVisible(true);
-        } else {
-            this.login_form.setVisible(true);
+        if (event.getSource() == this.signup_login || event.getSource() == this.forgot_login) {
+            show(login_form);
+        }
+        if (event.getSource() == this.createAccount || event.getSource() == this.forgot_signup) {
+            show(signup_form);
+        }
+        if (event.getSource() == this.forgotPassword || event.getSource() == this.signup_forgot) {
+            show(forgot_form);
+        }
+
+    }
+
+    public void show(AnchorPane paneToShow) {
+        List<AnchorPane> allPanes = Arrays.asList(login_form, signup_form, forgot_form);
+        for (AnchorPane pane : allPanes) {
+            pane.setVisible(pane == paneToShow);
         }
     }
+
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -247,5 +298,6 @@ public class AuthController implements Initializable {
         if (keyEvent.getCode() == KeyCode.ENTER)
             login();
     }
+
 }
 
