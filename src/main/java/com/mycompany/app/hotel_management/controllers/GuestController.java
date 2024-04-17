@@ -1,14 +1,22 @@
 package com.mycompany.app.hotel_management.controllers;
 
 import com.mycompany.app.hotel_management.entities.Guest;
+import com.mycompany.app.hotel_management.entities.Room;
+import com.mycompany.app.hotel_management.intefaces.RoomServiceImpl;
+import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import com.mycompany.app.week3.code1.Transmogrify;
+import com.mycompany.app.week5to6.controllers.HomeController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
@@ -19,30 +27,31 @@ public class GuestController {
     public AnchorPane signoutpane;
     public StackPane guestStackPane;
     @FXML
-    private AnchorPane editProfile;
+    public AnchorPane editProfile;
 
     @FXML
-    private AnchorPane findRoom;
+    public AnchorPane findRoom;
     @FXML
-    private AnchorPane home;
+    public AnchorPane home;
     @FXML
-    protected AnchorPane payment;
-    @FXML
-    private AnchorPane favorite;
+    public AnchorPane payment;
+    public AnchorPane detail;
     public static Guest guest = new Guest();
 
 
+
     public void initialize() throws IOException, SQLException {
-        //show(home);
-        System.out.println(guest.toString());
+        long startTime = System.nanoTime();
+        ToolFXML.test( "Guest : " ,startTime);
     }
 
     public void search() {
         show(findRoom);
+
     }
 
-    public void favorite() {
-        show(favorite);
+    public void detail() {
+        show(detail);
     }
 
     public void home() {
@@ -59,7 +68,7 @@ public class GuestController {
     }
 
     public void show(AnchorPane paneToShow) {
-        List<AnchorPane> allPanes = Arrays.asList(home, payment, favorite, findRoom, editProfile, signoutpane);
+        List<AnchorPane> allPanes = Arrays.asList(home, payment, detail, findRoom, editProfile, signoutpane);
         for (AnchorPane pane : allPanes) {
             pane.setVisible(pane == paneToShow);
         }
@@ -69,4 +78,19 @@ public class GuestController {
         ToolFXML.openFXML("views/authForm.fxml");
         ToolFXML.closeFXML(guestPane);
     }
+
+    public void imgDetail1(ActionEvent actionEvent) {
+        show(detail);
+    }
+
+    public void imgDetail2(ActionEvent actionEvent) {
+        show(detail);
+    }
+
+    public void imgDetail3(ActionEvent actionEvent) {
+        show(detail);
+    }
+
+
+
 }

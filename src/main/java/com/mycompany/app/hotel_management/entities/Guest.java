@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static com.mycompany.app.hotel_management.controllers.ManagerController.user;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -22,7 +24,7 @@ public class Guest {
     public String toString() {
         return "Guest{" +
                 "Id=" + Id +
-                ", username='" + username + '\'' +
+                ", username='" + user.getUsername() + '\'' +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +

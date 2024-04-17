@@ -31,6 +31,7 @@ public class RoomServiceImpl extends Database implements RoomService {
     public ObservableList<Image> getImage(Connection connect, ObservableList<Room> roomList, ObservableList<Image> images) throws SQLException {
         List<Integer> roomIds = roomList.stream().map(Room::getId).collect(Collectors.toList());
 
+        connect = Database.connectDb();
         try {
             String query = "SELECT * FROM pictures WHERE room_id IN (";
             for (int i = 0; i < roomIds.size(); i++) {
@@ -153,6 +154,7 @@ public class RoomServiceImpl extends Database implements RoomService {
 
     // search room
     public ObservableList<Room> searchRoom(Connection connect, ObservableList<Room> roomList, String search) throws SQLException {
+        connect = Database.connectDb();
         String sql = "SELECT * FROM rooms WHERE name LIKE '%" + search + "%'";
         ResultSet resultSet = connect.createStatement().executeQuery(sql);
         roomList.clear();

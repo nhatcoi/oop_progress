@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="billPaymentPane" prefHeight="891.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.PaymentDetailController">
+   <children>
+      <Label fx:id="lbNameBill" alignment="CENTER" layoutX="93.0" layoutY="143.0" prefHeight="135.0" prefWidth="402.0" text="BILL PAYMENT">
+         <font>
+            <Font name="SignPainter-HouseScript" size="64.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbGuestBill" layoutX="52.0" layoutY="314.0" prefHeight="27.0" prefWidth="315.0" text="Customer Name">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="165.0" fitWidth="153.0" layoutX="99.0" layoutY="14.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../img/VN_Hotel-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="261.0" layoutY="89.0" stroke="#09077c" strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel" wrappingWidth="133.05810546875">
+         <font>
+            <Font name="FontAwesome Regular" size="51.0" />
+         </font>
+      </Text>
+      <Text fill="#0300b2" layoutX="267.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Viet Nhat" wrappingWidth="121.05810546875">
+         <font>
+            <Font name="Herculanum" size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="52.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invoice to :">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <Label fx:id="lbPhone" layoutX="52.0" layoutY="359.0" prefHeight="17.0" prefWidth="161.0" text="phone">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbEmail" layoutX="101.0" layoutY="398.0" prefHeight="18.0" prefWidth="256.0" text="email">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Text layoutX="52.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email : ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="52.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" wrappingWidth="108.21630859375">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="362.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PRICE" wrappingWidth="51.21630859375">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="495.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL" wrappingWidth="57.21630859375">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Separator layoutX="51.0" layoutY="501.0" prefHeight="6.0" prefWidth="495.0" />
+      <Label fx:id="lbRoomName" layoutX="52.0" layoutY="525.0" prefHeight="18.0" prefWidth="256.0" text="Room name">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbDays" layoutX="57.0" layoutY="554.0" prefHeight="18.0" prefWidth="70.0" text="days">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbResId" layoutX="390.0" layoutY="318.0" prefHeight="17.0" prefWidth="121.0" text="reservation code">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Text layoutX="387.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check In : ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Label fx:id="lbCheckIn" layoutX="449.0" layoutY="359.0" prefHeight="18.0" prefWidth="121.0" text="metadata">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbCheckOut" layoutX="450.0" layoutY="389.0" prefHeight="18.0" prefWidth="121.0" text="metadata">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Text layoutX="388.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check Out : ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Label fx:id="lbPrice" alignment="TOP_RIGHT" layoutX="322.0" layoutY="525.0" prefHeight="20.0" prefWidth="90.0" text="lbPrice">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbTotal" alignment="TOP_RIGHT" layoutX="450.0" layoutY="525.0" prefHeight="20.0" prefWidth="90.0" text="lbTotal">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Separator layoutX="51.0" layoutY="630.0" prefHeight="6.0" prefWidth="495.0" />
+      <Label fx:id="lbAllTotal" alignment="TOP_RIGHT" layoutX="447.0" layoutY="649.0" prefHeight="17.0" prefWidth="98.0" text="total">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="52.0" layoutY="649.0" prefHeight="20.0" prefWidth="161.0" text="TOTAL">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Separator layoutX="51.0" layoutY="715.0" prefHeight="6.0" prefWidth="495.0" />
+      <Label layoutX="52.0" layoutY="741.0" prefHeight="20.0" prefWidth="161.0" text="PAYMENT INFO">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Separator layoutX="51.0" layoutY="782.0" prefHeight="6.0" prefWidth="495.0" />
+      <Label fx:id="lbPaymentMethod" alignment="CENTER_RIGHT" layoutX="397.0" layoutY="741.0" prefHeight="20.0" prefWidth="147.0" text="lbPaymentMethod">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="550.0" layoutY="1.0" mnemonicParsing="false" onAction="#closeBill" prefHeight="27.0" prefWidth="40.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
+         <graphic>
+            <FontAwesomeIcon glyphName="CLOSE" />
+         </graphic>
+      </Button>
+      <Button layoutX="25.0" layoutY="860.0" mnemonicParsing="false" onAction="#scan" styleClass="transparent-button" stylesheets="@../../css/home.css" text="Scan" />
+      <Label fx:id="lbRoomName2" layoutX="394.0" layoutY="801.0" prefHeight="20.0" prefWidth="79.0" text="Signature">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbSignature" alignment="CENTER" contentDisplay="CENTER" layoutX="300.0" layoutY="839.0" prefHeight="34.0" prefWidth="267.0" text="lbSignature">
+         <font>
+            <Font name="Snell Roundhand" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -21,7 +21,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OverviewController extends Database {
+public class OverviewController  {
     @FXML
     private AnchorPane overview;
     @FXML
@@ -46,19 +46,13 @@ public class OverviewController extends Database {
     Connection connect;
 
     RoomServiceImpl sv = new RoomServiceImpl();
-    public final ObservableList<Image> images = FXCollections.observableArrayList();
-    public final ObservableList<Room> roomList = FXCollections.observableArrayList();
+    public static final ObservableList<Image> images = FXCollections.observableArrayList();
+    public static final ObservableList<Room> roomList = FXCollections.observableArrayList();
     public void initialize() throws SQLException {
-        long startTime = System.nanoTime();
-
         connect = Database.connectDb();
         sv.getAllRoom(connect, roomList, "rooms");
         sv.getImage(connect, roomList, images);
         setTag();
-
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-        System.out.println("Initialization time: " + elapsedTime + " nanoseconds");
     }
 
     @FXML

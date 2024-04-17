@@ -13,19 +13,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
 
-public class HomeController extends GuestController {
+public class HomeController extends GuestController{
 
+    public AnchorPane homePane;
     @FXML
     private Button search;
     @FXML
@@ -59,33 +64,28 @@ public class HomeController extends GuestController {
 
     Connection connect;
 
-    final ObservableList<Room> rooms = FXCollections.observableArrayList();
-    ObservableList<Image> images = FXCollections.observableArrayList();
-    int[] id = new int[3];
 
+    static ObservableList<Room> rooms = FXCollections.observableArrayList();
+    static ObservableList<Image> images = FXCollections.observableArrayList();
     RoomServiceImpl sv = new RoomServiceImpl();
+    int[] id = new int[3];
+    static int sumImg = 0;
 
-    public void initialize() throws SQLException {
-
-        connect = Database.connectDb();
-        sv.getAllRoom(connect, rooms, "rooms");
-        images = sv.getImage(connect, rooms, images);
-
-        randomRoom();
-    }
-
-    private void randomRoom() throws SQLException {
+    private void randomRoom(ObservableList<Room> rooms, ObservableList<Image> images) throws SQLException {
         List<Label> names = List.of(lbName1, lbName2, lbName3);
         List<Label> prices = List.of(lbPrice1, lbPrice2, lbPrice3);
-        List<Room> selectedRooms = rooms.size() <= names.size() ? rooms : getRandomSublist(rooms, names.size());
-
-
+        List<Room> selectedRooms;
+        if (rooms.size() > 3) {
+            selectedRooms = getRandomSublist(rooms, 3);
+        } else {
+            selectedRooms = rooms;
+        }
+//        DetailController.roomDetailList = selectedRooms;
         for (int i = 0; i < selectedRooms.size(); i++) {
             names.get(i).setText(selectedRooms.get(i).getName());
             prices.get(i).setText(String.valueOf(selectedRooms.get(i).getPrice()));
-
             id[i] = rooms.indexOf(selectedRooms.get(i));
-            matchImg(id);
+            matchImg(images, id, i);
         }
     }
 
@@ -95,44 +95,42 @@ public class HomeController extends GuestController {
         return sublist.subList(0, size);
     }
 
-    // choose list image match room random
-    private void matchImg(int[] id) {
+    private void matchImg(ObservableList<Image> images, int[] id, int i) {
         List<ImageView> imageList = List.of(image1, image2, image3);
-        for (int i = 0; i < 3; i++) {
-            imageList.get(i).setImage(images.get(id[i]));
-        }
+        imageList.get(i).setImage(images.get(id[i]));
     }
 
     @FXML
     void otherRoom() throws SQLException {
-        randomRoom();
+        randomRoom(rooms, images);
     }
+
     @FXML
     public void searchRoom() throws SQLException {
-        String search = tfSearch.getText();
+        String search = tfSearch.getText().trim();
+        ObservableList<Room> roomTmp = rooms;
+        ObservableList<Image> imageTmp = images;
+
         if (search.isEmpty()) {
             sv.getAllRoom(connect, rooms, "rooms");
+            images = sv.getImage(connect, rooms, images);
         } else {
             try {
-                connect = Database.connectDb();
-                String sql = "SELECT * FROM rooms WHERE name LIKE '%" + search + "%'";
-                assert connect != null;
-                ResultSet resultSet = connect.createStatement().executeQuery(sql);
-                rooms.clear();
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String name = resultSet.getString("name");
-                    String type = RoomType.values()[resultSet.getInt("type")].getText();
-                    String status = RoomStatus.values()[resultSet.getInt("status")].getText();
-                    double price = resultSet.getDouble("price");
-
-                    rooms.add(new Room(id, name, type, status, price));
+                ObservableList<Room> searchRooms = FXCollections.observableArrayList();
+                ObservableList<Image> searchImages = FXCollections.observableArrayList();
+                for(int i=0; i<rooms.size(); i++) {
+                    if(rooms.get(i).getName().contains(search)) {
+                        searchRooms.add(rooms.get(i));
+                        searchImages.add(images.get(i));
+                    }
                 }
-                randomRoom();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                randomRoom(searchRooms, searchImages);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
+        rooms = roomTmp;
+        images = imageTmp;
     }
 
     public void booking1() {
@@ -147,7 +145,7 @@ public class HomeController extends GuestController {
         booking(3);
     }
 
-    private void booking(int idxTag) {
+    void booking(int idxTag) {
         idxTag = idxTag - 1;
 //        if(rooms.get(id[idxTag]).getStatus().equals(RoomStatus.OCCUPIED.getText())) {
 //            Dialog.showError("Room is occupied", null, "Room " + rooms.get(id[idxTag]).getName() + " is occupied, please choose another room");
@@ -157,9 +155,33 @@ public class HomeController extends GuestController {
             Dialog.showError("Room is already in cart", null, "Room " + rooms.get(id[idxTag]).getName() + " is already in cart, please open cart to check in room");
             return;
         }
-
         roomBooking.add(rooms.get(id[idxTag]));
         Dialog.showInformation("Add to Cart", null, "Add room " + rooms.get(id[idxTag]).getName() + " to payment Successfully \nCarry out payment to finish booking");
     }
 
+    public void imgClick1(MouseEvent mouseEvent) throws IOException {
+    }
+
+    public void imgClick2(MouseEvent mouseEvent) {
+    }
+
+    public void imgClick3(MouseEvent mouseEvent) {
+    }
+
+
+    public void initialize() throws SQLException {
+        long startTime = System.nanoTime();
+
+        connect = Database.connectDb();
+        sv.getAllRoom(connect, rooms, "rooms");
+        images = sv.getImage(connect, rooms, images);
+        sumImg = images.size();
+        randomRoom(rooms, images);
+
+        for (Room room : rooms){
+            System.out.println(room.toString());
+        }
+
+        ToolFXML.test("Home : ", startTime);
+    }
 }

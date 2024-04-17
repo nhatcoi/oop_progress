@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="603.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.HomeController">
+<AnchorPane fx:id="homePane" prefHeight="603.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.HomeController">
    <children>
       <ImageView fitHeight="619.0" fitWidth="908.0" layoutX="108.0" layoutY="-213.0" opacity="0.13" pickOnBounds="true" smooth="false">
          <image>
@@ -39,7 +39,7 @@
       </Label>
       <AnchorPane layoutX="30.0" layoutY="240.0" prefHeight="339.0" prefWidth="332.0" styleClass="bg-white" stylesheets="@../../css/home.css">
          <children>
-            <ImageView fx:id="image1" fitHeight="204.0" fitWidth="314.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true">
+            <ImageView fx:id="image1" fitHeight="204.0" fitWidth="314.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#imgClick1" pickOnBounds="true">
                <image>
                   <Image url="@../../img/hotelbg.jpeg" />
                </image>
@@ -69,7 +69,7 @@
       </AnchorPane>
       <AnchorPane layoutX="390.0" layoutY="240.0" prefHeight="339.0" prefWidth="332.0" styleClass="bg-white" stylesheets="@../../css/home.css">
          <children>
-            <ImageView fx:id="image2" fitHeight="204.0" fitWidth="308.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true">
+            <ImageView fx:id="image2" fitHeight="204.0" fitWidth="308.0" layoutX="11.0" layoutY="10.0" onMouseClicked="#imgClick2" pickOnBounds="true">
                <image>
                   <Image url="@../../img/hotel3.jpeg" />
                </image>
@@ -102,7 +102,7 @@
       </AnchorPane>
       <AnchorPane layoutX="750.0" layoutY="240.0" prefHeight="339.0" prefWidth="332.0" styleClass="bg-white" stylesheets="@../../css/home.css">
          <children>
-            <ImageView fx:id="image3" fitHeight="204.0" fitWidth="308.0" layoutX="12.0" layoutY="10.0" pickOnBounds="true">
+            <ImageView fx:id="image3" fitHeight="204.0" fitWidth="308.0" layoutX="12.0" layoutY="10.0" onMouseClicked="#imgClick3" pickOnBounds="true">
                <image>
                   <Image url="@../../img/hotel2.jpeg" />
                </image>

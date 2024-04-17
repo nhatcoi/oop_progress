@@ -45,16 +45,12 @@ public class RoomDetailsController extends OverviewController {
     @FXML
     private AnchorPane showRoomDetails;
 
-    RoomServiceImpl roomService = new RoomServiceImpl();
-
+    RoomServiceImpl sv = new RoomServiceImpl();
 
     public int currentImageIndex = 0;
 
     public void initialize() throws SQLException {
-        connect = Database.connectDb();
-        sv.getAllRoom(connect, roomList, "rooms");
-//        fetchDataFromDatabase();
-        sv.getImage(connect, roomList, images);
+
     }
 
 //    public void fetchDataFromDatabase() throws SQLException {
@@ -104,12 +100,12 @@ public class RoomDetailsController extends OverviewController {
 //    }
 
     @FXML
-    void switchRight(ActionEvent event) {
+    void switchRight() {
         switchImage(1);
     }
 
     @FXML
-    void switchLeft(ActionEvent event) {
+    void switchLeft() {
         switchImage(-1);
     }
 

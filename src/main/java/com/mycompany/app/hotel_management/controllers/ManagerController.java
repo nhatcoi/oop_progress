@@ -20,10 +20,6 @@ import java.util.List;
 public class ManagerController {
     public AnchorPane slidePane;
     public ImageView image1;
-    //    public ImageView image2;
-//    public ImageView image3;
-//    public AnchorPane slidePane;
-//    public AnchorPane navigateBar;
     public AnchorPane paneHome;
     public AnchorPane showRoomDetails;
     public AnchorPane overview;

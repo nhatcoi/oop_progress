@@ -68,4 +68,18 @@ public class ToolFXML {
         Stage stage = (Stage) form_close.getScene().getWindow();
         stage.close();
     }
+
+    public static void switchPane(AnchorPane pane, AnchorPane paneToShow) {
+        pane.setVisible(false);
+        paneToShow.setVisible(true);
+    }
+
+    public static void test(String mess, long startTime) {
+        long endTime = System.nanoTime();
+
+        long duration = (endTime - startTime);  // Thời gian chạy trong nanoseconds
+        double seconds = (double) duration / 1_000_000_000.0; // Chuyển đổi thành giây
+
+        System.out.println(mess + ":  " + seconds + " giây");
+    }
 }

@@ -76,27 +76,27 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                  </columnResizePolicy>
                  <columns>
-                    <TableColumn minWidth="0.0" prefWidth="110.0" resizable="false" text="ID">
+                    <TableColumn minWidth="0.0" prefWidth="99.0" resizable="false" text="Order code">
                         <cellValueFactory>
                             <PropertyValueFactory property="Id" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn minWidth="0.0" prefWidth="91.0" resizable="false" text="user id">
+                    <TableColumn minWidth="0.0" prefWidth="99.0" resizable="false" text="Guest code">
                         <cellValueFactory>
                             <PropertyValueFactory property="user_id" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn prefWidth="118.0" resizable="false" text="room_id">
+                    <TableColumn prefWidth="94.0" resizable="false" text="Room code">
                         <cellValueFactory>
                             <PropertyValueFactory property="room_id" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn minWidth="1.0" prefWidth="106.0" resizable="false" text="check in">
+                    <TableColumn minWidth="1.0" prefWidth="136.0" resizable="false" text="check in">
                         <cellValueFactory>
                             <PropertyValueFactory property="checkInDate" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn prefWidth="75.0" text="check out">
+                    <TableColumn prefWidth="110.0" resizable="false" text="check out">
                         <cellValueFactory>
                             <PropertyValueFactory property="checkoutDate" />
                         </cellValueFactory>

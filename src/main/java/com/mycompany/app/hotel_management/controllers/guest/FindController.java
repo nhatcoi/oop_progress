@@ -5,6 +5,8 @@ import com.mycompany.app.hotel_management.entities.Guest;
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomType;
 import com.mycompany.app.hotel_management.repositories.Database;
+import com.mycompany.app.hotel_management.utils.Dialog;
+import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +19,8 @@ import lombok.var;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
 
 public class FindController extends HomeController {
     @FXML
@@ -33,15 +37,13 @@ public class FindController extends HomeController {
     // private final ObservableList<Room> rooms = FXCollections.observableArrayList();
 
     public void initialize() throws SQLException {
+        long startTime = System.nanoTime();
+
         for (RoomType roomType : RoomType.values()) {
             cbType.getItems().add(roomType.getText());
         }
         cbType.getItems().add("All");
         cbPrice.getItems().addAll("low -> high", "high -> low", "Default");
-
-        connect = Database.connectDb();
-        sv.getAllRoom(connect, rooms, "rooms");
-        images = sv.getImage(connect, rooms, images);
 
         tableRoom.setItems(rooms);
         tableRoom.setOnMouseClicked(event -> {
@@ -55,6 +57,8 @@ public class FindController extends HomeController {
                 }
             });
         });
+
+        ToolFXML.test("Find : ", startTime);
     }
 
     @FXML
@@ -91,6 +95,7 @@ public class FindController extends HomeController {
 
     @FXML
     public void findRoom() throws SQLException {
+        sv.getAllRoom(connect, rooms, "rooms");
         String search = tfSearch.getText();
         if (search.isEmpty()) {
             return;
@@ -105,13 +110,14 @@ public class FindController extends HomeController {
     }
 
     @FXML
-    void booking() {
-
-    }
-
-    @FXML
     void addToCart() {
-
+        Room room = tableRoom.getSelectionModel().getSelectedItem();
+        if(roomBooking.contains(room)) {
+            Dialog.showError("Room is already in cart", null, "Room " + room.getName() + " is already in cart, please open cart to check in room");
+            return;
+        }
+        roomBooking.add(room);
+        Dialog.showInformation("Add to Cart", null, "Add room " + room.getName() + " to payment Successfully \nCarry out payment to finish booking");
     }
 
     @FXML

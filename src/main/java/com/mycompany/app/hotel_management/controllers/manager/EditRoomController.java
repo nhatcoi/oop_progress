@@ -36,8 +36,6 @@ public class EditRoomController extends OverviewController{
     public ImageView imgView;
 
     Connection connect;
-    private final ObservableList<Room> roomList = FXCollections.observableArrayList();
-
 
     public void initialize() throws SQLException {
         // Add data to combobox
@@ -47,7 +45,7 @@ public class EditRoomController extends OverviewController{
         if (!cbTypeRoom.getItems().isEmpty()) {
             cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
         }
-        fetchDataFromDatabase();
+//        fetchDataFromDatabase();
 
         // Add data to tableview
         tableView.setItems(roomList);
@@ -144,19 +142,7 @@ public class EditRoomController extends OverviewController{
         } else {
             try {
                 connect = Database.connectDb();
-                String query = "SELECT * FROM rooms WHERE name LIKE '%" + search + "%'";
-                assert connect != null;
-                ResultSet resultSet = connect.createStatement().executeQuery(query);
-                roomList.clear();
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String name = resultSet.getString("name");
-                    String type = RoomType.values()[resultSet.getInt("type")].getText();
-                    String status = RoomStatus.values()[resultSet.getInt("status")].getText();
-                    double price = resultSet.getDouble("price");
-
-                    roomList.add(new Room(id, name, type, status, price));
-                }
+                sv.searchRoom(connect, roomList, search);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

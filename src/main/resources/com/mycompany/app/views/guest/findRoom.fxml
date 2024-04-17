@@ -41,7 +41,6 @@
                 <Image url="@../../img/hotel3.jpeg" />
             </image>
         </ImageView>
-        <Button layoutX="535.0" layoutY="538.0" mnemonicParsing="false" onAction="#booking" prefHeight="50.0" prefWidth="155.0" styleClass="btn" stylesheets="@../../css/home.css" text="Booking" />
         <Button layoutX="784.0" layoutY="538.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="50.0" prefWidth="155.0" styleClass="btn" stylesheets="@../../css/home.css" text="Add to Cart" />
         <Button layoutX="724.0" layoutY="547.0" mnemonicParsing="false" onAction="#favoriteRoom" prefHeight="33.0" prefWidth="41.0" stylesheets="@../../css/home.css">
             <graphic>

@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.enums.RoomType;
+import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -65,12 +66,9 @@ public class Database {
             e.printStackTrace();
         }
 
-
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-        System.out.println("Initialization time: " + elapsedTime + " nanoseconds");
-
+        ToolFXML.test("FindAllRoom : " + i++, startTime);
     }
+    int i = 0;
 
 
 }

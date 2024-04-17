@@ -9,6 +9,7 @@ import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.intefaces.RoomServiceImpl;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
+import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,13 +17,22 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import lombok.var;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.time.LocalDate;
 
 import static com.mycompany.app.hotel_management.controllers.ManagerController.user;
 
@@ -32,7 +42,6 @@ public class PaymentController extends HomeController {
     private TableView<Reservation> tableViewReservation;
     @FXML
     private TableView<Room> tableViewBooking;
-
     @FXML
     private Label lbTotal;
     @FXML
@@ -43,86 +52,88 @@ public class PaymentController extends HomeController {
     private DatePicker dpCheckOut;
 
     Connection connect;
-//    ObservableList<Room> rooms = FXCollections.observableArrayList();
 
     public static ObservableList<Room> roomBooking = FXCollections.observableArrayList();
-    private final ObservableList<Payment> payments = FXCollections.observableArrayList();
-    private ObservableList<Reservation> reservations = FXCollections.observableArrayList();
-
-
     ObservableList<Room> selectedRooms;
+    ObservableList<Reservation> reservations = FXCollections.observableArrayList();
+    ObservableList<Payment> payments = FXCollections.observableArrayList();
+    
     int idxRoomSelect = 0;
-
     RoomServiceImpl sv = new RoomServiceImpl();
+    static Reservation reservation;
 
     public void initialize() throws SQLException {
-        for (PaymentMethod paymentMethod : PaymentMethod.values()) {
-            cbPaymentMethod.getItems().add(paymentMethod.getText());
-        }
-        if (!cbPaymentMethod.getItems().isEmpty()) {
-            cbPaymentMethod.getSelectionModel().select(0);
-        }
+        long startTime = System.nanoTime();
 
-        // set time present
+        cbPaymentMethod.getItems().addAll(Arrays.stream(PaymentMethod.values())
+                .map(PaymentMethod::getText)
+                .collect(Collectors.toList()));
+        cbPaymentMethod.getSelectionModel().selectFirst();
+
         dpCheckIn.setValue(LocalDate.now());
         dpCheckOut.setValue(LocalDate.now());
 
-        // TODO fetch db cart
-
+        // cart handing
         tableViewBooking.setItems(roomBooking);
         tableViewBooking.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
         tableViewBooking.setOnMouseClicked(e -> {
             selectedRooms = tableViewBooking.getSelectionModel().getSelectedItems();
             double total = 0;
-            int i = 0;
             for (Room room : selectedRooms) {
-                idxRoomSelect = i++;
                 total += room.getPrice();
-                lbTotal.setText(String.valueOf(total));
+            }
+            lbTotal.setText(String.valueOf(total));
+        });
+
+        // reservations handing
+        fetchReservation();
+        tableViewReservation.setItems(reservations);
+        tableViewReservation.setOnMouseClicked(e -> {
+            reservation = tableViewReservation.getSelectionModel().getSelectedItem();
+            if (reservation != null && e.getClickCount() == 2) {
+                // Open bill payment
+                System.out.println("Open bill payment");
+                try {
+                    ToolFXML.openFXML("views/guest/paymentDetail.fxml", 587, 891);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
+        // Update status neu qua han
+        // resOutOfDate();
 
-        // fetch reservation and set into table
-        fetchReservation();
-        tableViewReservation.setItems(reservations);
-//        tableViewReservation.setOnMouseClicked(e -> {
-//            Reservation reservation = tableViewReservation.getSelectionModel().getSelectedItem();
-//            if(reservation == null) {
-//                return;
-//            }
-//
-//            if (e.getClickCount() == 2) {
-//                // TODO open bill payment
-//                System.out.println("open bill payment");
-//            }
-//        });
-
+        ToolFXML.test("Payment: ", startTime);
     }
 
+    private void resOutOfDate() throws SQLException {
+        for(Reservation resOutOfDate : reservations) {
+            if(resOutOfDate.getCheckoutDate().before(new Date())) {
+                updateStatus(rooms.get(indexOfRoom(resOutOfDate)), RoomStatus.AVAILABLE.ordinal());
+            }
+        }
+    }
 
 
     @FXML
     void payment() throws SQLException {
-        // conduct payment
+        if(guest.getName() == null && guest.getPhone() == null && guest.getAddress() == null && guest.getEmail() == null){
+            Dialog.showError("Error", null, "Please fully update your personal information before payment");
+            return;
+        }
 
-        // create reservation
+        // create reservation - gan gia tri
         Reservation res = new Reservation();
         if(!paySelectedRoom(res)) {
             Dialog.showError("Error", null, "Please select a room to book");
             return;
         }
 
-        // set and update status
-        for (Room room : selectedRooms) {
-            room.setStatus(RoomStatus.OCCUPIED.getText());
-            System.out.println(room.getStatus());
+        // xu li trung lich phong
+        if(!sameOrder(res)) {
+            return;
         }
-        Dialog.showInformation("Reservation successful", null, "You have successfully booked your room");
-        updateStatus(selectedRooms.get(0) , RoomStatus.OCCUPIED.ordinal());
-
-        // TODO conduct payment method
 
         // insert reservation into db
         reservations.add(res);
@@ -140,13 +151,63 @@ public class PaymentController extends HomeController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        // insert reservation into tableview
         tableViewReservation.getItems().clear();
         fetchReservation();
+        roomBooking.remove(selectedRooms.get(idxRoomSelect));
 
-        // clear cart
-        roomBooking.remove(idxRoomSelect);
+        // conduct payment method
+        Dialog.showInformation("Payment", null, "Please pay the bill to complete the reservation");
+        Payment payment = new Payment();
+        reservations.stream()
+                .filter(resCheck -> resCheck.equals(res))
+                .findFirst()
+                .ifPresent(resCheck -> payment.setReservationId(resCheck.getId()));
+        payment.setTotalPrice(Double.parseDouble(lbTotal.getText()));
+        payment.setPaymentMethod(cbPaymentMethod.getValue());
+        payment.setPaymentDate(new Date()); // Gán thời gian hiện tại cho paymentDate
+
+        // xu li sql date
+        Date utilDate = payment.getPaymentDate();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        // insert payment into db
+        payments.add(payment);
+        connect = Database.connectDb();
+        sql = "INSERT INTO payments (reservation_id, total_price, payment_method, payment_date) VALUES (?, ?, ?, ?)";
+        try {
+            assert connect != null;
+            var prepare = connect.prepareStatement(sql);
+            prepare.setInt(1, payment.getReservationId());
+            prepare.setDouble(2, payment.getTotalPrice());
+            prepare.setString(3, payment.getPaymentMethod());
+            prepare.setDate(4, sqlDate);
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        fetchPayment(res);
+
+        // update status - dung ngay moi update
+        LocalDate localDateNow = LocalDate.now(), checkIn = dpCheckIn.getValue(), checkOut = dpCheckOut.getValue();
+        if((localDateNow.isAfter(checkIn) && localDateNow.isBefore(checkOut) || localDateNow.isEqual(dpCheckIn.getValue()))){
+            updateStatus(rooms.get(indexOfRoom(res)) , RoomStatus.OCCUPIED.ordinal());
+        }
+        Dialog.showInformation("Reservation successful", null, "You have successfully booked your room");
+    }
+
+    private boolean sameOrder(Reservation res) {
+        for(Reservation resExist : reservations) {
+            if(resExist.getRoom_id() == res.getRoom_id()) {
+                if(res.getCheckInDate().equals(resExist.getCheckInDate()) || (res.getCheckInDate().after(resExist.getCheckInDate()) && res.getCheckInDate().before(resExist.getCheckoutDate())) || (res.getCheckoutDate().after(resExist.getCheckInDate()) && res.getCheckoutDate().before(resExist.getCheckoutDate()))) {
+                    Dialog.showError("Error", null, "This Room is already booked from " + resExist.getCheckInDate() + " to " + resExist.getCheckoutDate() + "\n Please choose another room or date");
+                    return false;
+                }
+                if(res.getCheckInDate().before(resExist.getCheckInDate()) && res.getCheckoutDate().after(resExist.getCheckoutDate())) {
+                    Dialog.showError("Error", null, "This Room is already booked from " + resExist.getCheckInDate() + " to " + resExist.getCheckoutDate() + "\n Please choose another room or date");
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private boolean paySelectedRoom(Reservation res) {
@@ -181,12 +242,23 @@ public class PaymentController extends HomeController {
         }
     }
 
-    private void updateStatus(Room room, int statusRoom) throws SQLException {
-        // đúng ngày mới update
-        LocalDate localDateNow = LocalDate.now();
-        if(!(localDateNow.isAfter(dpCheckIn.getValue()) && localDateNow.isBefore(dpCheckOut.getValue()) || localDateNow.isEqual(dpCheckIn.getValue()))){
-            return;
+    private void fetchPayment(Reservation res) throws SQLException {
+        connect = Database.connectDb();
+        assert connect != null;
+        String sql = "SELECT * FROM payments WHERE reservation_id = '" + res.getId() + "'";
+        ResultSet rs = connect.createStatement().executeQuery(sql);
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            int reservation_id = rs.getInt("reservation_id");
+            double total_price = rs.getDouble("total_price");
+            String payment_method = rs.getString("payment_method");
+            Date payment_date = rs.getDate("payment_date");
+
+            payments.add(new Payment(id, reservation_id, total_price, payment_method, payment_date));
         }
+    }
+
+    private void updateStatus(Room room, int statusRoom) throws SQLException {
 
         connect = Database.connectDb();
         sv.getAllRoom(connect, rooms, "rooms");
@@ -227,9 +299,6 @@ public class PaymentController extends HomeController {
         }
         long daysBetween = ChronoUnit.DAYS.between(dpCheckIn.getValue(), dpCheckOut.getValue());
 
-        if(daysBetween == 0) {
-            daysBetween = 1;
-        }
         double price = 0;
         for (Room room : selectedRooms) {
             price += room.getPrice();
@@ -259,10 +328,25 @@ public class PaymentController extends HomeController {
             return;
         }
         connect = Database.connectDb();
-        String sql = "DELETE FROM reservations WHERE id = ?";
+        // remove payment before reservation
+        fetchPayment(res);
+        Payment payment = payments.get(payments.size()-1);
+        connect = Database.connectDb();
+        String sql = "DELETE FROM payments WHERE id = ?";
         try {
             assert connect != null;
             var prepare = connect.prepareStatement(sql);
+            prepare.setInt(1, payment.getId());
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+        String sql2 = "DELETE FROM reservations WHERE id = ?";
+        try {
+            assert connect != null;
+            var prepare = connect.prepareStatement(sql2);
             prepare.setInt(1, res.getId());
             prepare.executeUpdate();
         } catch (Exception e) {
@@ -279,16 +363,23 @@ public class PaymentController extends HomeController {
 //            }
 //        }
         // Stream api
-        int indexOfRoom = IntStream.range(0, rooms.size())
-                .filter(i -> rooms.get(i).getId() == res.getRoom_id())
-                .findFirst()
-                .orElse(-1);
+//        int indexOfRoom = IntStream.range(0, rooms.size())
+//                .filter(i -> rooms.get(i).getId() == res.getRoom_id())
+//                .findFirst()
+//                .orElse(-1);
 
 
-        updateStatus(rooms.get(indexOfRoom), RoomStatus.AVAILABLE.ordinal());
+        updateStatus(rooms.get(indexOfRoom(res)), RoomStatus.AVAILABLE.ordinal());
         reservations.remove(res);
         Dialog.showInformation("Cancel reservation", null, "You have successfully canceled your reservation");
         tableViewReservation.getItems().clear();
         fetchReservation();
+    }
+
+    private int indexOfRoom(Reservation res) {
+        return IntStream.range(0, rooms.size())
+                .filter(i -> rooms.get(i).getId() == res.getRoom_id())
+                .findFirst()
+                .orElse(-1);
     }
 }

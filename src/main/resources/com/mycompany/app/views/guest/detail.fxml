@@ -18,7 +18,7 @@
             <image>
                 <Image url="@../../img/emptyImg.png" />
             </image></ImageView>
-        <Button layoutX="732.0" layoutY="418.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="199.0" styleClass="btn" stylesheets="@../../css/home.css" text="Booking rooom">
+        <Button layoutX="732.0" layoutY="418.0" mnemonicParsing="false" onAction="#booking" prefHeight="76.0" prefWidth="199.0" styleClass="btn" stylesheets="@../../css/home.css" text="Booking rooom">
             <font>
                 <Font size="26.0" />
             </font>
@@ -28,13 +28,13 @@
                 <Font size="37.0" />
             </font>
         </Label>
-        <Label layoutX="23.0" layoutY="121.0" prefHeight="28.0" prefWidth="270.0" text="Name Room">
+        <Label fx:id="lbNameRoom" layoutX="23.0" layoutY="121.0" prefHeight="28.0" prefWidth="270.0" text="Name Room">
             <font>
                 <Font size="38.0" />
             </font>
         </Label>
-        <Label layoutX="59.0" layoutY="205.0" prefHeight="17.0" prefWidth="199.0" text="Type" />
-        <Label alignment="CENTER_RIGHT" layoutX="495.0" layoutY="435.0" prefHeight="42.0" prefWidth="182.0" text="Price">
+        <Label fx:id="lbType" layoutX="59.0" layoutY="205.0" prefHeight="17.0" prefWidth="199.0" text="Type" />
+        <Label fx:id="lbPrice" alignment="CENTER_RIGHT" layoutX="495.0" layoutY="435.0" prefHeight="42.0" prefWidth="182.0" text="Price">
             <font>
                 <Font size="34.0" />
             </font>

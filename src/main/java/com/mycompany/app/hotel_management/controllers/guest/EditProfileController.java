@@ -5,6 +5,7 @@ import com.mycompany.app.hotel_management.controllers.GuestController;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.Md5;
+import com.mycompany.app.hotel_management.utils.ToolFXML;
 import com.mycompany.app.hotel_management.utils.Validate;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -32,6 +33,7 @@ public class EditProfileController extends GuestController {
     public AnchorPane infoPane;
     public TextField tfEmail;
     public Label lbEmail;
+    public AnchorPane editProfileScreen;
     @FXML
     private PasswordField pfPassword;
     @FXML
@@ -58,9 +60,8 @@ public class EditProfileController extends GuestController {
     public Connection connect;
 
     public void initialize() throws IOException, SQLException {
+        long startTime = System.nanoTime();
 
-
-        super.initialize();
         if (lbUsername != null) {
             lbUsername.setText(user.getUsername());
         }
@@ -79,6 +80,8 @@ public class EditProfileController extends GuestController {
             }
             System.out.println(guest.toString());
         }
+
+        ToolFXML.test("EditProfile : ", startTime);
     }
 
     @FXML
@@ -99,7 +102,7 @@ public class EditProfileController extends GuestController {
     }
 
 
-    public void updateInfo() throws SQLException {
+    public void updateInfo() throws SQLException, IOException {
         if (!tfPhone.getText().isEmpty()) {
             guest.setPhone(tfPhone.getText());
         }
@@ -109,7 +112,7 @@ public class EditProfileController extends GuestController {
         if (!tfName.getText().isEmpty()) {
             guest.setName(tfName.getText());
         }
-        if(!tfEmail.getText().isEmpty()) {
+        if (!tfEmail.getText().isEmpty()) {
             guest.setEmail(tfEmail.getText());
             if(Validate.validateEmail(tfEmail.getText())) {
                 Dialog.showError("Error", null, "Email is invalid");
@@ -132,10 +135,8 @@ public class EditProfileController extends GuestController {
             sql = "INSERT INTO guests (user_id, name, phone, address, email) VALUES ('" + user.getId() + "', '" + guest.getName() + "', '" + guest.getPhone() + "', '" + guest.getAddress() + "', '" + guest.getEmail() + "')";
             statement.executeUpdate(sql);
         }
-
-        lbName.setText(tfName.getText());
-        lbPhone.setText(tfPhone.getText());
-        lbAddress.setText(tfAddress.getText());
+        Dialog.showInformation("Success", null, "Information updated successfully");
+        initialize();
     }
 
     public void updatePassword() throws SQLException {
