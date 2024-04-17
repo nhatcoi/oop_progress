@@ -112,6 +112,10 @@ public class FindController extends HomeController {
     @FXML
     void addToCart() {
         Room room = tableRoom.getSelectionModel().getSelectedItem();
+        if(room == null) {
+            Dialog.showError("No room selected", null, "Please select a room to add to cart");
+            return;
+        }
         if(roomBooking.contains(room)) {
             Dialog.showError("Room is already in cart", null, "Room " + room.getName() + " is already in cart, please open cart to check in room");
             return;

@@ -57,11 +57,11 @@
                 </TableView>
                 <Button layoutX="352.0" layoutY="567.0" mnemonicParsing="false" onAction="#deleteData" prefHeight="34.0" prefWidth="110.0" styleClass="btn" stylesheets="@../../css/home.css" text="Delete" />
                 <Button layoutX="100.0" layoutY="566.0" mnemonicParsing="false" onAction="#changeData" prefHeight="35.0" prefWidth="122.0" styleClass="btn" stylesheets="@../../css/home.css" text="Fix Room" />
-            <Button layoutX="6.0" layoutY="22.0" mnemonicParsing="false" onAction="#refreshTable" prefHeight="27.0" prefWidth="29.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
-               <graphic>
-                  <FontAwesomeIcon glyphName="REFRESH" />
-               </graphic>
-            </Button>
+                <Button layoutX="6.0" layoutY="22.0" mnemonicParsing="false" onAction="#refreshTable" prefHeight="27.0" prefWidth="29.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
+                    <graphic>
+                        <FontAwesomeIcon glyphName="REFRESH" />
+                    </graphic>
+                </Button>
             </children>
         </AnchorPane>
     </children>

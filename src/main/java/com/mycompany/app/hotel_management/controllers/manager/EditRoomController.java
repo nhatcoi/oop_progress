@@ -56,28 +56,28 @@ public class EditRoomController extends OverviewController{
             @Override
             public void handle(MouseEvent event) {
                 //if (event.getClickCount() == 2) { // Double click
-                    Room room = tableView.getSelectionModel().getSelectedItem();
-                    if (room != null) {
-                        rnameField.setText(room.getName());
-                        cbTypeRoom.setValue(room.getType());
-                        rpriceField.setText(String.valueOf(room.getPrice()));
-                        connect = Database.connectDb();
-                        String query = "SELECT * FROM pictures WHERE room_id = " + room.getId();
-                        try {
-                            assert connect != null;
-                            ResultSet resultSet = connect.createStatement().executeQuery(query);
-                            if (resultSet.next()) {
-                                String base64 = resultSet.getString("base64");
-                                Image image = imgTool.base64ToImage(base64);
-                                imgView.setImage(image);
-                            }
-                            else {
-                                imgView.setImage(null);
-                            }
-                        } catch (SQLException throwables) {
-                            throwables.printStackTrace();
+                Room room = tableView.getSelectionModel().getSelectedItem();
+                if (room != null) {
+                    rnameField.setText(room.getName());
+                    cbTypeRoom.setValue(room.getType());
+                    rpriceField.setText(String.valueOf(room.getPrice()));
+                    connect = Database.connectDb();
+                    String query = "SELECT * FROM pictures WHERE room_id = " + room.getId();
+                    try {
+                        assert connect != null;
+                        ResultSet resultSet = connect.createStatement().executeQuery(query);
+                        if (resultSet.next()) {
+                            String base64 = resultSet.getString("base64");
+                            Image image = imgTool.base64ToImage(base64);
+                            imgView.setImage(image);
                         }
+                        else {
+                            imgView.setImage(null);
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
                     }
+                }
                 //}
             }
         });

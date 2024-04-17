@@ -28,9 +28,5 @@ public class Dialog {
     public static void showConfirmation(String title, String headerText, String contentText) {
         showAlert(Alert.AlertType.CONFIRMATION, title, headerText, contentText);
     }
-
-    public static void load() throws IOException {
-
-    }
 }
 

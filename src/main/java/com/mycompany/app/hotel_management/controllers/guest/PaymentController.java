@@ -64,7 +64,7 @@ public class PaymentController extends HomeController {
 
     public void initialize() throws SQLException {
         long startTime = System.nanoTime();
-
+        roomBooking.clear();
         cbPaymentMethod.getItems().addAll(Arrays.stream(PaymentMethod.values())
                 .map(PaymentMethod::getText)
                 .collect(Collectors.toList()));
@@ -114,12 +114,25 @@ public class PaymentController extends HomeController {
             }
         }
     }
-
+    private boolean checkInfo() {
+        if(Objects.equals(guest.getName(), "") || Objects.equals(guest.getPhone(), "") || Objects.equals(guest.getAddress(), "") || Objects.equals(guest.getEmail(), "")){
+            Dialog.showError("Error", null, "Please fully update your personal information before payment");
+            return false;
+        }
+        if(Objects.equals(guest.getName(), "null") || Objects.equals(guest.getPhone(), "null") || Objects.equals(guest.getAddress(), "null") || Objects.equals(guest.getEmail(), "null")){
+            Dialog.showError("Error", null, "Please fully update your personal information before payment");
+            return false;
+        }
+        if(guest.getName() == null || guest.getPhone() == null || guest.getAddress() == null || guest.getEmail() == null){
+            Dialog.showError("Error", null, "Please fully update your personal information before payment");
+            return false;
+        }
+        return true;
+    }
 
     @FXML
     void payment() throws SQLException {
-        if(guest.getName() == null && guest.getPhone() == null && guest.getAddress() == null && guest.getEmail() == null){
-            Dialog.showError("Error", null, "Please fully update your personal information before payment");
+        if(!checkInfo()) {
             return;
         }
 
@@ -303,7 +316,7 @@ public class PaymentController extends HomeController {
         for (Room room : selectedRooms) {
             price += room.getPrice();
         }
-        double total =  price * daysBetween;
+        double total =  price * (daysBetween + 1);
         lbTotal.setText(String.valueOf(total));
 
         System.out.println(daysBetween);

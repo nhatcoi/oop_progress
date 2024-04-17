@@ -21,6 +21,8 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
+
 public class GuestController {
     public AnchorPane guestPane;
     public AnchorPane navigateBar;
@@ -41,8 +43,6 @@ public class GuestController {
 
 
     public void initialize() throws IOException, SQLException {
-        long startTime = System.nanoTime();
-        ToolFXML.test( "Guest : " ,startTime);
     }
 
     public void search() {
