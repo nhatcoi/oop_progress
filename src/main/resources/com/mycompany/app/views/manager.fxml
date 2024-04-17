@@ -40,7 +40,8 @@
                            <Button fx:id="btnControl" layoutY="293.0" mnemonicParsing="false" onAction="#overview" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Overview" />
                            <Button fx:id="btnManageRoom" layoutY="343.0" mnemonicParsing="false" onAction="#manageRoom" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Room" />
                            <Button fx:id="btnGuest" layoutX="2.0" layoutY="393.0" mnemonicParsing="false" onAction="#manageGuest" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Guests" />
-                           <Button fx:id="btnEditStaff" layoutX="2.0" layoutY="443.0" mnemonicParsing="false" onAction="#manageStaff" prefHeight="50.0" prefWidth="250.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Staff" />
+                  <Button layoutX="6.0" layoutY="451.0" mnemonicParsing="false" onAction="#booking" prefHeight="50.0" prefWidth="239.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Booking" />
+                           <Button fx:id="btnEditStaff" layoutX="6.0" layoutY="501.0" mnemonicParsing="false" onAction="#manageStaff" prefHeight="50.0" prefWidth="243.0" styleClass="nav-btn" stylesheets="@../css/home.css" text="Edit Staff" />
                            <Button fx:id="btnUs" layoutX="83.0" layoutY="616.0" mnemonicParsing="false" onAction="#aboutUs" styleClass="nav-btn" stylesheets="@../css/home.css" text="About Us" />
                    </children>
                 </AnchorPane>
@@ -64,7 +65,8 @@
 
 <!--                    'edit staff' function of admin -->
                         <fx:include fx:id="staff" source="managerDetails/admin/editStaff.fxml" />
-                        
+
+                        <fx:include fx:id="booking" source="managerDetails/resManage.fxml" />
 
                     </children>
                 </AnchorPane>

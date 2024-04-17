@@ -55,12 +55,12 @@ public class PaymentController extends HomeController {
 
     public static ObservableList<Room> roomBooking = FXCollections.observableArrayList();
     ObservableList<Room> selectedRooms;
-    ObservableList<Reservation> reservations = FXCollections.observableArrayList();
+    public static ObservableList<Reservation> reservations = FXCollections.observableArrayList();
     ObservableList<Payment> payments = FXCollections.observableArrayList();
     
     int idxRoomSelect = 0;
     RoomServiceImpl sv = new RoomServiceImpl();
-    static Reservation reservation;
+    public static Reservation reservation;
 
     public void initialize() throws SQLException {
         long startTime = System.nanoTime();

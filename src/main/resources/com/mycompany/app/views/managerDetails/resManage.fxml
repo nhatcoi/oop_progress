@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<AnchorPane fx:id="resManagePane" prefHeight="650.0" prefWidth="850.0" styleClass="bg-white" stylesheets="@../../css/home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.ResManageController">
+
+    <children>
+        <TableView fx:id="tableViewRes" layoutX="12.0" layoutY="29.0" prefHeight="288.0" prefWidth="826.0" stylesheets="@../../css/home.css" AnchorPane.bottomAnchor="333.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="29.0">
+
+            <columns>
+                <TableColumn minWidth="0.0" prefWidth="99.0" resizable="false" text="Order code">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="Id" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn minWidth="0.0" prefWidth="102.0" resizable="false" text="Guest code">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="user_id" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="116.0" resizable="false" text="Room code">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="room_id" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn minWidth="1.0" prefWidth="256.0" resizable="false" text="check in">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="checkInDate" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="251.0" resizable="false" text="check out">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="checkoutDate" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+      <TableView fx:id="tableViewPayment" layoutX="14.0" layoutY="377.0" prefHeight="267.0" prefWidth="826.0" stylesheets="@../../css/home.css">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <columns>
+            <TableColumn minWidth="0.0" prefWidth="83.0" resizable="false" text="Pay code">
+               <cellValueFactory>
+                  <PropertyValueFactory property="id" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn minWidth="0.0" prefWidth="93.0" resizable="false" text="Order code">
+               <cellValueFactory>
+                  <PropertyValueFactory property="reservationId" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="226.0" resizable="false" text="Total Price ($)">
+               <cellValueFactory>
+                  <PropertyValueFactory property="totalPrice" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="173.0" resizable="false" text="Payment Method">
+               <cellValueFactory>
+                  <PropertyValueFactory property="paymentMethod" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn minWidth="1.0" prefWidth="249.0" resizable="false" text="Payment Date">
+               <cellValueFactory>
+                  <PropertyValueFactory property="paymentDate" />
+               </cellValueFactory>
+            </TableColumn>
+         </columns>
+      </TableView>
+        <Button layoutX="51.0" layoutY="325.0" mnemonicParsing="false" onAction="#searchRes" prefHeight="40.0" prefWidth="83.0" styleClass="btn" stylesheets="@../../css/home.css" text="Search" />
+      <TextField fx:id="tfSearchOrderCode" layoutX="149.0" layoutY="332.0" prefHeight="28.0" prefWidth="655.0" promptText="search by order code" styleClass="textField" stylesheets="@../../css/home.css" />
+    </children>
+
+</AnchorPane>

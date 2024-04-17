@@ -26,6 +26,7 @@ public class ManagerController {
     public AnchorPane edit;
     public AnchorPane staff;
     public AnchorPane guests;
+    public AnchorPane booking;
 
     public Label lbName;
     @FXML
@@ -80,6 +81,10 @@ public class ManagerController {
         show(guests);
     }
     @FXML
+    void booking(ActionEvent actionEvent) {
+        show(booking);
+    }
+    @FXML
     void manageStaff(ActionEvent actionEvent) {
         show(staff);
     }
@@ -104,7 +109,7 @@ public class ManagerController {
 
 
     void show(AnchorPane paneToShow) {
-        List<AnchorPane> allPanes = Arrays.asList(overview, edit, guests, staff, showRoomDetails);
+        List<AnchorPane> allPanes = Arrays.asList(overview, edit, guests, staff, showRoomDetails, booking);
         for (AnchorPane pane : allPanes) {
             if (pane != paneToShow) {
                 pane.setVisible(false);
@@ -113,4 +118,6 @@ public class ManagerController {
             }
         }
     }
+
+
 }

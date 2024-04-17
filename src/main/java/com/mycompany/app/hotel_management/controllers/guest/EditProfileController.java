@@ -80,6 +80,13 @@ public class EditProfileController extends GuestController {
             }
             System.out.println(guest.toString());
         }
+        assert guest != null;
+        if(guest.getId() == 0) {
+            lbEmail.setText("");
+            lbName.setText("");
+            lbPhone.setText("");
+            lbAddress.setText("");
+        }
 
         ToolFXML.test("EditProfile : ", startTime);
     }

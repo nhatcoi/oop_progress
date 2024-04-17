@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Payment {
+public class Payment  {
     // info booked room
     int id;
     int reservationId;
