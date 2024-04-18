@@ -51,8 +51,6 @@
             <center>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-<!--                    'room details' function of manager-->
-                        <fx:include fx:id="showRoomDetails" source="managerDetails/roomDetails.fxml" />
 
 <!--                    'overview' function of manager -->
                         <fx:include fx:id="overview" source="managerDetails/overview.fxml" />
@@ -67,6 +65,9 @@
                         <fx:include fx:id="staff" source="managerDetails/admin/editStaff.fxml" />
 
                         <fx:include fx:id="booking" source="managerDetails/resManage.fxml" />
+
+<!--                    'room details' function of manager-->
+                        <fx:include fx:id="showRoomDetails" source="managerDetails/roomDetails.fxml" />
 
                     </children>
                 </AnchorPane>

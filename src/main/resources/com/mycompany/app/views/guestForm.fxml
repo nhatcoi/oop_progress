@@ -17,7 +17,7 @@
             </Button>
             <Button fx:id="btnFavorite" layoutX="220.0" mnemonicParsing="false" onAction="#detail" prefHeight="45.0" prefWidth="220.0" styleClass="nav-btn" stylesheets="@../css/home.css">
                <graphic>
-                  <FontAwesomeIcon fill="WHITE" glyphName="HEART" size="1.3em" />
+                  <FontAwesomeIcon fill="WHITE" glyphName="BUILDING" size="1.3em" />
                </graphic>
             </Button>
             <Button fx:id="btnHome" layoutX="440.0" mnemonicParsing="false" onAction="#home" prefHeight="45.0" prefWidth="220.0" styleClass="nav-btn" stylesheets="@../css/home.css">
@@ -38,16 +38,17 @@
          </children>
       </AnchorPane>
 
-      <fx:include fx:id="editProfile" source="guest/editProfile.fxml" />
-
-
-      <fx:include fx:id="findRoom" source="guest/findRoom.fxml" />
 
       <fx:include fx:id="home" source="guest/home.fxml" />
+
+      <fx:include fx:id="editProfile" source="guest/editProfile.fxml" />
+
+      <fx:include fx:id="findRoom" source="guest/findRoom.fxml" />
 
       <fx:include fx:id="payment" source="guest/payment.fxml" />
 
       <fx:include fx:id="detail" source="guest/detail.fxml" />
+
       <AnchorPane fx:id="signoutpane" layoutX="19.0" layoutY="35.0" prefHeight="34.0" prefWidth="40.0" visible="false">
          <children>
             <Button layoutX="11.0" layoutY="14.0" mnemonicParsing="false" onAction="#signOut" prefHeight="34.0" prefWidth="40.0" styleClass="signOut" stylesheets="@../css/home.css">

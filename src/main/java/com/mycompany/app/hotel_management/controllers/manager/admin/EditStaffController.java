@@ -31,7 +31,7 @@ public class EditStaffController {
     private final ObservableList<Staff> staff = FXCollections.observableArrayList();
 
     public void initialize() throws SQLException {
-        cbRaise.getItems().addAll("5%", "10%", "20%", "30%");
+        cbRaise.getItems().addAll("Default", "5%", "10%", "20%", "30%");
 
         // how to get all staff from user table has foreign key ID staff from database => dùng join nha bé :3 ==> dạ
         tableView.setItems(staff);
@@ -145,6 +145,10 @@ public class EditStaffController {
     public void changeData() {
         connect = Database.connectDb();
         Staff selectedStaff = tableView.getSelectionModel().getSelectedItem();
+        if(selectedStaff == null) {
+            Dialog.showError("Error", null, "Please select a staff to update");
+            return;
+        }
         String name = nameField.getText();
         String position = positionField.getText();
         double salary = Double.parseDouble(salaryField.getText());
@@ -168,10 +172,16 @@ public class EditStaffController {
 
     public void getRaise() {
         Staff selectedStaff = tableView.getSelectionModel().getSelectedItem();
+        if(selectedStaff == null) {
+            Dialog.showError("Error", null, "Please select a staff to get raise");
+            return;
+        }
         double salary = selectedStaff.getSalary();
         String raise = cbRaise.getValue();
         double raiseValue = 0;
         switch (raise) {
+            case "Default":
+                break;
             case "5%":
                 raiseValue = salary * 0.05;
                 break;

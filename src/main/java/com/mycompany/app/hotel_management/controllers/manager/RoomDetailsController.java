@@ -32,6 +32,7 @@ public class RoomDetailsController extends OverviewController {
 
     int currentImageIndex = 0;
     public void initialize() throws SQLException {
+        switchImage(0);
     }
 
     @FXML
