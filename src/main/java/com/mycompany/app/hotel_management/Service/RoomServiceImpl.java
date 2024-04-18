@@ -1,4 +1,4 @@
-package com.mycompany.app.hotel_management.intefaces;
+package com.mycompany.app.hotel_management.Service;
 
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
@@ -9,10 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +21,31 @@ public class RoomServiceImpl extends Database implements RoomService {
     @Override
     public void getAllRoom(Connection connect, ObservableList<Room> roomList, String table) throws SQLException {
         findAll(connect, roomList, table);
+    }
+
+    public void findAll(Connection connect, ObservableList<Room> roomList, String table) throws SQLException {
+        connect = connectDb();
+        String query = "SELECT * FROM " + table;
+
+        try {
+            assert connect != null;
+            try (Statement statement = connect.createStatement();
+                 ResultSet resultSet = statement.executeQuery(query)) {
+
+                roomList.clear();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String name = resultSet.getString("name");
+                    String type = RoomType.values()[resultSet.getInt("type")].getText();
+                    String status = RoomStatus.values()[resultSet.getInt("status")].getText();
+                    double price = resultSet.getDouble("price");
+
+                    roomList.add(new Room(id, name, type, status, price));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // read image

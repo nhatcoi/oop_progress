@@ -1,32 +1,24 @@
 package com.mycompany.app.hotel_management.controllers;
 
 
-import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.entities.User;
 import com.mycompany.app.hotel_management.enums.UserRole;
-import com.mycompany.app.hotel_management.intefaces.RoomServiceImpl;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.*;
 import com.mycompany.app.hotel_management.utils.Dialog;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.net.URL;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.ResourceBundle;
 
 public class AuthController {
 

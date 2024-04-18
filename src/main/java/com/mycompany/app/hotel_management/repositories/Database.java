@@ -38,37 +38,4 @@ public class Database {
 
         return null;
     }
-
-    public void findAll(Connection connect, ObservableList<Room> roomList, String table) throws SQLException {
-        long startTime = System.nanoTime();
-
-
-        connect = connectDb();
-        String query = "SELECT * FROM " + table;
-
-        try {
-            assert connect != null;
-            try (Statement statement = connect.createStatement();
-                     ResultSet resultSet = statement.executeQuery(query)) {
-
-                roomList.clear();
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String name = resultSet.getString("name");
-                    String type = RoomType.values()[resultSet.getInt("type")].getText();
-                    String status = RoomStatus.values()[resultSet.getInt("status")].getText();
-                    double price = resultSet.getDouble("price");
-
-                    roomList.add(new Room(id, name, type, status, price));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        ToolFXML.test("FindAllRoom : " + i++, startTime);
-    }
-    int i = 0;
-
-
 }

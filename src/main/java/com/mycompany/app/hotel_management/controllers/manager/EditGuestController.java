@@ -1,8 +1,7 @@
 package com.mycompany.app.hotel_management.controllers.manager;
 
 import com.mycompany.app.hotel_management.entities.Guest;
-import com.mycompany.app.hotel_management.intefaces.GuestServiceImpl;
-import com.mycompany.app.hotel_management.repositories.Database;
+import com.mycompany.app.hotel_management.Service.GuestServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EditGuestController {

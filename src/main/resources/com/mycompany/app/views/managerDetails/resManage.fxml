@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.cell.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -9,30 +11,30 @@
 <AnchorPane fx:id="resManagePane" prefHeight="650.0" prefWidth="850.0" styleClass="bg-white" stylesheets="@../../css/home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.ResManageController">
 
     <children>
-        <TableView fx:id="tableViewRes" layoutX="12.0" layoutY="29.0" prefHeight="288.0" prefWidth="826.0" stylesheets="@../../css/home.css" AnchorPane.bottomAnchor="333.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="29.0">
+        <TableView fx:id="tableViewRes" layoutX="327.0" layoutY="65.0" prefHeight="288.0" prefWidth="497.0" stylesheets="@../../css/home.css" AnchorPane.bottomAnchor="297.0" AnchorPane.leftAnchor="327.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="65.0">
 
             <columns>
-                <TableColumn minWidth="0.0" prefWidth="99.0" resizable="false" text="Order code">
+                <TableColumn minWidth="0.0" prefWidth="79.0" resizable="false" text="Order code">
                     <cellValueFactory>
                         <PropertyValueFactory property="Id" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn minWidth="0.0" prefWidth="102.0" resizable="false" text="Guest code">
+                <TableColumn minWidth="0.0" prefWidth="86.0" resizable="false" text="Guest code">
                     <cellValueFactory>
                         <PropertyValueFactory property="user_id" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="116.0" resizable="false" text="Room code">
+                <TableColumn prefWidth="81.0" resizable="false" text="Room code">
                     <cellValueFactory>
                         <PropertyValueFactory property="room_id" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn minWidth="1.0" prefWidth="256.0" resizable="false" text="check in">
+                <TableColumn minWidth="1.0" prefWidth="117.0" resizable="false" text="check in">
                     <cellValueFactory>
                         <PropertyValueFactory property="checkInDate" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="251.0" resizable="false" text="check out">
+                <TableColumn prefWidth="129.0" resizable="false" text="check out">
                     <cellValueFactory>
                         <PropertyValueFactory property="checkoutDate" />
                     </cellValueFactory>
@@ -42,40 +44,92 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-      <TableView fx:id="tableViewPayment" layoutX="14.0" layoutY="377.0" prefHeight="267.0" prefWidth="826.0" stylesheets="@../../css/home.css">
+      <TableView fx:id="tableViewPayment" layoutX="327.0" layoutY="369.0" prefHeight="267.0" prefWidth="497.0" stylesheets="@../../css/home.css">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
          <columns>
-            <TableColumn minWidth="0.0" prefWidth="83.0" resizable="false" text="Pay code">
+            <TableColumn minWidth="0.0" prefWidth="67.0" resizable="false" text="Pay code">
                <cellValueFactory>
                   <PropertyValueFactory property="id" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn minWidth="0.0" prefWidth="93.0" resizable="false" text="Order code">
+            <TableColumn minWidth="0.0" prefWidth="78.0" resizable="false" text="Order code">
                <cellValueFactory>
                   <PropertyValueFactory property="reservationId" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="226.0" resizable="false" text="Total Price ($)">
+            <TableColumn prefWidth="102.0" resizable="false" text="Total Price ($)">
                <cellValueFactory>
                   <PropertyValueFactory property="totalPrice" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="173.0" resizable="false" text="Payment Method">
+            <TableColumn minWidth="7.0" prefWidth="118.0" resizable="false" text="Payment Method">
                <cellValueFactory>
                   <PropertyValueFactory property="paymentMethod" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn minWidth="1.0" prefWidth="249.0" resizable="false" text="Payment Date">
+            <TableColumn minWidth="0.0" prefWidth="130.0" resizable="false" text="Payment Date">
                <cellValueFactory>
                   <PropertyValueFactory property="paymentDate" />
                </cellValueFactory>
             </TableColumn>
          </columns>
       </TableView>
-        <Button layoutX="51.0" layoutY="325.0" mnemonicParsing="false" onAction="#searchRes" prefHeight="40.0" prefWidth="83.0" styleClass="btn" stylesheets="@../../css/home.css" text="Search" />
-      <TextField fx:id="tfSearchOrderCode" layoutX="149.0" layoutY="332.0" prefHeight="28.0" prefWidth="655.0" promptText="search by order code" styleClass="textField" stylesheets="@../../css/home.css" />
+        <Button layoutX="334.0" layoutY="15.0" mnemonicParsing="false" onAction="#searchRes" prefHeight="40.0" prefWidth="83.0" styleClass="btn" stylesheets="@../../css/home.css" text="Search" />
+      <TextField fx:id="tfSearchOrderCode" layoutX="436.0" layoutY="21.0" prefHeight="28.0" prefWidth="360.0" promptText="search by order code" styleClass="textField" stylesheets="@../../css/home.css" />
+        <AnchorPane layoutY="115.0" prefHeight="224.0" prefWidth="307.0" styleClass="card3" stylesheets="@../../css/home.css">
+            <children>
+                <FontAwesomeIcon fill="WHITE" glyphName="DOLLAR" layoutX="40.0" layoutY="135.0" size="5em" text="" />
+                <Label fx:id="lbRevenue" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="122.0" layoutY="59.0" prefHeight="40.0" prefWidth="134.0" text="*" textAlignment="RIGHT" textFill="WHITE">
+                    <font>
+                        <Font size="21.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER_RIGHT" layoutX="78.0" prefHeight="40.0" prefWidth="83.0" styleClass="font" stylesheets="@../../css/home.css" text="REVENUE" />
+            <Text fill="WHITE" layoutX="111.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total bill ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Label fx:id="lbTotalBill" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="156.0" prefHeight="22.0" prefWidth="124.0" text="*" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutY="420.0" prefHeight="208.0" prefWidth="307.0" styleClass="card2" stylesheets="@../../css/home.css">
+            <children>
+                <Label alignment="CENTER_RIGHT" layoutX="87.0" layoutY="5.0" prefHeight="40.0" prefWidth="104.0" styleClass="font" stylesheets="@../../css/home.css" text="BEST HIRED" />
+                <FontAwesomeIcon fill="WHITE" glyphName="ARROW_UP" layoutX="26.0" layoutY="139.0" size="5em" />
+                <Label fx:id="lbRoomName" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="147.0" layoutY="71.0" prefHeight="34.0" prefWidth="134.0" text="*" textFill="WHITE">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+            <Label fx:id="lbRoomCode" contentDisplay="RIGHT" layoutX="104.0" layoutY="37.0" prefHeight="34.0" prefWidth="37.0" text="*" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Text fill="WHITE" layoutX="87.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="#">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Label fx:id="lbCount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="146.0" layoutY="160.0" prefHeight="34.0" prefWidth="60.0" text="*" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Text fill="WHITE" layoutX="214.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="times">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            </children>
+        </AnchorPane>
     </children>
 
 </AnchorPane>

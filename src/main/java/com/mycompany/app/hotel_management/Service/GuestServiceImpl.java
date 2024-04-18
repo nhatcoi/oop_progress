@@ -1,9 +1,8 @@
-package com.mycompany.app.hotel_management.intefaces;
+package com.mycompany.app.hotel_management.Service;
 
 import com.mycompany.app.hotel_management.entities.Guest;
 import com.mycompany.app.hotel_management.repositories.Database;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

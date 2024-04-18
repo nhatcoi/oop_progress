@@ -1,18 +1,16 @@
 package com.mycompany.app.hotel_management.controllers.guest;
 
-import com.mycompany.app.hotel_management.controllers.manager.OverviewController;
 import com.mycompany.app.hotel_management.entities.Payment;
 import com.mycompany.app.hotel_management.entities.Reservation;
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.PaymentMethod;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
-import com.mycompany.app.hotel_management.intefaces.RoomServiceImpl;
+import com.mycompany.app.hotel_management.Service.RoomServiceImpl;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import lombok.var;
@@ -21,18 +19,13 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.time.LocalDate;
 
 import static com.mycompany.app.hotel_management.controllers.ManagerController.user;
 
@@ -86,6 +79,7 @@ public class PaymentController extends HomeController {
         });
 
         // reservations handing
+        reservations.clear();
         fetchReservation();
         tableViewReservation.setItems(reservations);
         tableViewReservation.setOnMouseClicked(e -> {

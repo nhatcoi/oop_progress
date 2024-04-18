@@ -1,20 +1,14 @@
 package com.mycompany.app.hotel_management.controllers.guest;
 
 import com.mycompany.app.hotel_management.controllers.GuestController;
-import com.mycompany.app.hotel_management.controllers.ManagerController;
 import com.mycompany.app.hotel_management.entities.Room;
-import com.mycompany.app.hotel_management.enums.RoomStatus;
-import com.mycompany.app.hotel_management.enums.RoomType;
-import com.mycompany.app.hotel_management.intefaces.RoomServiceImpl;
+import com.mycompany.app.hotel_management.Service.RoomServiceImpl;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,9 +16,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
 
@@ -68,25 +63,25 @@ public class HomeController extends GuestController{
     static ObservableList<Room> rooms = FXCollections.observableArrayList();
     static ObservableList<Image> images = FXCollections.observableArrayList();
     RoomServiceImpl sv = new RoomServiceImpl();
-    int[] id = new int[3];
-    static int sumImg = 0;
+    int[] index = new int[3];
+    List<Room> selectedRooms;
 
     private void randomRoom(ObservableList<Room> rooms, ObservableList<Image> images) throws SQLException {
         List<Label> names = List.of(lbName1, lbName2, lbName3);
         List<Label> prices = List.of(lbPrice1, lbPrice2, lbPrice3);
-        List<Room> selectedRooms;
-        if (rooms.size() > 3) {
-            selectedRooms = getRandomSublist(rooms, 3);
+
+        if (rooms.size() > names.size()) {
+            selectedRooms = getRandomSublist(rooms, names.size());
         } else {
             selectedRooms = rooms;
         }
-//        DetailController.roomDetailList = selectedRooms;
-        for (int i = 0; i < selectedRooms.size(); i++) {
-            names.get(i).setText(selectedRooms.get(i).getName());
-            prices.get(i).setText(String.valueOf(selectedRooms.get(i).getPrice()));
-            id[i] = rooms.indexOf(selectedRooms.get(i));
-            matchImg(images, id, i);
-        }
+        IntStream.range(0, selectedRooms.size())
+                .forEach(i -> {
+                    names.get(i).setText(selectedRooms.get(i).getName());
+                    prices.get(i).setText(String.valueOf(selectedRooms.get(i).getPrice()));
+                    index[i] = rooms.indexOf(selectedRooms.get(i));
+                    matchImg(images, index, i);
+                });
     }
 
     private List<Room> getRandomSublist(List<Room> list, int size) {
@@ -95,9 +90,9 @@ public class HomeController extends GuestController{
         return sublist.subList(0, size);
     }
 
-    private void matchImg(ObservableList<Image> images, int[] id, int i) {
+    private void matchImg(ObservableList<Image> images, int[] index, int i) {
         List<ImageView> imageList = List.of(image1, image2, image3);
-        imageList.get(i).setImage(images.get(id[i]));
+        imageList.get(i).setImage(images.get(index[i]));
     }
 
     @FXML
@@ -108,9 +103,6 @@ public class HomeController extends GuestController{
     @FXML
     public void searchRoom() throws SQLException {
         String search = tfSearch.getText().trim();
-        ObservableList<Room> roomTmp = rooms;
-        ObservableList<Image> imageTmp = images;
-
         if (search.isEmpty()) {
             sv.getAllRoom(connect, rooms, "rooms");
             images = sv.getImage(connect, rooms, images);
@@ -129,8 +121,6 @@ public class HomeController extends GuestController{
                 throw new RuntimeException(e);
             }
         }
-        rooms = roomTmp;
-        images = imageTmp;
     }
 
     public void booking1() {
@@ -151,12 +141,36 @@ public class HomeController extends GuestController{
 //            Dialog.showError("Room is occupied", null, "Room " + rooms.get(id[idxTag]).getName() + " is occupied, please choose another room");
 //            return;
 //        }
-        if(roomBooking.contains(rooms.get(id[idxTag]))) {
-            Dialog.showError("Room is already in cart", null, "Room " + rooms.get(id[idxTag]).getName() + " is already in cart, please open cart to check in room");
+
+        // Lọc lại index sau search
+        Map<Room, Integer> roomIndexMap = IntStream.range(0, rooms.size())
+                .boxed()
+                .collect(Collectors.toMap(rooms::get, i -> i));
+        int[] index = selectedRooms.stream()
+                .filter(roomIndexMap::containsKey)
+                .mapToInt(roomIndexMap::get)
+                .toArray();
+        Arrays.stream(index).forEach(System.out::println);
+
+//        int a = 0;
+//        for(Room room : selectedRooms) {
+//            for(int i = 0; i < rooms.size(); i++) {
+//                if(room.equals(rooms.get(i))) {
+//                    index[a] = i;
+//                    System.out.println(index[a]);
+//                    a++;
+//                    break;
+//                }
+//            }
+//        }
+
+
+        if(roomBooking.contains(rooms.get(index[idxTag]))) {
+            Dialog.showError("Room is already in cart", null, "Room " + rooms.get(index[idxTag]).getName() + " is already in cart, please open cart to check in room");
             return;
         }
-        roomBooking.add(rooms.get(id[idxTag]));
-        Dialog.showInformation("Add to Cart", null, "Add room " + rooms.get(id[idxTag]).getName() + " to payment Successfully \nCarry out payment to finish booking");
+        roomBooking.add(rooms.get(index[idxTag]));
+        Dialog.showInformation("Add to Cart", null, "Add room " + rooms.get(index[idxTag]).getName() + " to payment Successfully \nCarry out payment to finish booking");
     }
 
     public void imgClick1(MouseEvent mouseEvent) throws IOException {
@@ -172,10 +186,11 @@ public class HomeController extends GuestController{
     public void initialize() throws SQLException {
         long startTime = System.nanoTime();
 
+        rooms.clear();
+        images.clear();
         connect = Database.connectDb();
         sv.getAllRoom(connect, rooms, "rooms");
         images = sv.getImage(connect, rooms, images);
-        sumImg = images.size();
         randomRoom(rooms, images);
 
         for (Room room : rooms){

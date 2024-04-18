@@ -1,4 +1,4 @@
-package com.mycompany.app.hotel_management.intefaces;
+package com.mycompany.app.hotel_management.Service;
 
 import com.mycompany.app.hotel_management.entities.Room;
 import javafx.collections.ObservableList;

@@ -1,27 +1,16 @@
 package com.mycompany.app.hotel_management.controllers;
 
 import com.mycompany.app.hotel_management.entities.Guest;
-import com.mycompany.app.hotel_management.entities.Room;
-import com.mycompany.app.hotel_management.intefaces.RoomServiceImpl;
-import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
-import com.mycompany.app.week3.code1.Transmogrify;
-import com.mycompany.app.week5to6.controllers.HomeController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
 
 public class GuestController {
     public AnchorPane guestPane;
@@ -47,7 +36,6 @@ public class GuestController {
 
     public void search() {
         show(findRoom);
-
     }
 
     public void detail() {
@@ -75,7 +63,7 @@ public class GuestController {
     }
 
     public void signOut() throws IOException {
-        ToolFXML.openFXML("views/authForm.fxml");
+        ToolFXML.openFXML("views/authForm.fxml", 600, 400);
         ToolFXML.closeFXML(guestPane);
     }
 

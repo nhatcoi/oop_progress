@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -17,19 +18,25 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.reservations;
 
-public class ResManageController extends PaymentController {
-
+public class ResManageController extends OverviewController  {
     public TextField tfSearchOrderCode;
+    public Label lbRevenue;
+    public Label lbTotalBill;
+    public Label lbRoomName;
+    public Label lbRoomCode;
+    public Label lbCount;
     @FXML
     private TableView<Payment> tableViewPayment;
     @FXML
     private TableView<Reservation> tableViewRes;
-
     @FXML
     private AnchorPane resManagePane;
+
     ObservableList<Reservation> reservations = FXCollections.observableArrayList();
     ObservableList<Payment> payments = FXCollections.observableArrayList();
 
@@ -39,11 +46,39 @@ public class ResManageController extends PaymentController {
         getAllPayment();
         tableViewRes.setItems(reservations);
         tableViewPayment.setItems(payments);
+
+        Map<Integer, Integer> roomCount = new HashMap<>();
+        int maxRoomId = -1;
+        int maxCount = 0;
+        for(Reservation res : reservations) {
+            int roomId = res.getRoom_id();
+            roomCount.put(roomId, roomCount.getOrDefault(roomId, 0) + 1);
+            int count = roomCount.get(roomId);
+            if(count > maxCount) {
+                maxCount = count;
+                maxRoomId = roomId;
+            }
+        }
+
+        if(maxRoomId != -1) {
+            lbRoomCode.setText(String.valueOf(maxRoomId));
+            connect = Database.connectDb();
+            String sql = "SELECT name FROM rooms WHERE id = " + maxRoomId;
+            assert connect != null;
+            ResultSet rs = connect.createStatement().executeQuery(sql);
+            rs.next();
+            lbRoomName.setText(rs.getString("name"));
+            lbCount.setText(String.valueOf(maxCount));
+        }
+
+
+        double totalRevenue = 0;
+        for(Payment pay : payments) {
+            totalRevenue += pay.getTotalPrice();
+        }
+        lbRevenue.setText(String.valueOf(totalRevenue));
+        lbTotalBill.setText(String.valueOf(payments.size()));
     }
-
-
-
-
 
     private void getAllReservation() throws SQLException {
         connect = Database.connectDb();
@@ -64,7 +99,6 @@ public class ResManageController extends PaymentController {
             payments.add(new Payment(rs.getInt("id"), rs.getInt("reservation_id"), rs.getDouble("total_price"), rs.getString("payment_method"), rs.getDate("payment_date")));
         }
     }
-
 
     public void searchRes(ActionEvent actionEvent) throws SQLException {
         String search = tfSearchOrderCode.getText();
@@ -94,4 +128,8 @@ public class ResManageController extends PaymentController {
             }
         }
     }
+
+
+
+
 }
