@@ -96,7 +96,7 @@ public class PaymentController extends HomeController {
         });
 
         // Update status neu qua han
-        // resOutOfDate();
+//        resOutOfDate();
 
         ToolFXML.test("Payment: ", startTime);
     }
@@ -105,9 +105,12 @@ public class PaymentController extends HomeController {
         for(Reservation resOutOfDate : reservations) {
             if(resOutOfDate.getCheckoutDate().before(new Date())) {
                 updateStatus(rooms.get(indexOfRoom(resOutOfDate)), RoomStatus.AVAILABLE.ordinal());
+                System.out.println(rooms.get(indexOfRoom(resOutOfDate)).getStatus() + " is out of date : " + indexOfRoom(resOutOfDate));
             }
+            System.out.println(rooms.get(indexOfRoom(resOutOfDate)).getStatus() + " is out of date : " + indexOfRoom(resOutOfDate));
         }
     }
+
     private boolean checkInfo() {
         if(Objects.equals(guest.getName(), "") || Objects.equals(guest.getPhone(), "") || Objects.equals(guest.getAddress(), "") || Objects.equals(guest.getEmail(), "")){
             Dialog.showError("Error", null, "Please fully update your personal information before payment");
@@ -204,7 +207,7 @@ public class PaymentController extends HomeController {
     private boolean sameOrder(Reservation res) {
         for(Reservation resExist : reservations) {
             if(resExist.getRoom_id() == res.getRoom_id()) {
-                if(res.getCheckInDate().equals(resExist.getCheckInDate()) || (res.getCheckInDate().after(resExist.getCheckInDate()) && res.getCheckInDate().before(resExist.getCheckoutDate())) || (res.getCheckoutDate().after(resExist.getCheckInDate()) && res.getCheckoutDate().before(resExist.getCheckoutDate()))) {
+                if(res.getCheckInDate().equals(resExist.getCheckInDate()) || res.getCheckInDate().equals(resExist.getCheckoutDate()) || (res.getCheckInDate().after(resExist.getCheckInDate()) && res.getCheckInDate().before(resExist.getCheckoutDate())) || (res.getCheckoutDate().after(resExist.getCheckInDate()) && res.getCheckoutDate().before(resExist.getCheckoutDate()))) {
                     Dialog.showError("Error", null, "This Room is already booked from " + resExist.getCheckInDate() + " to " + resExist.getCheckoutDate() + "\n Please choose another room or date");
                     return false;
                 }

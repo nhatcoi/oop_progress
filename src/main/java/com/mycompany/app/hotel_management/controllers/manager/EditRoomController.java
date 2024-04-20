@@ -6,8 +6,6 @@ import com.mycompany.app.hotel_management.enums.RoomType;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.imgTool;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -273,7 +271,6 @@ public class EditRoomController extends OverviewController{
     }
 
     public void refreshTable(ActionEvent actionEvent) throws SQLException {
-        super.initialize();
         initialize();
     }
 }

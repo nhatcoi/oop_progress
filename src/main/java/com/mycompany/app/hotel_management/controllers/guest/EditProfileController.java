@@ -8,15 +8,23 @@ import com.mycompany.app.hotel_management.utils.Md5;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import com.mycompany.app.hotel_management.utils.Validate;
 import javafx.fxml.FXML;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+
+import java.io.*;
 
 import java.awt.*;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.*;
 
 
@@ -26,7 +34,6 @@ import static com.mycompany.app.hotel_management.controllers.ManagerController.u
 public class EditProfileController extends GuestController {
 
 
-
     public Label lbName;
     public TextField tfName;
     public AnchorPane passwordPane;
@@ -34,6 +41,8 @@ public class EditProfileController extends GuestController {
     public TextField tfEmail;
     public Label lbEmail;
     public AnchorPane editProfileScreen;
+    public ImageView imgAvatar;
+    public Hyperlink change;
     @FXML
     private PasswordField pfPassword;
     @FXML
@@ -62,6 +71,10 @@ public class EditProfileController extends GuestController {
     public void initialize() throws IOException, SQLException {
         long startTime = System.nanoTime();
 
+        // set avt
+        setAvt();
+
+        // set info
         if (lbUsername != null) {
             lbUsername.setText(user.getUsername());
         }
@@ -80,8 +93,8 @@ public class EditProfileController extends GuestController {
             }
             System.out.println(guest.toString());
         }
-        assert guest != null;
-        if(guest.getId() == 0) {
+
+        if (guest == null) {
             lbEmail.setText("");
             lbName.setText("");
             lbPhone.setText("");
@@ -89,6 +102,17 @@ public class EditProfileController extends GuestController {
         }
 
         ToolFXML.test("EditProfile : ", startTime);
+    }
+
+    private String removeExtension(String filename) {
+        if (filename == null) {
+            return null;
+        }
+        int extensionIndex = filename.lastIndexOf('.');
+        if (extensionIndex == -1) {
+            return filename;
+        }
+        return filename.substring(0, extensionIndex);
     }
 
     @FXML
@@ -99,7 +123,43 @@ public class EditProfileController extends GuestController {
 
     @FXML
     void changeAvatar() {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Choose an image");
+        fc.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+        File file = fc.showOpenDialog(change.getScene().getWindow());
 
+        if (file != null) {
+            try {
+                String fileUrl = file.toURI().toURL().toString();
+                imgAvatar.setImage(new javafx.scene.image.Image(fileUrl));
+                Path source = Paths.get(file.toURI());
+                Path target = Paths.get("src/main/resources/com/mycompany/app/img/avt/" + user.getId() + ".png");
+                Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void setAvt() {
+        File directory = new File("src/main/resources/com/mycompany/app/img/avt/");
+        if (directory.exists() && directory.isDirectory()) {
+            // list files in the directory
+            File[] files = directory.listFiles();
+            if (files != null) {
+                // Duyệt qua từng tệp
+                for (File file : files) {
+                    // Kiểm tra xem tên tệp có giống với user.getId()
+                    if (removeExtension(file.getName()).equals(String.valueOf(user.getId()))) {
+                        imgAvatar.setImage(new javafx.scene.image.Image(file.toURI().toString()));
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @FXML
@@ -108,8 +168,8 @@ public class EditProfileController extends GuestController {
         passwordPane.setVisible(false);
     }
 
-
-    public void updateInfo() throws SQLException, IOException {
+    @FXML
+    void updateInfo() throws SQLException, IOException {
         if (!tfPhone.getText().isEmpty()) {
             guest.setPhone(tfPhone.getText());
         }
@@ -121,7 +181,7 @@ public class EditProfileController extends GuestController {
         }
         if (!tfEmail.getText().isEmpty()) {
             guest.setEmail(tfEmail.getText());
-            if(Validate.validateEmail(tfEmail.getText())) {
+            if (Validate.validateEmail(tfEmail.getText())) {
                 Dialog.showError("Error", null, "Email is invalid");
                 return;
             }
@@ -133,12 +193,10 @@ public class EditProfileController extends GuestController {
         Statement statement = connect.createStatement();
 
         ResultSet resultSet = statement.executeQuery(sql);
-        if(resultSet.next())
-        {
+        if (resultSet.next()) {
             sql = "UPDATE guests SET name = '" + guest.getName() + "', phone = '" + guest.getPhone() + "', address = '" + guest.getAddress() + "', email = '" + guest.getEmail() + "' WHERE user_id = '" + user.getId() + "'";
             statement.executeUpdate(sql);
-        }
-        else{
+        } else {
             sql = "INSERT INTO guests (user_id, name, phone, address, email) VALUES ('" + user.getId() + "', '" + guest.getName() + "', '" + guest.getPhone() + "', '" + guest.getAddress() + "', '" + guest.getEmail() + "')";
             statement.executeUpdate(sql);
         }
@@ -146,32 +204,33 @@ public class EditProfileController extends GuestController {
         initialize();
     }
 
-    public void updatePassword() throws SQLException {
+    @FXML
+    void updatePassword() throws SQLException {
         String pass = pfPassword.getText();
         String newPass = pfNewPassword.getText();
         String confirmPass = pfConfirmPassword.getText();
 
-        if(pass.isEmpty()) {
+        if (pass.isEmpty()) {
             Dialog.showError("Error", null, "Please enter your current password");
             return;
         }
-        if(newPass.isEmpty()) {
+        if (newPass.isEmpty()) {
             Dialog.showError("Error", null, "Please enter new password");
             return;
         }
-        if(confirmPass.isEmpty()) {
+        if (confirmPass.isEmpty()) {
             Dialog.showError("Error", null, "Please enter confirm password");
             return;
         }
-        if(!(newPass.equals(confirmPass))) {
+        if (!(newPass.equals(confirmPass))) {
             Dialog.showError("Error", null, "Confirm password is not match with new password");
             return;
         }
-        if(newPass.equals(pass)) {
+        if (newPass.equals(pass)) {
             Dialog.showError("Error", null, "New password is the same as the old password");
             return;
         }
-        if(newPass.length() < 6) {
+        if (newPass.length() < 6) {
             Dialog.showError("Error", null, "Password must be at least 6 characters");
             return;
         }
@@ -185,14 +244,14 @@ public class EditProfileController extends GuestController {
         assert connect != null;
         Statement statement2 = connect.createStatement();
         ResultSet resultSet2 = statement2.executeQuery(sql0);
-        if(resultSet2.next())
+        if (resultSet2.next())
             guest.setUser_id(resultSet2.getInt("user_id"));
 
         String sql = "SELECT * FROM users WHERE id = '" + guest.getUser_id() + "' AND password = '" + password + "'";
         assert connect != null;
         Statement statement = connect.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        if(resultSet.next()) {
+        if (resultSet.next()) {
             sql = "UPDATE users SET password = '" + newPassword + "' WHERE id = '" + guest.getUser_id() + "'";
             statement.executeUpdate(sql);
             Dialog.showInformation("Success", null, "Password updated successfully");
@@ -203,44 +262,49 @@ public class EditProfileController extends GuestController {
         }
     }
 
-    public void phoneSupport() {
+    @FXML
+    void phoneSupport() {
         String phoneNumber = "0376696037";
         String facetimeURL = "facetime://" + phoneNumber;
 
         try {
             Desktop.getDesktop().browse(new URI(facetimeURL));
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
     }
 
-    public void cusSupport() {
+    @FXML
+    void cusSupport() {
         String mail = "23010887@st.phenikaa-uni.edu.vn";
         String cusSupport = "mailto:" + mail;
-        try{
+        try {
             Desktop.getDesktop().browse(new URI(cusSupport));
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    public void contactSupport() {
+    @FXML
+    void contactSupport() {
         String mail = "23010636@st.phenikaa-uni.edu.vn";
         String cusSupport = "mailto:" + mail;
-        try{
+        try {
             Desktop.getDesktop().browse(new URI(cusSupport));
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    public void aboutUs() {
+    @FXML
+    void aboutUs() {
         String url = "https://github.com/nhatcoi/project_java";
         openBrowser(url);
     }
 
-    public void address() {
+    @FXML
+    void address() {
         String url = "https://s.net.vn/D9Nc";
         openBrowser(url);
     }
@@ -249,7 +313,7 @@ public class EditProfileController extends GuestController {
         try {
             Desktop.getDesktop().browse(new URI(url));
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

@@ -1,14 +1,11 @@
 package com.mycompany.app.hotel_management.controllers.manager.admin;
 
-import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.entities.Staff;
-import com.mycompany.app.hotel_management.entities.User;
 import com.mycompany.app.hotel_management.enums.UserRole;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;

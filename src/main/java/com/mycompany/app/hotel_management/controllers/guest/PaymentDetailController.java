@@ -4,7 +4,7 @@ import com.mycompany.app.hotel_management.entities.Payment;
 import com.mycompany.app.hotel_management.entities.Reservation;
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.repositories.Database;
-import com.mycompany.app.hotel_management.utils.PDFScanner;
+import com.mycompany.app.hotel_management.utils.FilesUtils;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -23,16 +23,7 @@ public class PaymentDetailController extends PaymentController {
     private Label lbTotal;
 
     @FXML
-    private Label lbRoomName11;
-
-    @FXML
     private Label lbAllTotal;
-
-    @FXML
-    private Label lbRoomName2;
-
-    @FXML
-    private Label lbRoomName1;
 
     @FXML
     private Label lbPaymentMethod;
@@ -51,9 +42,6 @@ public class PaymentDetailController extends PaymentController {
 
     @FXML
     private Label lbRoomName;
-
-    @FXML
-    private Label lbNameBill;
 
     @FXML
     private Label lbGuestBill;
@@ -111,7 +99,7 @@ public class PaymentDetailController extends PaymentController {
                 payment.setPaymentDate(resultSet.getDate("payment_date"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
     }
@@ -143,7 +131,7 @@ public class PaymentDetailController extends PaymentController {
 
     @FXML
     void scan() {
-        PDFScanner.scanToPDF((Stage) billPaymentPane.getScene().getWindow());
-        PDFScanner.openPDF("scan_bill_vn_hotel.pdf");
+        FilesUtils.scanToPDF((Stage) billPaymentPane.getScene().getWindow());
+        FilesUtils.openPDF("scan_bill_vn_hotel.pdf");
     }
 }

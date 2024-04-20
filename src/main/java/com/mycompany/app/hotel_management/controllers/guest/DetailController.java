@@ -1,7 +1,6 @@
 package com.mycompany.app.hotel_management.controllers.guest;
 
 import com.mycompany.app.hotel_management.entities.Comment;
-import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import java.sql.Connection;
@@ -11,7 +10,6 @@ import java.sql.Statement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -19,19 +17,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
 
-
 public class DetailController extends HomeController {
 
-    public Label lbDate1;
-    public Label lbDate2;
-    public Label lbDate3;
+    @FXML
+    private Label lbDate1;
+
+    @FXML
+    private Label lbDate2;
+
+    @FXML
+    private Label lbDate3;
+
     @FXML
     private Label lbNameRoom;
 
@@ -94,13 +94,11 @@ public class DetailController extends HomeController {
 
             fetchComment(currentIndex);
             setComments();
-
         }
     }
 
-    void setComments() {
+    private void setComments() {
         Collections.shuffle(comments);
-
         // Tạo một list random mới chứa 3 phần tử đầu tiên sau khi đã xáo trộn
         ObservableList<Comment> randomComments = FXCollections.observableArrayList(comments.subList(0, Math.min(comments.size(), 3)));
 
@@ -127,7 +125,7 @@ public class DetailController extends HomeController {
     }
 
     @FXML
-    void booking(ActionEvent event) {
+    void booking() {
         if(roomBooking.contains(rooms.get(currentIndex))) {
             Dialog.showError("Booking", null, "Room " + rooms.get(currentIndex).getName() + " is already in your cart");
             return;
@@ -164,15 +162,7 @@ public class DetailController extends HomeController {
         ResultSet rs = statement.executeQuery(sql);
 
         if (!rs.next()) {
-            user1.setText("#user1");
-            fbText1.setText("No feedback yet");
-            lbDate1.setText("##/##/####");
-            user2.setText("#user2");
-            fbText2.setText("No feedback yet");
-            lbDate2.setText("##/##/####");
-            user3.setText("#user3");
-            fbText3.setText("No feedback yet");
-            lbDate3.setText("##/##/####");
+            System.out.println("No comment");
         } else {
             do {
                 Comment comment = new Comment();

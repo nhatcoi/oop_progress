@@ -1,10 +1,10 @@
 package com.mycompany.app.hotel_management.controllers.manager;
 
-import com.mycompany.app.hotel_management.controllers.guest.PaymentController;
 import com.mycompany.app.hotel_management.entities.Payment;
 import com.mycompany.app.hotel_management.entities.Reservation;
+import com.mycompany.app.hotel_management.entities.Room;
+import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.repositories.Database;
-import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,15 +13,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import lombok.var;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.reservations;
+import java.util.stream.IntStream;
 
 public class ResManageController extends OverviewController  {
     public TextField tfSearchOrderCode;
@@ -41,7 +45,7 @@ public class ResManageController extends OverviewController  {
     ObservableList<Payment> payments = FXCollections.observableArrayList();
 
     Connection connect;
-    public void initialize() throws SQLException {
+    public void initialize() throws SQLException, ParseException {
         getAllReservation();
         getAllPayment();
         tableViewRes.setItems(reservations);
@@ -50,17 +54,17 @@ public class ResManageController extends OverviewController  {
         Map<Integer, Integer> roomCount = new HashMap<>();
         int maxRoomId = -1;
         int maxCount = 0;
-        for(Reservation res : reservations) {
+        for (Reservation res : reservations) {
             int roomId = res.getRoom_id();
             roomCount.put(roomId, roomCount.getOrDefault(roomId, 0) + 1);
             int count = roomCount.get(roomId);
-            if(count > maxCount) {
+            if (count > maxCount) {
                 maxCount = count;
                 maxRoomId = roomId;
             }
         }
 
-        if(maxRoomId != -1) {
+        if (maxRoomId != -1) {
             lbRoomCode.setText(String.valueOf(maxRoomId));
             connect = Database.connectDb();
             String sql = "SELECT name FROM rooms WHERE id = " + maxRoomId;
@@ -73,11 +77,78 @@ public class ResManageController extends OverviewController  {
 
 
         double totalRevenue = 0;
-        for(Payment pay : payments) {
+        for (Payment pay : payments) {
             totalRevenue += pay.getTotalPrice();
         }
         lbRevenue.setText(String.valueOf(totalRevenue));
         lbTotalBill.setText(String.valueOf(payments.size()));
+
+//        resSetOfDate();
+    }
+
+    public void refreshTable() throws SQLException, ParseException {
+        resSetOfDate();
+        super.initialize();
+    }
+
+    private void resSetOfDate() throws SQLException, ParseException {
+        ObservableList<Integer> roomsToAvailable = FXCollections.observableArrayList();
+        ObservableList<Integer> roomsToOccupied = FXCollections.observableArrayList();
+
+        for (Reservation resNotOfDate : reservations) {
+            Date checkoutDate = resNotOfDate.getCheckoutDate();
+            Date checkInDate = resNotOfDate.getCheckInDate();
+            // Kiểm tra nếu checkout đã qua hoặc checkin là hôm sau của ngày hiện tại
+            if (isCheckoutPastToday(checkoutDate) || isCheckinNextDay(checkInDate)) {
+                int roomId = indexOfRoom(resNotOfDate);
+                roomsToAvailable.add(roomId);
+                System.out.println(roomList.get(roomId).getStatus() + " is out of date : " + roomId);
+            } else {
+                roomsToOccupied.add(indexOfRoom(resNotOfDate));
+            }
+        }
+        // Thực hiện cập nhật trạng thái của các phòng trong danh sách
+        if (!roomsToAvailable.isEmpty()) {
+            updateStatusBatch(roomsToAvailable, RoomStatus.AVAILABLE.ordinal());
+            updateStatusBatch(roomsToOccupied, RoomStatus.OCCUPIED.ordinal());
+        }
+    }
+
+    private boolean isCheckoutPastToday(Date date) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate checkoutDate = LocalDate.ofEpochDay(date.getTime() / (24 * 60 * 60 * 1000)); // Chuyển đổi từ java.sql.Date sang java.time.LocalDate
+        checkoutDate = checkoutDate.plusDays(1);
+        return checkoutDate.isBefore(currentDate);
+    }
+
+    private boolean isCheckinNextDay(Date date) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate checkinDate = LocalDate.ofEpochDay(date.getTime() / (24 * 60 * 60 * 1000)); // Chuyển đổi từ java.sql.Date sang java.time.LocalDate
+        checkinDate = checkinDate.plusDays(1);
+        return checkinDate.isAfter(currentDate);
+    }
+
+    private void updateStatusBatch(ObservableList<Integer> roomIds, int statusRoom) throws SQLException {
+        connect = Database.connectDb();
+        String sql = "UPDATE rooms SET status = ? WHERE id IN (" + String.join(",", Collections.nCopies(roomIds.size(), "?")) + ")";
+        try {
+            assert connect != null;
+            var prepare = connect.prepareStatement(sql);
+            prepare.setInt(1, statusRoom);
+            int index = 2;
+            for (int roomId : roomIds) {
+                prepare.setInt(index++, roomList.get(roomId).getId());
+            }
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private int indexOfRoom(Reservation res) {
+        return IntStream.range(0, roomList.size())
+                .filter(i -> roomList.get(i).getId() == res.getRoom_id())
+                .findFirst()
+                .orElse(-1);
     }
 
     private void getAllReservation() throws SQLException {
@@ -128,8 +199,4 @@ public class ResManageController extends OverviewController  {
             }
         }
     }
-
-
-
-
 }

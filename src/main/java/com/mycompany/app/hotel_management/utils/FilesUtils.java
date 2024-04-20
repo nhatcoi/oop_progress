@@ -10,16 +10,15 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class PDFScanner {
+public class FilesUtils {
 
     public static void scanToPDF(Stage stage) {
         WritableImage snapshot = stage.getScene().snapshot(null);
         try {
             Document document = new Document();
-            PdfWriter.getInstance(document, Files.newOutputStream(Paths.get("scan_bill_vn_hotel.pdf")));
+            PdfWriter.getInstance(document, java.nio.file.Files.newOutputStream(Paths.get("scan_bill_vn_hotel.pdf")));
             document.open();
             Image image = Image.getInstance(SwingFXUtils.fromFXImage(snapshot, null), null);
             document.add(image);
@@ -37,5 +36,7 @@ public class PDFScanner {
             e.printStackTrace();
         }
     }
+
+
 
 }

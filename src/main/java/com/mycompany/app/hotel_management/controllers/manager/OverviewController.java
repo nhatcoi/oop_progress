@@ -8,18 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 public class OverviewController  {
-    @FXML
-    private AnchorPane overview;
     @FXML
     private Label lbAvailable;
 
@@ -32,11 +29,6 @@ public class OverviewController  {
     @FXML
     private ImageView image1;
 
-    @FXML
-    private AnchorPane slidePane;
-    @FXML
-    private Button btnChangeImage;
-
 
     public int currentImageIndex = 0;
     Connection connect;
@@ -44,7 +36,7 @@ public class OverviewController  {
     RoomServiceImpl sv = new RoomServiceImpl();
     public static ObservableList<Image> images = FXCollections.observableArrayList();
     public static final ObservableList<Room> roomList = FXCollections.observableArrayList();
-    public void initialize() throws SQLException {
+    public void initialize() throws SQLException, ParseException {
         roomList.clear();
         images.clear();
         connect = Database.connectDb();

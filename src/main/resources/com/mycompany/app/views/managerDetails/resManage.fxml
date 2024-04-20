@@ -8,9 +8,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<AnchorPane fx:id="resManagePane" prefHeight="650.0" prefWidth="850.0" styleClass="bg-white" stylesheets="@../../css/home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.ResManageController">
+<AnchorPane fx:id="resManagePane" visible="false" prefHeight="650.0" prefWidth="850.0" styleClass="bg-white" stylesheets="@../../css/home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.ResManageController">
 
     <children>
+        <Button layoutX="6.0" layoutY="22.0" mnemonicParsing="false" onAction="#refreshTable" prefHeight="27.0" prefWidth="29.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
+            <graphic>
+                <FontAwesomeIcon glyphName="REFRESH" />
+            </graphic>
+        </Button>
         <TableView fx:id="tableViewRes" layoutX="327.0" layoutY="65.0" prefHeight="288.0" prefWidth="497.0" stylesheets="@../../css/home.css" AnchorPane.bottomAnchor="297.0" AnchorPane.leftAnchor="327.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="65.0">
 
             <columns>

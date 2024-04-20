@@ -22,9 +22,6 @@ public class RoomDetailsController extends OverviewController {
     private Label lbStatus;
 
     @FXML
-    private AnchorPane slidePane1;
-
-    @FXML
     private ImageView imageRoom;
 
     @FXML

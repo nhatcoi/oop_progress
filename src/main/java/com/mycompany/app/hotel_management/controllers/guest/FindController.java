@@ -1,15 +1,11 @@
 package com.mycompany.app.hotel_management.controllers.guest;
 
-
-import com.mycompany.app.hotel_management.entities.Guest;
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomType;
-import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
@@ -66,7 +62,7 @@ public class FindController extends HomeController {
         var type = cbType.getValue();
         if (type !=  null) {
             if(type.equals("All")) {
-                tableRoom.setItems(this.rooms);
+                tableRoom.setItems(rooms);
                 return;
             }
             ObservableList<Room> filterRooms = FXCollections.observableArrayList();

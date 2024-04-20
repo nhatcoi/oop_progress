@@ -1,16 +1,16 @@
 package com.mycompany.app.hotel_management.enums;
 
 public enum RoomType {
-    SINGLE("Phòng đơn"),
-    DOUBLE("Phòng đôi"),
-    TRIPLE("Phòng ba"),
-    QUAD("Phòng bốn"),
-    QUEEN("Phòng queen"),
-    KING("Phòng king"),
-    STUDIO("Phòng studio"),
-    SUITE("Phòng suite"),
-    DUPLEX("Phòng duplex"),
-    PENTHOUSE("Phòng penthouse");
+    SINGLE("Single Room"),
+    DOUBLE("Double Room"),
+    TRIPLE("Triple Room"),
+    QUAD("Quad Room"),
+    QUEEN("Queen Room"),
+    KING("King Room"),
+    STUDIO("Studio Room"),
+    SUITE("Suite Room"),
+    DUPLEX("Duplex Room"),
+    PENTHOUSE("Penthouse Room"),;
 
     private final String text;
 

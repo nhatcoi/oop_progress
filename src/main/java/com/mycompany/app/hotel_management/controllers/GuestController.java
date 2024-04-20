@@ -1,37 +1,39 @@
 package com.mycompany.app.hotel_management.controllers;
 
 import com.mycompany.app.hotel_management.entities.Guest;
+import com.mycompany.app.hotel_management.entities.User;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-public class GuestController {
-    public AnchorPane guestPane;
-    public AnchorPane navigateBar;
-    public AnchorPane signoutpane;
-    public StackPane guestStackPane;
-    @FXML
-    public AnchorPane editProfile;
+import static com.mycompany.app.hotel_management.controllers.ManagerController.user;
 
+public class GuestController {
     @FXML
-    public AnchorPane findRoom;
+    private  AnchorPane guestPane;
     @FXML
-    public AnchorPane home;
+    private  AnchorPane signOutPane;
     @FXML
-    public AnchorPane payment;
-    public AnchorPane detail;
+    private  AnchorPane editProfile;
+    @FXML
+    private AnchorPane findRoom;
+    @FXML
+    private  AnchorPane home;
+    @FXML
+    private  AnchorPane payment;
+    @FXML
+    private  AnchorPane detail;
+
+
     public static Guest guest = new Guest();
 
-
-
     public void initialize() throws IOException, SQLException {
+        show(home);
     }
 
     public void search() {
@@ -52,33 +54,20 @@ public class GuestController {
 
     public void userAccount() throws IOException {
         show(editProfile);
-        signoutpane.setVisible(true);
+        signOutPane.setVisible(true);
     }
 
     public void show(AnchorPane paneToShow) {
-        List<AnchorPane> allPanes = Arrays.asList(home, payment, detail, findRoom, editProfile, signoutpane);
+        List<AnchorPane> allPanes = Arrays.asList(home, payment, detail, findRoom, editProfile, signOutPane);
         for (AnchorPane pane : allPanes) {
             pane.setVisible(pane == paneToShow);
         }
     }
 
     public void signOut() throws IOException {
+        guest = new Guest();
+        user = new User();
         ToolFXML.openFXML("views/authForm.fxml", 600, 400);
         ToolFXML.closeFXML(guestPane);
     }
-
-    public void imgDetail1(ActionEvent actionEvent) {
-        show(detail);
-    }
-
-    public void imgDetail2(ActionEvent actionEvent) {
-        show(detail);
-    }
-
-    public void imgDetail3(ActionEvent actionEvent) {
-        show(detail);
-    }
-
-
-
 }

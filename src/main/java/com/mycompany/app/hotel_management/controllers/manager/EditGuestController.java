@@ -24,9 +24,6 @@ public class EditGuestController {
     private TableView<Guest> tableViewUser;
 
     @FXML
-    private AnchorPane guests;
-
-    @FXML
     private TextField tfAddress;
 
     @FXML
@@ -60,14 +57,16 @@ public class EditGuestController {
         sv.getData(connect, guestsList);
     }
 
-    public void removeData(ActionEvent actionEvent) {
+    @FXML
+    void removeData() {
         Guest guest = tableViewUser.getSelectionModel().getSelectedItem();
         if(guest != null) {
             sv.deleteData(connect, guestsList, guest);
         }
     }
 
-    public void changeData() {
+    @FXML
+    void changeData() {
         Guest guest = tableViewUser.getSelectionModel().getSelectedItem();
         if (guest != null) {
             guest.setName(tfName.getText());

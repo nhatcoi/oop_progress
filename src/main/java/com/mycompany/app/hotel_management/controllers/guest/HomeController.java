@@ -23,18 +23,16 @@ import java.util.stream.IntStream;
 
 import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
 
-public class HomeController extends GuestController{
+public class HomeController extends GuestController {
 
-    public AnchorPane homePane;
     @FXML
-    private Button search;
+    private AnchorPane homePane;
     @FXML
     private ImageView image1;
     @FXML
     private ImageView image2;
     @FXML
     private ImageView image3;
-
 
     @FXML
     private Label lbPrice2;
@@ -110,8 +108,8 @@ public class HomeController extends GuestController{
             try {
                 ObservableList<Room> searchRooms = FXCollections.observableArrayList();
                 ObservableList<Image> searchImages = FXCollections.observableArrayList();
-                for(int i=0; i<rooms.size(); i++) {
-                    if(rooms.get(i).getName().contains(search)) {
+                for (int i = 0; i < rooms.size(); i++) {
+                    if (rooms.get(i).getName().contains(search)) {
                         searchRooms.add(rooms.get(i));
                         searchImages.add(images.get(i));
                     }
@@ -165,21 +163,12 @@ public class HomeController extends GuestController{
 //        }
 
 
-        if(roomBooking.contains(rooms.get(index[idxTag]))) {
+        if (roomBooking.contains(rooms.get(index[idxTag]))) {
             Dialog.showError("Room is already in cart", null, "Room " + rooms.get(index[idxTag]).getName() + " is already in cart, please open cart to check in room");
             return;
         }
         roomBooking.add(rooms.get(index[idxTag]));
         Dialog.showInformation("Add to Cart", null, "Add room " + rooms.get(index[idxTag]).getName() + " to payment Successfully \nCarry out payment to finish booking");
-    }
-
-    public void imgClick1(MouseEvent mouseEvent) throws IOException {
-    }
-
-    public void imgClick2(MouseEvent mouseEvent) {
-    }
-
-    public void imgClick3(MouseEvent mouseEvent) {
     }
 
 
@@ -193,7 +182,7 @@ public class HomeController extends GuestController{
         images = sv.getImage(connect, rooms, images);
         randomRoom(rooms, images);
 
-        for (Room room : rooms){
+        for (Room room : rooms) {
             System.out.println(room.toString());
         }
 

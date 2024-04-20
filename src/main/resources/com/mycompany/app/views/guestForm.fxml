@@ -49,7 +49,7 @@
 
       <fx:include fx:id="detail" source="guest/detail.fxml" />
 
-      <AnchorPane fx:id="signoutpane" layoutX="19.0" layoutY="35.0" prefHeight="34.0" prefWidth="40.0" visible="false">
+      <AnchorPane fx:id="signOutPane" layoutX="19.0" layoutY="35.0" prefHeight="34.0" prefWidth="40.0" visible="false">
          <children>
             <Button layoutX="11.0" layoutY="14.0" mnemonicParsing="false" onAction="#signOut" prefHeight="34.0" prefWidth="40.0" styleClass="signOut" stylesheets="@../css/home.css">
                <graphic>

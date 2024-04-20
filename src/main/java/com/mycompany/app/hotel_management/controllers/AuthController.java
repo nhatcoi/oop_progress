@@ -22,8 +22,10 @@ import java.util.Random;
 
 public class AuthController {
 
-    public TextField tfEmail;
-    public TextField tfUsername;
+    @FXML
+    private TextField tfEmail;
+    @FXML
+    private TextField tfUsername;
     @FXML
     private StackPane authForm;
     @FXML
@@ -33,8 +35,6 @@ public class AuthController {
     @FXML
     private PasswordField password;
     @FXML
-    private Button loginBtn;
-    @FXML
     private Hyperlink forgotPassword;
     @FXML
     private Hyperlink createAccount;
@@ -43,13 +43,9 @@ public class AuthController {
     @FXML
     private TextField signup_username;
     @FXML
-    private TextField signup_email;
-    @FXML
     private PasswordField signup_password;
     @FXML
     private PasswordField signup_password2;
-    @FXML
-    private Button signupBtn;
     @FXML
     private Hyperlink signup_forgot;
     @FXML
@@ -57,16 +53,10 @@ public class AuthController {
     // forgot
     @FXML
     private AnchorPane forgot_form;
-
     @FXML
     private Hyperlink forgot_login;
     @FXML
     private Hyperlink forgot_signup;
-
-    @FXML
-    private ComboBox comboBox;
-    @FXML
-    ProgressIndicator progress;
 
     // db tools
     private Connection connect;
@@ -83,7 +73,7 @@ public class AuthController {
             String passLog = password.getText();
 
             if (userLog.isEmpty() || passLog.isEmpty()) {
-                Dialog.showError("Đừng để trống", null, "Vui lòng nhập tên đăng nhập và mật khẩu");
+                Dialog.showError("Login failed", null, "Please fill in all fields");
             } else {
 
                 passLog = Md5.hashString(passLog);
@@ -98,7 +88,7 @@ public class AuthController {
                     int role = result.getInt("role");
                     ManagerController.user = new User(id, userLog, role);
 
-                    Dialog.showInformation("Đăng nhập thành công", null, "Chào mừng " + userLog);
+                    Dialog.showInformation("Login successful", null, "Welcome " + userLog);
                     if (ManagerController.user.getRole() == UserRole.GUEST.getValue()) {
                         String sql2 = "SELECT * FROM guests WHERE user_id = ?";
                         prepare = connect.prepareStatement(sql2);
@@ -120,7 +110,7 @@ public class AuthController {
                     }
                     ToolFXML.closeFXML(authForm);
                 } else {
-                    Dialog.showError("Đăng nhập thất bại", null, "Tên đăng nhập hoặc mật khẩu không đúng");
+                    Dialog.showError("Login failed", null, "Username or password is incorrect");
                 }
             }
         } catch (Exception e) {
@@ -142,19 +132,19 @@ public class AuthController {
 
             // check empty fields
             if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Dialog.showError("Đừng để trống", null, "Vui lòng điền đầy đủ thông tin");
+                Dialog.showError("Sign up failed", null, "Please fill in all fields");
                 return;
             }
-            if(username.length() < 6) {
-                Dialog.showError("Tên đăng nhập quá ngắn", null, "Tên đăng nhập phải chứa ít nhất 6 ký tự");
+            if (username.length() < 6) {
+                Dialog.showError("Error", null, "Username must be at least 6 characters");
                 return;
             }
-            if(password.length() < 6){
-                Dialog.showError("Mật khẩu quá ngắn", null, "Mật khẩu phải chứa ít nhất 6 ký tự");
+            if (password.length() < 6) {
+                Dialog.showError("Error", null, "Password must be at least 6 characters");
                 return;
             }
             if (!password.equals(confirmPassword)) {
-                Dialog.showError("Mật khẩu không khớp", null, "Mật khẩu và xác nhận mật khẩu không khớp");
+                Dialog.showError("Error", null, "Confirm password is not match with new password");
                 return;
             }
             password = Md5.hashString(password);
@@ -166,7 +156,7 @@ public class AuthController {
             ResultSet checkResult = prepare.executeQuery();
 
             if (checkResult.next()) {
-                Dialog.showError("Đăng ký thất bại", null, "Email hoặc tên đăng nhập đã tồn tại");
+                Dialog.showError("Error", null, "Username is already taken");
                 return;
             }
 
@@ -188,7 +178,7 @@ public class AuthController {
                 userId = idResult.getInt("id");
             }
 
-            Dialog.showInformation("Đăng ký thành công", null, "Tài khoản của bạn đã được tạo thành công");
+            Dialog.showInformation("Success", null, "Account created successfully");
 
             this.signup_form.setVisible(false);
             this.login_form.setVisible(true);
@@ -203,7 +193,7 @@ public class AuthController {
     public void requestPassword() {
         String username = tfUsername.getText();
         String email = tfEmail.getText();
-        if(Validate.validateEmail(email)) {
+        if (Validate.validateEmail(email)) {
             Dialog.showError("Error", null, "Email is invalid");
             return;
         }
@@ -214,7 +204,7 @@ public class AuthController {
             prepare = connect.prepareStatement(sql);
             prepare.setString(1, email);
             result = prepare.executeQuery();
-            if(result.next()) {
+            if (result.next()) {
                 String newPassword = generateRandomString(6);
                 String hashedPassword = Md5.hashString(newPassword);
 
@@ -287,7 +277,6 @@ public class AuthController {
     }
 
 
-
     public void initialize() throws SQLException {
 
     }
@@ -296,6 +285,5 @@ public class AuthController {
         if (keyEvent.getCode() == KeyCode.ENTER)
             login();
     }
-
 }
 

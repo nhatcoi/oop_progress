@@ -5,7 +5,7 @@ import com.mycompany.app.week2.code2.interfaces.interfaces.Car;
 public class Ex5 implements Car {
     @Override
     public void wheels() {
-        System.out.println("wheels: 4");
+        System.out.println("wheels: 4.png");
     }
 
     @Override
