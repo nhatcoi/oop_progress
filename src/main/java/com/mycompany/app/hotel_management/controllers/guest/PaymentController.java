@@ -337,6 +337,11 @@ public class PaymentController extends HomeController {
             Dialog.showError("Error", null, "Please select a reservation to cancel");
             return;
         }
+        if(!res.getCheckInDate().after(new Date())) {
+            Dialog.showError("Error", null, "You can't cancel a reservation that has already started");
+            return;
+        }
+
         connect = Database.connectDb();
         // remove payment before reservation
         fetchPayment(res);

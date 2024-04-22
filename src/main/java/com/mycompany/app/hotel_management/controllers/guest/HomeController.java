@@ -23,6 +23,16 @@ import java.util.stream.IntStream;
 
 import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
 
+
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.util.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class HomeController extends GuestController {
 
     @FXML
@@ -54,6 +64,8 @@ public class HomeController extends GuestController {
 
     @FXML
     private Label lbPrice3;
+    @FXML
+    private Label clockLabel;
 
     Connection connect;
 
@@ -115,6 +127,16 @@ public class HomeController extends GuestController {
                     }
                 }
                 randomRoom(searchRooms, searchImages);
+
+                // Lọc lại index sau search
+                Map<Room, Integer> roomIndexMap = IntStream.range(0, rooms.size())
+                        .boxed()
+                        .collect(Collectors.toMap(rooms::get, i -> i));
+                index = selectedRooms.stream()
+                        .filter(roomIndexMap::containsKey)
+                        .mapToInt(roomIndexMap::get)
+                        .toArray();
+                Arrays.stream(index).forEach(System.out::println);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -140,16 +162,6 @@ public class HomeController extends GuestController {
 //            return;
 //        }
 
-        // Lọc lại index sau search
-        Map<Room, Integer> roomIndexMap = IntStream.range(0, rooms.size())
-                .boxed()
-                .collect(Collectors.toMap(rooms::get, i -> i));
-        int[] index = selectedRooms.stream()
-                .filter(roomIndexMap::containsKey)
-                .mapToInt(roomIndexMap::get)
-                .toArray();
-        Arrays.stream(index).forEach(System.out::println);
-
 //        int a = 0;
 //        for(Room room : selectedRooms) {
 //            for(int i = 0; i < rooms.size(); i++) {
@@ -161,7 +173,6 @@ public class HomeController extends GuestController {
 //                }
 //            }
 //        }
-
 
         if (roomBooking.contains(rooms.get(index[idxTag]))) {
             Dialog.showError("Room is already in cart", null, "Room " + rooms.get(index[idxTag]).getName() + " is already in cart, please open cart to check in room");
@@ -185,6 +196,23 @@ public class HomeController extends GuestController {
         for (Room room : rooms) {
             System.out.println(room.toString());
         }
+
+        // clock
+        Timeline clockTimeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        LocalTime currentTime = LocalTime.now();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                        String formattedTime = currentTime.format(formatter);
+                        clockLabel.setText(formattedTime);
+                    }
+                }),
+                new KeyFrame(Duration.seconds(1))
+        );
+        clockTimeline.setCycleCount(Animation.INDEFINITE);
+        clockTimeline.play();
+
 
         ToolFXML.test("Home : ", startTime);
     }

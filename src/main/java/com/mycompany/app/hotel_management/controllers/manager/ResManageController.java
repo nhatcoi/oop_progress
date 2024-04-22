@@ -88,7 +88,6 @@ public class ResManageController extends OverviewController  {
 
     public void refreshTable() throws SQLException, ParseException {
         resSetOfDate();
-        super.initialize();
     }
 
     private void resSetOfDate() throws SQLException, ParseException {
