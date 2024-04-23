@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="603.0" prefWidth="1100.0" visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.FindController">
+    <children>
+        <Button layoutX="23.0" layoutY="26.0" mnemonicParsing="false" onAction="#findRoom" prefHeight="27.0" prefWidth="67.0" styleClass="btn" stylesheets="@../../css/home.css" text="Search" />
+        <TextField fx:id="tfSearch" layoutX="101.0" layoutY="26.0" prefHeight="27.0" prefWidth="927.0" promptText="Search" styleClass="textField" stylesheets="@../../css/home.css" />
+        <TableView fx:id="tableRoom" layoutX="14.0" layoutY="113.0" prefHeight="476.0" prefWidth="414.0" stylesheets="@../../css/home.css">
+            <columns>
+                <TableColumn prefWidth="145.0" text="Room Name">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="name" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="84.0" text="Type">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="type" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="103.0" text="status">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="status" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="78.0" text="price ($)">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="price" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+        <ImageView fx:id="imageRoom" fitHeight="365.0" fitWidth="582.0" layoutX="480.0" layoutY="113.0" pickOnBounds="true">
+            <image>
+                <Image url="@../../img/hotel3.jpeg" />
+            </image>
+        </ImageView>
+        <Button layoutX="719.0" layoutY="537.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="50.0" prefWidth="155.0" styleClass="btn" stylesheets="@../../css/home.css" text="Add to Cart" />
+        <Button layoutX="657.0" layoutY="547.0" mnemonicParsing="false" onAction="#favoriteRoom" prefHeight="33.0" prefWidth="41.0" stylesheets="@../../css/home.css">
+            <graphic>
+                <FontAwesomeIcon fill="RED" glyphName="HEART" />
+            </graphic>
+        </Button>
+        <Label layoutX="451.0" layoutY="61.0" prefHeight="33.0" prefWidth="113.0" stylesheets="@../../css/home.css" text="Room illustration">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="cbType" layoutX="26.0" layoutY="64.0" onAction="#typeFilter" prefHeight="27.0" prefWidth="88.0" promptText="type" styleClass="textField" stylesheets="@../../css/home.css" />
+        <ComboBox fx:id="cbPrice" layoutX="143.0" layoutY="64.0" onAction="#priceFilter" prefHeight="27.0" prefWidth="88.0" promptText="price" styleClass="textField" stylesheets="@../../css/home.css" />
+      <ImageView fitHeight="521.0" fitWidth="707.0" layoutX="410.0" layoutY="41.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../img/v5mwy4xk-removebg-preview.png" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>
