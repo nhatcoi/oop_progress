@@ -8,13 +8,17 @@ import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.Service.RoomServiceImpl;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
+import com.mycompany.app.hotel_management.utils.MailSender;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import lombok.var;
 
+import javax.tools.Tool;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -47,7 +51,8 @@ public class PaymentController extends HomeController {
     Connection connect;
 
     public static ObservableList<Room> roomBooking = FXCollections.observableArrayList();
-    ObservableList<Room> selectedRooms;
+    //ObservableList<Room> selectedRooms;
+    Room room;
     public static ObservableList<Reservation> reservations = FXCollections.observableArrayList();
     ObservableList<Payment> payments = FXCollections.observableArrayList();
     
@@ -68,14 +73,9 @@ public class PaymentController extends HomeController {
 
         // cart handing
         tableViewBooking.setItems(roomBooking);
-        tableViewBooking.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableViewBooking.setOnMouseClicked(e -> {
-            selectedRooms = tableViewBooking.getSelectionModel().getSelectedItems();
-            double total = 0;
-            for (Room room : selectedRooms) {
-                total += room.getPrice();
-            }
-            lbTotal.setText(String.valueOf(total));
+            room = tableViewBooking.getSelectionModel().getSelectedItem();
+            lbTotal.setText(String.valueOf(room.getPrice()));
         });
 
         // reservations handing
@@ -128,7 +128,7 @@ public class PaymentController extends HomeController {
     }
 
     @FXML
-    void payment() throws SQLException {
+    void payment() throws Exception {
         if(!checkInfo()) {
             return;
         }
@@ -139,7 +139,6 @@ public class PaymentController extends HomeController {
             Dialog.showError("Error", null, "Please select a room to book");
             return;
         }
-
         // xu li trung lich phong
         if(!sameOrder(res)) {
             return;
@@ -157,16 +156,14 @@ public class PaymentController extends HomeController {
             prepare.setDate(3, (java.sql.Date) res.getCheckInDate());
             prepare.setDate(4, (java.sql.Date) res.getCheckoutDate());
             prepare.executeUpdate();
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         tableViewReservation.getItems().clear();
         fetchReservation();
-        roomBooking.remove(selectedRooms.get(idxRoomSelect));
+        roomBooking.remove(room);
 
         // conduct payment method
-        Dialog.showInformation("Payment", null, "Please pay the bill to complete the reservation");
         Payment payment = new Payment();
         reservations.stream()
                 .filter(resCheck -> resCheck.equals(res))
@@ -176,10 +173,10 @@ public class PaymentController extends HomeController {
         payment.setPaymentMethod(cbPaymentMethod.getValue());
         payment.setPaymentDate(new Date()); // Gán thời gian hiện tại cho paymentDate
 
+        // insert payment into db
         // xu li sql date
         Date utilDate = payment.getPaymentDate();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        // insert payment into db
         payments.add(payment);
         connect = Database.connectDb();
         sql = "INSERT INTO payments (reservation_id, total_price, payment_method, payment_date) VALUES (?, ?, ?, ?)";
@@ -201,7 +198,23 @@ public class PaymentController extends HomeController {
         if((localDateNow.isAfter(checkIn) && localDateNow.isBefore(checkOut) || localDateNow.isEqual(dpCheckIn.getValue()))){
             updateStatus(rooms.get(indexOfRoom(res)) , RoomStatus.OCCUPIED.ordinal());
         }
-        Dialog.showInformation("Reservation successful", null, "You have successfully booked your room");
+//        Dialog.showInformation("Reservation successful", null, "You have successfully booked your room");
+
+        // bank lor
+        Dialog.showInformation("Payment", null, "Please pay the bill to complete the reservation");
+        if(cbPaymentMethod.getValue().equals(PaymentMethod.BANK_TRANSFER.getText())) {
+            try {
+                reservation = reservations.get(reservations.size()-1);
+                ToolFXML.openFXML("views/guest/bank.fxml", 600, 600);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
+        MailSender.sendEmail(guest.getEmail(), "Reservation", "You have just booked a room from " + dpCheckIn.getValue() + " to " + dpCheckOut.getValue() + " at Viet Nhat Hotel" +
+                "\nTotal price: " + lbTotal.getText() + " $" +
+                "\nPayment method: " + cbPaymentMethod.getValue() +
+                "\nThank you for choosing our service");
     }
 
     private boolean sameOrder(Reservation res) {
@@ -222,13 +235,11 @@ public class PaymentController extends HomeController {
 
     private boolean paySelectedRoom(Reservation res) {
         // conduct payment
-        if (selectedRooms == null || selectedRooms.isEmpty()) {
+        if (room == null) {
             return false;
         }
         res.setUser_id(user.getId());
-        for (Room room : selectedRooms) {
-            res.setRoom_id(room.getId());
-        }
+        res.setRoom_id(room.getId());
         checkIn();
         res.setCheckInDate(convertToDate(dpCheckIn.getValue()));
         checkOut();
@@ -309,10 +320,7 @@ public class PaymentController extends HomeController {
         }
         long daysBetween = ChronoUnit.DAYS.between(dpCheckIn.getValue(), dpCheckOut.getValue());
 
-        double price = 0;
-        for (Room room : selectedRooms) {
-            price += room.getPrice();
-        }
+        double price = room.getPrice();
         double total =  price * (daysBetween + 1);
         lbTotal.setText(String.valueOf(total));
 
@@ -397,4 +405,6 @@ public class PaymentController extends HomeController {
                 .findFirst()
                 .orElse(-1);
     }
+
+
 }
