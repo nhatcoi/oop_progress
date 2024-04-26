@@ -172,11 +172,14 @@ public class PaymentController extends HomeController {
         payment.setTotalPrice(Double.parseDouble(lbTotal.getText()));
         payment.setPaymentMethod(cbPaymentMethod.getValue());
         payment.setPaymentDate(new Date()); // Gán thời gian hiện tại cho paymentDate
+        System.out.println(payment.getPaymentDate());
 
         // insert payment into db
         // xu li sql date
         Date utilDate = payment.getPaymentDate();
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(utilDate.getTime());
+        System.out.println(timestamp);
+        System.out.println(timestamp);
         payments.add(payment);
         connect = Database.connectDb();
         sql = "INSERT INTO payments (reservation_id, total_price, payment_method, payment_date) VALUES (?, ?, ?, ?)";
@@ -186,7 +189,7 @@ public class PaymentController extends HomeController {
             prepare.setInt(1, payment.getReservationId());
             prepare.setDouble(2, payment.getTotalPrice());
             prepare.setString(3, payment.getPaymentMethod());
-            prepare.setDate(4, sqlDate);
+            prepare.setTimestamp(4, timestamp);
             prepare.executeUpdate();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -214,6 +217,7 @@ public class PaymentController extends HomeController {
         MailSender.sendEmail(guest.getEmail(), "Reservation", "You have just booked a room from " + dpCheckIn.getValue() + " to " + dpCheckOut.getValue() + " at Viet Nhat Hotel" +
                 "\nTotal price: " + lbTotal.getText() + " $" +
                 "\nPayment method: " + cbPaymentMethod.getValue() +
+                "\nTime Order: " + payment.getPaymentDate() +
                 "\nThank you for choosing our service");
     }
 

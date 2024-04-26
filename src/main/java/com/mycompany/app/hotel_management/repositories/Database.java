@@ -2,22 +2,16 @@ package com.mycompany.app.hotel_management.repositories;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mycompany.app.hotel_management.entities.Room;
-import com.mycompany.app.hotel_management.enums.RoomStatus;
-import com.mycompany.app.hotel_management.enums.RoomType;
-import com.mycompany.app.hotel_management.utils.ToolFXML;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.io.FileReader;
 import java.sql.*;
+import java.util.Objects;
 
 public class Database {
     private static final String CONFIG_FILE = "config.json";
 
     public static Connection connectDb() {
         //Class.forName("com.mysql.cj.jdbc.Driver");
-
         //return DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_data", "root", "nhatcoi2004");
 
         try (FileReader reader = new FileReader(CONFIG_FILE)) {

@@ -143,7 +143,7 @@ public class DetailController extends HomeController {
             return;
         }
         System.out.println(guest.getId());
-        String sql = "INSERT INTO comments (guest_id, room_id, comment, date_submmited) VALUES ('" + guest.getId() + "', '" + rooms.get(currentIndex).getId() + "', '" + feedback + "', NOW())";
+        String sql = "INSERT INTO comments (guest_id, room_id, comment, date_submmited) VALUES ('" + guest.getId() + "', '" + rooms.get(currentIndex).getId() + "', '" + feedback + "', now())";
         assert connect != null;
         Statement statement = connect.createStatement();
         statement.executeUpdate(sql);

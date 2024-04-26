@@ -64,8 +64,6 @@ public class EditStaffController {
             staff.setUsername(resultSet.getString("username"));
             this.staff.add(staff);
         }
-
-
     }
 
     public void clearInput() {
@@ -82,26 +80,29 @@ public class EditStaffController {
         double salary = Double.parseDouble(salaryField.getText());
         String username = usernameField.getText();
 
-        String sqlGetUserId = "SELECT id FROM users WHERE username = '" + username + "'";
+        String sqlGetUserId = "SELECT id, role FROM users WHERE username = '" + username + "'";
         try {
             Statement statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlGetUserId);
             if(resultSet.next()) {
                 int userId = resultSet.getInt("id");
+                int userRole = Integer.parseInt(resultSet.getString("role"));
                 String sql = "INSERT INTO staff (name, position, salary, user_id) VALUES ('" + name + "', '" + position + "', " + salary + ", " + userId + ")";
+                String sqlUpdateRole = "UPDATE users SET role = " + UserRole.STAFF.getValue() + " WHERE id = " + userId;
                 statement.executeUpdate(sql);
+                if(userRole == UserRole.GUEST.getValue()) {
+                    statement.executeUpdate(sqlUpdateRole);
+                }
             } else {
                 Dialog.showError("Error", null, "Username not found");
             }
-
             fetchData();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
-    public void searchData() {
+        public void searchData() {
         String search = searchField.getText();
         String sql = "SELECT staff.*,users.username FROM staff LEFT JOIN users ON users.id = staff.user_id WHERE users.role = " + UserRole.STAFF.getValue() + " AND staff.name LIKE '%" + search + "%'";
         try {
