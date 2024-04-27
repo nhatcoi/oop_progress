@@ -5,6 +5,7 @@ import com.mycompany.app.hotel_management.entities.Reservation;
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.repositories.Database;
+import com.sun.glass.events.KeyEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,19 +13,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import lombok.var;
 
+import java.security.Key;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class ResManageController extends OverviewController  {
@@ -34,6 +35,14 @@ public class ResManageController extends OverviewController  {
     public Label lbRoomName;
     public Label lbRoomCode;
     public Label lbCount;
+    public Label lbIdRes;
+    public Label lbGuestCode;
+    public Label lbRoom;
+    public Label lbCheckIn;
+    public Label lbCheckOut;
+    public ImageView imgRoom;
+    public AnchorPane detailResPane;
+    public AnchorPane managePane;
     @FXML
     private TableView<Payment> tableViewPayment;
     @FXML
@@ -45,11 +54,27 @@ public class ResManageController extends OverviewController  {
     ObservableList<Payment> payments = FXCollections.observableArrayList();
 
     Connection connect;
+    Reservation resDetail;
+
     public void initialize() throws SQLException, ParseException {
+        show(resManagePane);
         getAllReservation();
         getAllPayment();
         tableViewRes.setItems(reservations);
         tableViewPayment.setItems(payments);
+
+        tableViewRes.setOnMouseClicked(event -> {
+            resDetail = tableViewRes.getSelectionModel().getSelectedItem();
+            if(event.getClickCount() == 2 && resDetail != null) {
+                lbIdRes.setText(String.valueOf(resDetail.getId()));
+                lbGuestCode.setText(String.valueOf(resDetail.getUser_id()));
+                lbRoom.setText(String.valueOf(roomList.get(indexOfRoom(resDetail)).getName()));
+                lbCheckIn.setText(String.valueOf(resDetail.getCheckInDate()));
+                lbCheckOut.setText(String.valueOf(resDetail.getCheckoutDate()));
+                imgRoom.setImage(images.get(indexOfRoom(resDetail)));
+                show(detailResPane);
+            }
+        });
 
         Map<Integer, Integer> roomCount = new HashMap<>();
         int maxRoomId = -1;
@@ -156,7 +181,7 @@ public class ResManageController extends OverviewController  {
         assert connect != null;
         ResultSet rs = connect.createStatement().executeQuery(sql);
         while(rs.next()) {
-            reservations.add(new Reservation(rs.getInt("id"), rs.getInt("user_id"), rs.getInt("room_id"), rs.getDate("check_in_date"), rs.getDate("check_out_date")));
+            reservations.add(new Reservation(rs.getInt("id"), rs.getInt("user_id"), rs.getInt("room_id"), rs.getTimestamp("check_in_date"), rs.getTimestamp("check_out_date")));
         }
     }
 
@@ -166,7 +191,7 @@ public class ResManageController extends OverviewController  {
         assert connect != null;
         ResultSet rs = connect.createStatement().executeQuery(sql);
         while(rs.next()) {
-            payments.add(new Payment(rs.getInt("id"), rs.getInt("reservation_id"), rs.getDouble("total_price"), rs.getString("payment_method"), rs.getDate("payment_date")));
+            payments.add(new Payment(rs.getInt("id"), rs.getInt("reservation_id"), rs.getDouble("total_price"), rs.getString("payment_method"), rs.getTimestamp("payment_date")));
         }
     }
 
@@ -197,5 +222,23 @@ public class ResManageController extends OverviewController  {
                 throw new RuntimeException();
             }
         }
+    }
+
+    public void outDetail() {
+        detailResPane.setVisible(false);
+    }
+
+    void show(AnchorPane paneToShow) {
+        List<AnchorPane> allPanes = Arrays.asList(detailResPane, managePane);
+        for (AnchorPane pane : allPanes) {
+            if(pane.equals(paneToShow)) {
+                pane.setVisible(true);
+            }
+        }
+    }
+
+    public void esc(javafx.scene.input.KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.ESCAPE)
+            outDetail();
     }
 }

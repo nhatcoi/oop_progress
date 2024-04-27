@@ -23,9 +23,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -47,6 +49,8 @@ public class PaymentController extends HomeController {
     private DatePicker dpCheckIn;
     @FXML
     private DatePicker dpCheckOut;
+    public ComboBox<Integer> cbHourIn;
+    public ComboBox<Integer> cbHourOut;
 
     Connection connect;
 
@@ -55,7 +59,7 @@ public class PaymentController extends HomeController {
     Room room;
     public static ObservableList<Reservation> reservations = FXCollections.observableArrayList();
     ObservableList<Payment> payments = FXCollections.observableArrayList();
-    
+
     int idxRoomSelect = 0;
     RoomServiceImpl sv = new RoomServiceImpl();
     public static Reservation reservation;
@@ -67,6 +71,11 @@ public class PaymentController extends HomeController {
                 .map(PaymentMethod::getText)
                 .collect(Collectors.toList()));
         cbPaymentMethod.getSelectionModel().selectFirst();
+
+        cbHourIn.getItems().addAll(IntStream.range(0, 24).boxed().collect(Collectors.toList()));
+        cbHourIn.getSelectionModel().selectFirst();
+        cbHourOut.getItems().addAll(IntStream.range(0, 24).boxed().collect(Collectors.toList()));
+        cbHourOut.getSelectionModel().selectLast();
 
         dpCheckIn.setValue(LocalDate.now());
         dpCheckOut.setValue(LocalDate.now());
@@ -111,31 +120,20 @@ public class PaymentController extends HomeController {
         }
     }
 
-    private boolean checkInfo() {
-        if(Objects.equals(guest.getName(), "") || Objects.equals(guest.getPhone(), "") || Objects.equals(guest.getAddress(), "") || Objects.equals(guest.getEmail(), "")){
-            Dialog.showError("Error", null, "Please fully update your personal information before payment");
-            return false;
-        }
-        if(Objects.equals(guest.getName(), "null") || Objects.equals(guest.getPhone(), "null") || Objects.equals(guest.getAddress(), "null") || Objects.equals(guest.getEmail(), "null")){
-            Dialog.showError("Error", null, "Please fully update your personal information before payment");
-            return false;
-        }
-        if(guest.getName() == null || guest.getPhone() == null || guest.getAddress() == null || guest.getEmail() == null){
-            Dialog.showError("Error", null, "Please fully update your personal information before payment");
-            return false;
-        }
-        return true;
-    }
-
     @FXML
     void payment() throws Exception {
+        if(!roomBooking.contains(room)) {
+            Dialog.showError("Error", null, "Please select a room to book");
+            return;
+        }
+
         if(!checkInfo()) {
             return;
         }
 
         // create reservation - gan gia tri
         Reservation res = new Reservation();
-        if(!paySelectedRoom(res)) {
+        if(!resInfo(res)) {
             Dialog.showError("Error", null, "Please select a room to book");
             return;
         }
@@ -153,8 +151,10 @@ public class PaymentController extends HomeController {
             var prepare = connect.prepareStatement(sql);
             prepare.setInt(1, res.getUser_id());
             prepare.setInt(2, res.getRoom_id());
-            prepare.setDate(3, (java.sql.Date) res.getCheckInDate());
-            prepare.setDate(4, (java.sql.Date) res.getCheckoutDate());
+            java.sql.Timestamp checkin = new java.sql.Timestamp(res.getCheckInDate().getTime());
+            java.sql.Timestamp checkout = new java.sql.Timestamp(res.getCheckoutDate().getTime());
+            prepare.setTimestamp(3, checkin);
+            prepare.setTimestamp(4, checkout);
             prepare.executeUpdate();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -165,10 +165,11 @@ public class PaymentController extends HomeController {
 
         // conduct payment method
         Payment payment = new Payment();
-        reservations.stream()
-                .filter(resCheck -> resCheck.equals(res))
-                .findFirst()
-                .ifPresent(resCheck -> payment.setReservationId(resCheck.getId()));
+//        reservations.stream()
+//                .filter(resCheck -> resCheck.equals(res))
+//                .findFirst()
+//                .ifPresent(resCheck -> payment.setReservationId(resCheck.getId()));
+        payment.setReservationId(reservations.get(reservations.size()-1).getId());
         payment.setTotalPrice(Double.parseDouble(lbTotal.getText()));
         payment.setPaymentMethod(cbPaymentMethod.getValue());
         payment.setPaymentDate(new Date()); // Gán thời gian hiện tại cho paymentDate
@@ -214,11 +215,44 @@ public class PaymentController extends HomeController {
             }
         }
 
-        MailSender.sendEmail(guest.getEmail(), "Reservation", "You have just booked a room from " + dpCheckIn.getValue() + " to " + dpCheckOut.getValue() + " at Viet Nhat Hotel" +
+        MailSender.sendEmail(guest.getEmail(), "Reservation", "You have just booked a room (" + rooms.get(indexOfRoom(res)).getName() + ") from " + dpCheckIn.getValue() + " to " + dpCheckOut.getValue() + " at Viet Nhat Hotel" +
                 "\nTotal price: " + lbTotal.getText() + " $" +
                 "\nPayment method: " + cbPaymentMethod.getValue() +
                 "\nTime Order: " + payment.getPaymentDate() +
                 "\nThank you for choosing our service");
+    }
+
+    private boolean checkInfo() {
+        if (guest == null || guest.getName() == null || guest.getPhone() == null || guest.getAddress() == null || guest.getEmail() == null ||
+                guest.getName().isEmpty() || guest.getPhone().isEmpty() || guest.getAddress().isEmpty() || guest.getEmail().isEmpty()) {
+            Dialog.showError("Error", null, "Please fully update your personal information before payment");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean resInfo(Reservation res) {
+        if (room == null) {
+            return false;
+        }
+        res.setUser_id(user.getId());
+        res.setRoom_id(room.getId());
+        checkIn();
+        res.setCheckInDate(setDateTime(convertToDate(dpCheckIn.getValue()), cbHourIn.getValue()));
+        checkOut();
+        res.setCheckoutDate(setDateTime(convertToDate(dpCheckOut.getValue()), cbHourOut.getValue()));
+        return true;
+    }
+
+    private java.sql.Timestamp setDateTime(Date date, int hour) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, hour); // Set the hour of the day
+        return new java.sql.Timestamp(calendar.getTimeInMillis());
+    }
+
+    private Date convertToDate(LocalDate localDate) {
+        return java.sql.Date.valueOf(localDate);
     }
 
     private boolean sameOrder(Reservation res) {
@@ -237,54 +271,8 @@ public class PaymentController extends HomeController {
         return true;
     }
 
-    private boolean paySelectedRoom(Reservation res) {
-        // conduct payment
-        if (room == null) {
-            return false;
-        }
-        res.setUser_id(user.getId());
-        res.setRoom_id(room.getId());
-        checkIn();
-        res.setCheckInDate(convertToDate(dpCheckIn.getValue()));
-        checkOut();
-        res.setCheckoutDate(convertToDate(dpCheckOut.getValue()));
-        return true;
-    }
-
-    private void fetchReservation() throws SQLException {
-        connect = Database.connectDb();
-        assert connect != null;
-        String sql = "SELECT * FROM reservations WHERE user_id = '" + user.getId() + "'";
-        ResultSet rs = connect.createStatement().executeQuery(sql);
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            int user_id = rs.getInt("user_id");
-            int room_id = rs.getInt("room_id");
-            Date check_in_date = rs.getDate("check_in_date");
-            Date check_out_date = rs.getDate("check_out_date");
-
-            reservations.add(new Reservation(id, user_id, room_id, check_in_date, check_out_date));
-        }
-    }
-
-    private void fetchPayment(Reservation res) throws SQLException {
-        connect = Database.connectDb();
-        assert connect != null;
-        String sql = "SELECT * FROM payments WHERE reservation_id = '" + res.getId() + "'";
-        ResultSet rs = connect.createStatement().executeQuery(sql);
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            int reservation_id = rs.getInt("reservation_id");
-            double total_price = rs.getDouble("total_price");
-            String payment_method = rs.getString("payment_method");
-            Date payment_date = rs.getDate("payment_date");
-
-            payments.add(new Payment(id, reservation_id, total_price, payment_method, payment_date));
-        }
-    }
 
     private void updateStatus(Room room, int statusRoom) throws SQLException {
-
         connect = Database.connectDb();
         sv.getAllRoom(connect, rooms, "rooms");
         String sql = "UPDATE rooms SET status = ? WHERE id = ?";
@@ -310,25 +298,47 @@ public class PaymentController extends HomeController {
     void checkOut() {
         checkDate();
     }
-
-    private Date convertToDate(LocalDate localDate) {
-        return java.sql.Date.valueOf(localDate);
+    @FXML
+    void checkTimeIn() {
+        checkDate();
+    }
+    @FXML
+    void checkTimeOut() {
+        checkDate();
     }
 
     private void checkDate() {
-        if( dpCheckOut.getValue() == null || dpCheckIn.getValue().isAfter(dpCheckOut.getValue()) || dpCheckIn.getValue().isBefore(LocalDate.now()) ) {
-            Dialog.showError("Date", null, "please choose check in or checkout out suitable");
+        LocalDate checkInDate = dpCheckIn.getValue();
+        LocalDate checkOutDate = dpCheckOut.getValue();
+        if (checkOutDate == null || checkInDate.isAfter(checkOutDate) || checkInDate.isBefore(LocalDate.now())) {
+            Dialog.showError("Date", null, "Please choose suitable check-in and check-out dates");
             dpCheckIn.setValue(LocalDate.now());
             dpCheckOut.setValue(LocalDate.now());
             return;
         }
-        long daysBetween = ChronoUnit.DAYS.between(dpCheckIn.getValue(), dpCheckOut.getValue());
-
+        long daysBetween = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+        int hoursBetween = cbHourOut.getValue() - cbHourIn.getValue();
+        if (daysBetween == 0 && hoursBetween < 0) {
+            Dialog.showError("Date", null, "Please choose suitable hours");
+            cbHourIn.setValue(0);
+            cbHourOut.setValue(23);
+            return;
+        }
         double price = room.getPrice();
-        double total =  price * (daysBetween + 1);
-        lbTotal.setText(String.valueOf(total));
+        double total = 0;
 
-        System.out.println(daysBetween);
+        if(daysBetween == 0 && hoursBetween > 0) {
+            total = price;
+        }
+        if(daysBetween > 0) {
+            daysBetween++;
+            if(cbHourOut.getValue() <= cbHourIn.getValue()) {
+                daysBetween--;
+                total = price * daysBetween;
+            }
+            total = price * daysBetween;
+        }
+        lbTotal.setText(String.valueOf(total));
     }
 
     @FXML
@@ -342,7 +352,7 @@ public class PaymentController extends HomeController {
     }
 
     @FXML
-    void cancel() throws SQLException {
+    void cancel() throws Exception {
         // Cancel reservation
         Reservation res = tableViewReservation.getSelectionModel().getSelectedItem();
         if(res == null) {
@@ -401,6 +411,9 @@ public class PaymentController extends HomeController {
         Dialog.showInformation("Cancel reservation", null, "You have successfully canceled your reservation");
         tableViewReservation.getItems().clear();
         fetchReservation();
+
+        MailSender.sendEmail(guest.getEmail(), "Cancel Reservation", "You have just canceled a room " + rooms.get(indexOfRoom(res)).getName() + ") from " + res.getCheckInDate() + " to " + res.getCheckoutDate() + " at Viet Nhat Hotel" +
+                "\nThank you! Hope to see you again");
     }
 
     private int indexOfRoom(Reservation res) {
@@ -410,5 +423,39 @@ public class PaymentController extends HomeController {
                 .orElse(-1);
     }
 
+
+
+    private void fetchReservation() throws SQLException {
+        connect = Database.connectDb();
+        assert connect != null;
+        String sql = "SELECT * FROM reservations WHERE user_id = '" + user.getId() + "'";
+        ResultSet rs = connect.createStatement().executeQuery(sql);
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            int user_id = rs.getInt("user_id");
+            int room_id = rs.getInt("room_id");
+            java.sql.Timestamp check_in_timestamp = rs.getTimestamp("check_in_date");
+            java.sql.Timestamp check_out_timestamp = rs.getTimestamp("check_out_date");
+
+            System.out.println(check_in_timestamp + " " + check_out_timestamp);
+            reservations.add(new Reservation(id, user_id, room_id, check_in_timestamp, check_out_timestamp));
+        }
+    }
+
+    private void fetchPayment(Reservation res) throws SQLException {
+        connect = Database.connectDb();
+        assert connect != null;
+        String sql = "SELECT * FROM payments WHERE reservation_id = '" + res.getId() + "'";
+        ResultSet rs = connect.createStatement().executeQuery(sql);
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            int reservation_id = rs.getInt("reservation_id");
+            double total_price = rs.getDouble("total_price");
+            String payment_method = rs.getString("payment_method");
+            Date payment_date = rs.getDate("payment_date");
+
+            payments.add(new Payment(id, reservation_id, total_price, payment_method, payment_date));
+        }
+    }
 
 }

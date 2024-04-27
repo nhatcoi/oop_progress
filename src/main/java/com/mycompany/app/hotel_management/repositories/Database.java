@@ -21,6 +21,7 @@ public class Database {
             String databaseName = jsonObject.get("database_name").getAsString();
             String username = jsonObject.get("username").getAsString();
             String password = jsonObject.get("password").getAsString();
+
             // Create the connection URL
             String url = "jdbc:mysql://" + host + ":3306/" + databaseName;
 

@@ -21,6 +21,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.mycompany.app.hotel_management.controllers.AuthController.imagesIni;
+import static com.mycompany.app.hotel_management.controllers.AuthController.roomsIni;
 import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
 
 
@@ -188,9 +190,8 @@ public class HomeController extends GuestController {
 
         rooms.clear();
         images.clear();
-        connect = Database.connectDb();
-        sv.getAllRoom(connect, rooms, "rooms");
-        images = sv.getImage(connect, rooms, images);
+        rooms = roomsIni;
+        images = imagesIni;
         randomRoom(rooms, images);
 
         for (Room room : rooms) {

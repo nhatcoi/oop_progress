@@ -1,14 +1,19 @@
 package com.mycompany.app.hotel_management.controllers;
 
 
+import com.mycompany.app.hotel_management.Service.RoomServiceImpl;
+import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.entities.User;
 import com.mycompany.app.hotel_management.enums.UserRole;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.*;
 import com.mycompany.app.hotel_management.utils.Dialog;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -63,6 +69,9 @@ public class AuthController {
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
+    RoomServiceImpl sv = new RoomServiceImpl();
+    public static ObservableList<Image> imagesIni = FXCollections.observableArrayList();
+    public static ObservableList<Room> roomsIni = FXCollections.observableArrayList();
 
     public void login() {
 
@@ -276,9 +285,12 @@ public class AuthController {
         }
     }
 
-
-    public void initialize() throws SQLException {
-
+    public void initialize() throws SQLException, ParseException {
+        roomsIni.clear();
+        imagesIni.clear();
+        connect = Database.connectDb();
+        sv.getAllRoom(connect, roomsIni, "rooms");
+        sv.getImage(connect, roomsIni, imagesIni);
     }
 
     public void loginEnter(KeyEvent keyEvent) {

@@ -10,6 +10,7 @@ import java.sql.Statement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -174,6 +175,15 @@ public class DetailController extends HomeController {
                 comment.setRoom_id(rs.getInt("room_id"));
                 comments.add(comment);
             } while (rs.next());
+        }
+    }
+
+    @FXML
+    void otherComment() {
+        try {
+            setComments();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

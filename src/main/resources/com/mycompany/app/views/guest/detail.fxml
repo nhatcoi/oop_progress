@@ -12,7 +12,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="603.0" prefWidth="1100.0" visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.DetailController">
+<AnchorPane prefHeight="603.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.DetailController">
     <children>
         <Button layoutX="788.0" layoutY="453.0" mnemonicParsing="false" onAction="#booking" prefHeight="76.0" prefWidth="199.0" styleClass="btn" stylesheets="@../../css/home.css" text="Booking rooom">
             <font>
@@ -72,5 +72,6 @@
       <Label fx:id="lbDate3" layoutX="140.0" layoutY="569.0" prefHeight="17.0" prefWidth="140.0" text="Label" textFill="#000680" />
       <Separator layoutX="29.0" layoutY="499.0" prefHeight="0.0" prefWidth="392.0" />
       <Separator layoutX="28.0" layoutY="544.0" prefHeight="0.0" prefWidth="392.0" />
+      <Hyperlink layoutX="4.0" layoutY="441.0" onAction="#otherComment" prefHeight="22.0" prefWidth="64.0" text="other" />
     </children>
 </AnchorPane>

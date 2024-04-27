@@ -16,6 +16,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+import static com.mycompany.app.hotel_management.controllers.AuthController.imagesIni;
+import static com.mycompany.app.hotel_management.controllers.AuthController.roomsIni;
+
 public class OverviewController  {
     @FXML
     private Label lbAvailable;
@@ -35,13 +38,13 @@ public class OverviewController  {
 
     RoomServiceImpl sv = new RoomServiceImpl();
     public static ObservableList<Image> images = FXCollections.observableArrayList();
-    public static final ObservableList<Room> roomList = FXCollections.observableArrayList();
+    public static ObservableList<Room> roomList = FXCollections.observableArrayList();
     public void initialize() throws SQLException, ParseException {
         roomList.clear();
         images.clear();
-        connect = Database.connectDb();
-        sv.getAllRoom(connect, roomList, "rooms");
-        images = sv.getImage(connect, roomList, images);
+
+        roomList = roomsIni;
+        images = imagesIni;
         setTag();
     }
 

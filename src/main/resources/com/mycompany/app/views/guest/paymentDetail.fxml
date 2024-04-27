@@ -78,32 +78,32 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lbDays" layoutX="57.0" layoutY="554.0" prefHeight="18.0" prefWidth="70.0" text="days">
+      <Label fx:id="lbDays" layoutX="51.0" layoutY="554.0" prefHeight="18.0" prefWidth="70.0" text="days">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lbResId" layoutX="390.0" layoutY="318.0" prefHeight="17.0" prefWidth="121.0" text="reservation code">
+      <Label fx:id="lbResId" layoutX="405.0" layoutY="318.0" prefHeight="17.0" prefWidth="121.0" text="reservation code">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Text layoutX="387.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check In : ">
+      <Text layoutX="405.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check In : ">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Label fx:id="lbCheckIn" layoutX="449.0" layoutY="359.0" prefHeight="18.0" prefWidth="121.0" text="metadata">
+      <Label fx:id="lbCheckIn" alignment="CENTER_RIGHT" layoutX="325.0" layoutY="377.0" prefHeight="18.0" prefWidth="219.0" text="metadata">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lbCheckOut" layoutX="450.0" layoutY="389.0" prefHeight="18.0" prefWidth="121.0" text="metadata">
+      <Label fx:id="lbCheckOut" alignment="CENTER_RIGHT" layoutX="325.0" layoutY="416.0" prefHeight="18.0" prefWidth="219.0" text="metadata">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Text layoutX="388.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check Out : ">
+      <Text layoutX="405.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check Out : ">
          <font>
             <Font size="14.0" />
          </font>
@@ -155,6 +155,11 @@
       <Label fx:id="lbSignature" alignment="CENTER" contentDisplay="CENTER" layoutX="300.0" layoutY="839.0" prefHeight="34.0" prefWidth="267.0" text="lbSignature">
          <font>
             <Font name="Snell Roundhand" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbDays1" layoutX="98.0" layoutY="554.0" prefHeight="18.0" prefWidth="70.0" text="days">
+         <font>
+            <Font size="14.0" />
          </font>
       </Label>
    </children>

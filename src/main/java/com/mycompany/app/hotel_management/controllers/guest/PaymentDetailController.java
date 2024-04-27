@@ -64,21 +64,21 @@ public class PaymentDetailController extends PaymentController {
 
         Room room = rooms.stream().filter(r -> r.getId() == reservation.getRoom_id()).findFirst().orElse(null);
         assert room != null;
+        reservation(reservation);
+        setDays(room);
+        setTotal(room);
+        Payment payment = new Payment();
+        fetchPayment(payment);
+
+
         lbGuestBill.setText(guest.getName());
         lbPhone.setText(guest.getPhone());
         lbEmail.setText(guest.getEmail());
-        reservation(reservation);
-        setDays(room);
         lbPrice.setText(String.valueOf(room.getPrice()));
         lbTotal.setText(String.valueOf(room.getPrice()));
-        setTotal(room);
-
-        Payment payment = new Payment();
-        fetchPayment(payment);
         lbAllTotal.setText(String.valueOf(payment.getTotalPrice()));
         lbPaymentMethod.setText(payment.getPaymentMethod());
         lbSignature.setText(guest.getName());
-
 
         ToolFXML.test("PaymentDetail : ", startTime);
     }
@@ -120,7 +120,7 @@ public class PaymentDetailController extends PaymentController {
 
 
     void reservation (Reservation res) {
-        lbResId.setText(String.valueOf(res.getId()));
+        lbResId.setText("#" + String.valueOf(res.getId()));
         lbCheckIn.setText(String.valueOf(res.getCheckInDate()));
         lbCheckOut.setText(String.valueOf(res.getCheckoutDate()));
     }
