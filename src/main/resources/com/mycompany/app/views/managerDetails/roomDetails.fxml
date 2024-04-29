@@ -8,43 +8,28 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="showRoomDetails" layoutX="10.0" layoutY="13.0" prefHeight="627.0" prefWidth="830.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="13.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.RoomDetailsController">
+<AnchorPane fx:id="showRoomDetails"  layoutX="10.0" layoutY="13.0" prefHeight="627.0" prefWidth="830.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="13.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.RoomDetailsController">
     <children>
-        <AnchorPane fx:id="slidePane1" layoutX="26.0" layoutY="30.0" prefHeight="571.0" prefWidth="792.0" styleClass="bg-white" stylesheets="@../../css/home.css">
+        <AnchorPane fx:id="slidePane1" onKeyPressed="#switchRoom" layoutX="26.0" layoutY="30.0" prefHeight="571.0" prefWidth="783.0" styleClass="bg-white" stylesheets="@../../css/home.css">
             <children>
-                <ImageView fx:id="imageRoom" fitHeight="330.0" fitWidth="649.0" layoutX="73.0" layoutY="31.0" pickOnBounds="true">
+                <ImageView fx:id="imageRoom" fitHeight="368.0" fitWidth="755.0" layoutX="12.0" layoutY="14.0" pickOnBounds="true">
                     <image>
                         <Image url="@../../img/hotelbg.jpeg" />
                     </image>
                 </ImageView>
-                <Label fx:id="lbName" layoutX="90.0" layoutY="397.0" prefHeight="52.0" prefWidth="285.0" text="Room Name : ">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label fx:id="lbStatus" layoutX="91.0" layoutY="460.0" prefHeight="52.0" prefWidth="295.0" text="Status: ">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label fx:id="lbType" layoutX="415.0" layoutY="396.0" prefHeight="52.0" prefWidth="266.0" text="Type of Room : ">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label fx:id="lbPrice" layoutX="413.0" layoutY="460.0" prefHeight="52.0" prefWidth="266.0" text="Price :">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Button layoutX="407.0" layoutY="515.0" mnemonicParsing="false" onAction="#switchRight" prefHeight="27.0" prefWidth="63.0">
+                <Label fx:id="lbName" layoutX="99.0" layoutY="394.0" prefHeight="42.0" prefWidth="366.0" styleClass="font-room" stylesheets="" text="name" />
+                <Label fx:id="lbStatus" layoutX="478.0" layoutY="394.0" prefHeight="42.0" prefWidth="221.0" styleClass="font-room" stylesheets="" text="lbStatus" />
+                <Label fx:id="lbType" layoutX="99.0" layoutY="450.0" prefHeight="42.0" prefWidth="222.0" styleClass="font-room" stylesheets="" text="lbType" />
+
+                <Label fx:id="lbPrice" layoutX="478.0" layoutY="450.0" prefHeight="42.0" prefWidth="221.0" styleClass="font-room" stylesheets="" text="lbPrice" />
+                <Button layoutX="405.0" layoutY="501.0" mnemonicParsing="false" onAction="#switchRight" prefHeight="59.0" prefWidth="63.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
                     <graphic>
-                        <FontAwesomeIcon glyphName="ARROW_RIGHT" />
+                        <FontAwesomeIcon glyphName="ARROW_RIGHT" size="2.5em" />
                     </graphic>
                 </Button>
-                <Button layoutX="292.0" layoutY="515.0" mnemonicParsing="false" onAction="#switchLeft" prefHeight="27.0" prefWidth="60.0">
+                <Button layoutX="284.0" layoutY="501.0" mnemonicParsing="false" onAction="#switchLeft" prefHeight="59.0" prefWidth="63.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
                     <graphic>
-                        <FontAwesomeIcon glyphName="ARROW_LEFT" />
+                        <FontAwesomeIcon glyphName="ARROW_LEFT" size="2.5em" />
                     </graphic>
                 </Button>
             </children>

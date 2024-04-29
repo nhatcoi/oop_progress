@@ -9,16 +9,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<AnchorPane fx:id="resManagePane" prefHeight="650.0" prefWidth="850.0" styleClass="bg-white" onKeyPressed="#esc" stylesheets="@../../css/home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.ResManageController">
+<AnchorPane fx:id="resManagePane" onKeyPressed="#esc" prefHeight="650.0" prefWidth="850.0" styleClass="bg-white" stylesheets="@../../css/home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.ResManageController">
 
     <children>
-      <AnchorPane fx:id="managePane" layoutX="154.0" layoutY="100.0" prefHeight="650.0" prefWidth="850.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="managePane" layoutX="154.0" layoutY="100.0" prefHeight="650.0" prefWidth="850.0" stylesheets="@../../css/home.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
               <Button mnemonicParsing="false" onAction="#refreshTable" prefHeight="27.0" prefWidth="29.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
                   <graphic>
                       <FontAwesomeIcon glyphName="REFRESH" />
                   </graphic>
               </Button>
+             <Label layoutX="45.0" layoutY="84.0" prefHeight="42.0" prefWidth="221.0" styleClass="font-room" stylesheets="" text="REVENUE" />
               <TableView fx:id="tableViewRes" layoutX="325.0" layoutY="50.0" prefHeight="288.0" prefWidth="497.0" stylesheets="@../../css/home.css" AnchorPane.bottomAnchor="312.0" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="50.0">
       
                         <columns>
@@ -86,58 +87,49 @@
             </TableView>
               <Button layoutX="330.0" layoutY="7.0" mnemonicParsing="false" onAction="#searchRes" prefHeight="34.0" prefWidth="60.0" styleClass="btn" stylesheets="@../../css/home.css" text="Search" />
             <TextField fx:id="tfSearchOrderCode" layoutX="400.0" layoutY="13.0" prefHeight="28.0" prefWidth="360.0" promptText="search by order code" styleClass="textField" stylesheets="@../../css/home.css" />
-              <AnchorPane layoutY="74.0" prefHeight="200.0" prefWidth="307.0" styleClass="card3" stylesheets="@../../css/home.css">
-                  <children>
-                      <FontAwesomeIcon fill="WHITE" glyphName="DOLLAR" layoutX="40.0" layoutY="135.0" size="5em" text="" />
-                      <Label fx:id="lbRevenue" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="122.0" layoutY="59.0" prefHeight="40.0" prefWidth="134.0" text="*" textAlignment="RIGHT" textFill="WHITE">
-                          <font>
-                              <Font size="21.0" />
-                          </font>
-                      </Label>
-                      <Label alignment="CENTER_RIGHT" layoutX="78.0" prefHeight="40.0" prefWidth="83.0" styleClass="font" stylesheets="@../../css/home.css" text="REVENUE" />
-                  <Text fill="WHITE" layoutX="117.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total bill ">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-                  <Label fx:id="lbTotalBill" alignment="CENTER_RIGHT" layoutX="132.0" layoutY="101.0" prefHeight="22.0" prefWidth="124.0" text="*" textFill="WHITE">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Label>
-                  </children>
-              </AnchorPane>
-              <AnchorPane layoutY="372.0" prefHeight="208.0" prefWidth="307.0" styleClass="card2" stylesheets="@../../css/home.css">
-                  <children>
-                      <Label alignment="CENTER_RIGHT" layoutX="87.0" layoutY="5.0" prefHeight="40.0" prefWidth="104.0" styleClass="font" stylesheets="@../../css/home.css" text="BEST HIRED" />
-                      <FontAwesomeIcon fill="WHITE" glyphName="ARROW_UP" layoutX="26.0" layoutY="139.0" size="5em" />
-                      <Label fx:id="lbRoomName" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="100.0" layoutY="87.0" prefHeight="34.0" prefWidth="134.0" text="*" textFill="WHITE">
-                          <font>
-                              <Font size="24.0" />
-                          </font>
-                      </Label>
-                  <Label fx:id="lbRoomCode" contentDisplay="RIGHT" layoutX="110.0" layoutY="53.0" prefHeight="34.0" prefWidth="37.0" text="*" textFill="WHITE">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Label>
-                  <Text fill="WHITE" layoutX="87.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="#">
-                     <font>
+                <FontAwesomeIcon fill="#1d9000" glyphName="DOLLAR" layoutX="289.0" layoutY="113.0" size="2em" text="" />
+                <Label fx:id="lbRevenue" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="150.0" layoutY="85.0" prefHeight="40.0" prefWidth="134.0" text="lbRevenue" textAlignment="RIGHT">
+                    <font>
                         <Font size="21.0" />
-                     </font>
-                  </Text>
-                  <Label fx:id="lbCount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="120.0" layoutY="112.0" prefHeight="34.0" prefWidth="60.0" text="*" textFill="WHITE">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Label>
-                  <Text fill="WHITE" layoutX="191.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="times">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </Text>
-                  </children>
-              </AnchorPane>
+                    </font>
+                </Label>
+            <Text layoutX="85.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total bill ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Label fx:id="lbTotalBill" alignment="CENTER_RIGHT" layoutX="174.0" layoutY="129.0" prefHeight="22.0" prefWidth="124.0" text="lbTotalBill">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbStaffName1" layoutX="44.0" layoutY="182.0" prefHeight="42.0" prefWidth="221.0" styleClass="font-room" stylesheets="" text="BEST HIRED" />
+                <FontAwesomeIcon glyphName="ARROW_UP" layoutX="189.0" layoutY="212.0" size="2em" />
+            <Label fx:id="lbRoomCode" contentDisplay="RIGHT" layoutX="66.0" layoutY="225.0" prefHeight="34.0" prefWidth="57.0" text="lbRoomCode">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Text layoutX="50.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="#">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+                <Label fx:id="lbRoomName" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="23.0" layoutY="251.0" prefHeight="28.0" prefWidth="277.0" text="lbRoomName">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            <Label fx:id="lbCount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="182.0" layoutY="226.0" prefHeight="34.0" prefWidth="60.0" text="lbCount">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Text layoutX="258.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="times">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="detailResPane" layoutX="223.0" layoutY="54.0" prefHeight="331.0" prefWidth="575.0" visible="false">

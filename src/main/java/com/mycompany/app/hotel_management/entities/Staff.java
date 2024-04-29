@@ -15,4 +15,9 @@ public class Staff {
     private String name;
     private String position;
     private double salary;
+    private String email;
+    private String phone;
+    private String address;
+    private String startDate;
+    private String endDate;
 }

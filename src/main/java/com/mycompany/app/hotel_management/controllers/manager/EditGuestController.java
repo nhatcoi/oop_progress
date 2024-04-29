@@ -1,16 +1,14 @@
 package com.mycompany.app.hotel_management.controllers.manager;
 
 import com.mycompany.app.hotel_management.entities.Guest;
-import com.mycompany.app.hotel_management.Service.GuestServiceImpl;
+import com.mycompany.app.hotel_management.service.Impl.GuestServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -54,14 +52,14 @@ public class EditGuestController {
             }
         });
 
-        sv.getData(connect, guestsList);
+        sv.getData(guestsList);
     }
 
     @FXML
     void removeData() {
         Guest guest = tableViewUser.getSelectionModel().getSelectedItem();
         if(guest != null) {
-            sv.deleteData(connect, guestsList, guest);
+            sv.deleteData( guestsList, guest);
         }
     }
 
@@ -73,7 +71,7 @@ public class EditGuestController {
             guest.setPhone(tfPhoneNumber.getText());
             guest.setAddress(tfAddress.getText());
             guest.setEmail(tfEmail.getText());
-            sv.updateData(connect, guestsList, guest);
+            sv.updateData(guestsList, guest);
         }
     }
 }

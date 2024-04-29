@@ -1,9 +1,11 @@
-package com.mycompany.app.hotel_management.Service;
+package com.mycompany.app.hotel_management.service.Impl;
+
 
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.enums.RoomType;
 import com.mycompany.app.hotel_management.repositories.Database;
+import com.mycompany.app.hotel_management.service.RoomService;
 import com.mycompany.app.hotel_management.utils.imgTool;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -175,7 +177,7 @@ public class RoomServiceImpl extends Database implements RoomService {
     }
 
     // search room
-    public ObservableList<Room> searchRoom(Connection connect, ObservableList<Room> roomList, String search) throws SQLException {
+    public void searchRoom(Connection connect, ObservableList<Room> roomList, String search) throws SQLException {
         connect = Database.connectDb();
         String sql = "SELECT * FROM rooms WHERE name LIKE '%" + search + "%'";
         ResultSet resultSet = connect.createStatement().executeQuery(sql);
@@ -189,7 +191,5 @@ public class RoomServiceImpl extends Database implements RoomService {
 
             roomList.add(new Room(id, name, type, status, price));
         }
-
-        return roomList;
     }
 }

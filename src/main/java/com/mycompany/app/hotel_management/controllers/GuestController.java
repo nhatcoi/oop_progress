@@ -8,12 +8,13 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.mycompany.app.hotel_management.controllers.ManagerController.user;
 
-public class GuestController {
+public class GuestController extends AuthController {
     @FXML
     private  AnchorPane guestPane;
     @FXML
@@ -32,7 +33,7 @@ public class GuestController {
 
     public static Guest guest = new Guest();
 
-    public void initialize() throws IOException, SQLException {
+    public void initialize() throws SQLException {
         show(home);
     }
 
@@ -64,9 +65,10 @@ public class GuestController {
         }
     }
 
-    public void signOut() throws IOException {
+    public void signOut() throws IOException, SQLException, ParseException {
         guest = new Guest();
         user = new User();
+        super.initialize();
         ToolFXML.openFXML("views/authForm.fxml", 600, 400);
         ToolFXML.closeFXML(guestPane);
     }

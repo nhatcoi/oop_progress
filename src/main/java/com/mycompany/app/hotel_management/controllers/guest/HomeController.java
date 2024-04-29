@@ -2,8 +2,7 @@ package com.mycompany.app.hotel_management.controllers.guest;
 
 import com.mycompany.app.hotel_management.controllers.GuestController;
 import com.mycompany.app.hotel_management.entities.Room;
-import com.mycompany.app.hotel_management.Service.RoomServiceImpl;
-import com.mycompany.app.hotel_management.repositories.Database;
+import com.mycompany.app.hotel_management.service.Impl.RoomServiceImpl;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
@@ -12,17 +11,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.mycompany.app.hotel_management.controllers.AuthController.imagesIni;
-import static com.mycompany.app.hotel_management.controllers.AuthController.roomsIni;
 import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
 
 
@@ -188,8 +183,6 @@ public class HomeController extends GuestController {
     public void initialize() throws SQLException {
         long startTime = System.nanoTime();
 
-        rooms.clear();
-        images.clear();
         rooms = roomsIni;
         images = imagesIni;
         randomRoom(rooms, images);

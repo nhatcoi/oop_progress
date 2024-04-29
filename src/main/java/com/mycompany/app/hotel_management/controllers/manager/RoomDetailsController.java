@@ -3,6 +3,8 @@ package com.mycompany.app.hotel_management.controllers.manager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.sql.SQLException;
@@ -48,8 +50,17 @@ public class RoomDetailsController extends OverviewController {
             imageRoom.setImage(images.get(currentImageIndex));
             lbName.setText(roomList.get(currentImageIndex).getName());
             lbType.setText(roomList.get(currentImageIndex).getType());
-            lbPrice.setText(String.valueOf(roomList.get(currentImageIndex).getPrice()));
+            lbPrice.setText(String.valueOf(roomList.get(currentImageIndex).getPrice()) + "$/day ");
             lbStatus.setText(roomList.get(currentImageIndex).getStatus());
         }
     }
+
+    public void switchRoom(KeyEvent keyEvent) {
+        if(keyEvent.getCode() == KeyCode.RIGHT) {
+            switchRight();
+        } else if(keyEvent.getCode() == KeyCode.LEFT) {
+            switchLeft();
+        }
+    }
+
 }

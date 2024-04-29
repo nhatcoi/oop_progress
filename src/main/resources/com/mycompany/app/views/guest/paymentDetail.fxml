@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="billPaymentPane" prefHeight="891.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.PaymentDetailController">
+<AnchorPane fx:id="billPaymentPane" onKeyPressed="#escKey" prefHeight="891.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.PaymentDetailController">
    <children>
       <Label fx:id="lbNameBill" alignment="CENTER" layoutX="93.0" layoutY="143.0" prefHeight="135.0" prefWidth="402.0" text="BILL PAYMENT">
          <font>

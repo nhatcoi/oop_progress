@@ -1,15 +1,18 @@
 package com.mycompany.app.hotel_management.controllers.manager.admin;
 
+import com.mycompany.app.hotel_management.service.Impl.StaffServiceImpl;
 import com.mycompany.app.hotel_management.entities.Staff;
 import com.mycompany.app.hotel_management.enums.UserRole;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
+import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,13 +28,15 @@ public class EditStaffController {
     public TextField searchField;
     public ComboBox<String> cbRaise;
     private Connection connect;
-    private final ObservableList<Staff> staff = FXCollections.observableArrayList();
+    private final ObservableList<Staff> staffs = FXCollections.observableArrayList();
 
+    protected static int idStaff;
+    StaffServiceImpl sv = new StaffServiceImpl();
     public void initialize() throws SQLException {
         cbRaise.getItems().addAll("Default", "5%", "10%", "20%", "30%");
 
         // how to get all staff from user table has foreign key ID staff from database => dùng join nha bé :3 ==> dạ
-        tableView.setItems(staff);
+        tableView.setItems(staffs);
         fetchData();
 
         tableView.setOnMouseClicked(event -> {
@@ -43,27 +48,21 @@ public class EditStaffController {
                     salaryField.setText(String.valueOf(selectedStaff.getSalary()));
                     usernameField.setText(selectedStaff.getUsername());
                 }
+                if(event.getClickCount() == 2 && selectedStaff != null) {
+                    idStaff = selectedStaff.getId();
+                    try {
+                        ToolFXML.openFXML( "views/managerDetails/admin/StaffProfile.fxml", 386, 551);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
             });
         });
     }
 
-    void fetchData() throws SQLException {
-        staff.clear();
-        connect = Database.connectDb();
-        String sql = "SELECT staff.*,users.username FROM staff LEFT JOIN users ON users.id = staff.user_id WHERE users.role = " + UserRole.STAFF.getValue();
-        assert connect != null;
-        Statement statement = connect.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-
-        while (resultSet.next()) {
-            Staff staff = new Staff();
-            staff.setId(resultSet.getInt("id"));
-            staff.setName(resultSet.getString("name"));
-            staff.setPosition(resultSet.getString("position"));
-            staff.setSalary(resultSet.getDouble("salary"));
-            staff.setUsername(resultSet.getString("username"));
-            this.staff.add(staff);
-        }
+    public void fetchData() throws SQLException {
+        sv.fetchStaff(staffs);
     }
 
     public void clearInput() {
@@ -73,40 +72,28 @@ public class EditStaffController {
         usernameField.clear();
     }
 
-    public void addData() {
+    public void addData() throws SQLException {
         connect = Database.connectDb();
+        String username = usernameField.getText();
         String name = nameField.getText();
         String position = positionField.getText();
         double salary = Double.parseDouble(salaryField.getText());
-        String username = usernameField.getText();
 
-        String sqlGetUserId = "SELECT id, role FROM users WHERE username = '" + username + "'";
-        try {
-            Statement statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlGetUserId);
-            if(resultSet.next()) {
-                int userId = resultSet.getInt("id");
-                int userRole = Integer.parseInt(resultSet.getString("role"));
-                String sql = "INSERT INTO staff (name, position, salary, user_id) VALUES ('" + name + "', '" + position + "', " + salary + ", " + userId + ")";
-                String sqlUpdateRole = "UPDATE users SET role = " + UserRole.STAFF.getValue() + " WHERE id = " + userId;
-                statement.executeUpdate(sql);
-                if(userRole == UserRole.GUEST.getValue()) {
-                    statement.executeUpdate(sqlUpdateRole);
-                }
-            } else {
-                Dialog.showError("Error", null, "Username not found");
-            }
-            fetchData();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        Staff staff = new Staff();
+        staff.setUsername(username);
+        staff.setName(name);
+        staff.setPosition(position);
+        staff.setSalary(salary);
+
+        sv.addStaff(staff);
+        fetchData();
     }
 
-        public void searchData() {
+    public void searchData() {
         String search = searchField.getText();
         String sql = "SELECT staff.*,users.username FROM staff LEFT JOIN users ON users.id = staff.user_id WHERE users.role = " + UserRole.STAFF.getValue() + " AND staff.name LIKE '%" + search + "%'";
         try {
-            staff.clear();
+            staffs.clear();
             connect = Database.connectDb();
             assert connect != null;
             Statement statement = connect.createStatement();
@@ -119,7 +106,7 @@ public class EditStaffController {
                 staff.setPosition(resultSet.getString("position"));
                 staff.setSalary(resultSet.getDouble("salary"));
                 staff.setUsername(resultSet.getString("username"));
-                this.staff.add(staff);
+                this.staffs.add(staff);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -127,44 +114,30 @@ public class EditStaffController {
 
     }
 
-    public void deleteData() {
+    public void deleteData() throws SQLException {
         connect = Database.connectDb();
         Staff selectedStaff = tableView.getSelectionModel().getSelectedItem();
-        String sql = "DELETE FROM staff WHERE id = " + selectedStaff.getId();
-        try {
-            Statement statement = connect.createStatement();
-            statement.executeUpdate(sql);
-            fetchData();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        if(selectedStaff == null) {
+            Dialog.showError("Error", null, "Please select a staff to delete");
+            return;
         }
+        sv.deleteStaff(selectedStaff);
+        fetchData();
     }
 
-    public void changeData() {
-        connect = Database.connectDb();
+    public void changeData() throws SQLException {
         Staff selectedStaff = tableView.getSelectionModel().getSelectedItem();
         if(selectedStaff == null) {
             Dialog.showError("Error", null, "Please select a staff to update");
             return;
         }
-        String name = nameField.getText();
-        String position = positionField.getText();
-        double salary = Double.parseDouble(salaryField.getText());
-        String username = usernameField.getText();
+        selectedStaff.setUsername(usernameField.getText());
+        selectedStaff.setName(nameField.getText());
+        selectedStaff.setPosition(positionField.getText());
+        selectedStaff.setSalary(Double.parseDouble(salaryField.getText()));
 
-        String sqlGetUserId = "SELECT id FROM users WHERE username = '" + username + "'";
-        try {
-            Statement statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlGetUserId);
-            resultSet.next();
-            int userId = resultSet.getInt("id");
-
-            String sql = "UPDATE staff SET name = '" + name + "', position = '" + position + "', salary = " + salary + ", user_id = " + userId + " WHERE id = " + selectedStaff.getId();
-            statement.executeUpdate(sql);
-            fetchData();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        sv.updateStaff(selectedStaff);
+        fetchData();
         Dialog.showInformation("Success", null, "Update staff successfully");
     }
 

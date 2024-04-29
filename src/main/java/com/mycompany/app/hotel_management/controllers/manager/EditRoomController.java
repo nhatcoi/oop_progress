@@ -27,6 +27,7 @@ public class EditRoomController extends OverviewController{
     public Button btnAdd;
     public TextField rnameField;
     public ComboBox<String> cbTypeRoom;
+    public ComboBox<String> cbStatus;
     public TextField rpriceField;
     public TableView<Room> tableView;
     public TextField searchField;
@@ -39,6 +40,12 @@ public class EditRoomController extends OverviewController{
         // Add data to combobox
         for (RoomType value : RoomType.values()) {
             cbTypeRoom.getItems().add(value.getText());
+        }
+        for(RoomStatus value : RoomStatus.values()) {
+            cbStatus.getItems().add(value.getText());
+        }
+        if(!cbStatus.getItems().isEmpty()) {
+            cbStatus.setValue(cbStatus.getItems().get(0));
         }
         if (!cbTypeRoom.getItems().isEmpty()) {
             cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
@@ -59,6 +66,7 @@ public class EditRoomController extends OverviewController{
                     rnameField.setText(room.getName());
                     cbTypeRoom.setValue(room.getType());
                     rpriceField.setText(String.valueOf(room.getPrice()));
+                    cbStatus.setValue(room.getStatus());
                     connect = Database.connectDb();
                     String query = "SELECT * FROM pictures WHERE room_id = " + room.getId();
                     try {
@@ -89,7 +97,7 @@ public class EditRoomController extends OverviewController{
         connect = Database.connectDb();
         String name = rnameField.getText();
         int type = cbTypeRoom.getSelectionModel().getSelectedIndex();
-
+        int status = cbStatus.getSelectionModel().getSelectedIndex();
         try {
             double price = Double.parseDouble(rpriceField.getText());
             String query = "INSERT INTO rooms (name, type, status, price) VALUES (?, ?, ?, ?)";
@@ -98,7 +106,7 @@ public class EditRoomController extends OverviewController{
                 PreparedStatement preparedStatement = connect.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, name);
                 preparedStatement.setInt(2, type);
-                preparedStatement.setInt(3, RoomStatus.AVAILABLE.ordinal());
+                preparedStatement.setInt(3, status);
                 preparedStatement.setDouble(4, price);
                 preparedStatement.executeUpdate();
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -195,7 +203,7 @@ public class EditRoomController extends OverviewController{
             try {
                 String fileUrl = selectedFile.toURI().toURL().toString();
                 System.out.println("Selected File URL: " + fileUrl);
-                imgView.setImage(new javafx.scene.image.Image(fileUrl));
+                imgView.setImage(new Image(fileUrl));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -209,22 +217,22 @@ public class EditRoomController extends OverviewController{
             Dialog.showError("Error", "Error", "Chọn phòng cần sửa!");
             return;
         }
-
         connect = Database.connectDb();
-
         String name = rnameField.getText();
         int type = cbTypeRoom.getSelectionModel().getSelectedIndex();
+        int status = cbStatus.getSelectionModel().getSelectedIndex();
 
         try {
             double price = Double.parseDouble(rpriceField.getText());
-            String query = "UPDATE rooms SET name = ?, type = ?, price = ? WHERE id = ?";
+            String query = "UPDATE rooms SET name = ?, type = ?, price = ?, status = ? WHERE id = ?";
             try {
                 assert connect != null;
                 PreparedStatement preparedStatement = connect.prepareStatement(query);
                 preparedStatement.setString(1, name);
                 preparedStatement.setInt(2, type);
                 preparedStatement.setDouble(3, price);
-                preparedStatement.setInt(4, currRoom.getId());
+                preparedStatement.setInt(4, status);
+                preparedStatement.setInt(5, currRoom.getId());
                 preparedStatement.executeUpdate();
                 fetchDataFromDatabase();
 

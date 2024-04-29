@@ -68,7 +68,7 @@
                   <Font size="19.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbPaymentMethod" layoutX="164.0" layoutY="457.0" prefHeight="34.0" prefWidth="159.0" promptText="Payment Methods" styleClass="textField" stylesheets="@../../css/home.css" />
+            <ComboBox fx:id="cbPaymentMethod" onAction="#paymentMethod" layoutX="164.0" layoutY="457.0" prefHeight="34.0" prefWidth="159.0" promptText="Payment Methods" styleClass="textField" stylesheets="@../../css/home.css" />
             <Button layoutX="381.0" layoutY="569.0" mnemonicParsing="false" onAction="#delete" prefHeight="28.0" prefWidth="140.0" styleClass="btn" stylesheets="@../../css/home.css" text="Delete" />
             <Label layoutX="108.0" layoutY="51.0" prefHeight="34.0" prefWidth="113.0" styleClass="font-room" stylesheets="@../../css/home.css" text="CART">
                <font>

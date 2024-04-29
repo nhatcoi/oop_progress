@@ -5,31 +5,27 @@ import com.mycompany.app.hotel_management.entities.Reservation;
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.PaymentMethod;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
-import com.mycompany.app.hotel_management.Service.RoomServiceImpl;
+import com.mycompany.app.hotel_management.service.Impl.RoomServiceImpl;
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.MailSender;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import lombok.var;
 
-import javax.tools.Tool;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -73,7 +69,7 @@ public class PaymentController extends HomeController {
         cbPaymentMethod.getSelectionModel().selectFirst();
 
         cbHourIn.getItems().addAll(IntStream.range(0, 24).boxed().collect(Collectors.toList()));
-        cbHourIn.getSelectionModel().selectFirst();
+        cbHourIn.getSelectionModel().select(LocalTime.now().getHour());
         cbHourOut.getItems().addAll(IntStream.range(0, 24).boxed().collect(Collectors.toList()));
         cbHourOut.getSelectionModel().selectLast();
 
@@ -122,6 +118,10 @@ public class PaymentController extends HomeController {
 
     @FXML
     void payment() throws Exception {
+        if(room.getStatus().equals(RoomStatus.MAINTENANCE.getText())) {
+            Dialog.showError("Error", null, "This room is under maintenance, please try again later");
+            return;
+        }
         if(!roomBooking.contains(room)) {
             Dialog.showError("Error", null, "Please select a room to book");
             return;
@@ -202,17 +202,18 @@ public class PaymentController extends HomeController {
         if((localDateNow.isAfter(checkIn) && localDateNow.isBefore(checkOut) || localDateNow.isEqual(dpCheckIn.getValue()))){
             updateStatus(rooms.get(indexOfRoom(res)) , RoomStatus.OCCUPIED.ordinal());
         }
-//        Dialog.showInformation("Reservation successful", null, "You have successfully booked your room");
 
         // bank lor
-        Dialog.showInformation("Payment", null, "Please pay the bill to complete the reservation");
         if(cbPaymentMethod.getValue().equals(PaymentMethod.BANK_TRANSFER.getText())) {
             try {
+                Dialog.showInformation("Payment", null, "Please pay the bill to complete the reservation");
                 reservation = reservations.get(reservations.size()-1);
                 ToolFXML.openFXML("views/guest/bank.fxml", 600, 600);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
+        } else {
+            Dialog.showInformation("Reservation successful", null, "You have successfully booked your room");
         }
 
         MailSender.sendEmail(guest.getEmail(), "Reservation", "You have just booked a room (" + rooms.get(indexOfRoom(res)).getName() + ") from " + dpCheckIn.getValue() + " to " + dpCheckOut.getValue() + " at Viet Nhat Hotel" +
@@ -310,26 +311,38 @@ public class PaymentController extends HomeController {
     private void checkDate() {
         LocalDate checkInDate = dpCheckIn.getValue();
         LocalDate checkOutDate = dpCheckOut.getValue();
+        long daysBetween = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+        int hoursBetween = cbHourOut.getValue() - cbHourIn.getValue();
+        double price = room.getPrice();
+        double total = 0;
+
+        // check lệch checkin và checkout thì set lại
         if (checkOutDate == null || checkInDate.isAfter(checkOutDate) || checkInDate.isBefore(LocalDate.now())) {
             Dialog.showError("Date", null, "Please choose suitable check-in and check-out dates");
             dpCheckIn.setValue(LocalDate.now());
             dpCheckOut.setValue(LocalDate.now());
             return;
         }
-        long daysBetween = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
-        int hoursBetween = cbHourOut.getValue() - cbHourIn.getValue();
-        if (daysBetween == 0 && hoursBetween < 0) {
+
+        // Check checkin trùng ngày hiện tại thì set giờ hiện tại
+        if (checkInDate.equals(LocalDate.now())) {
+            Integer selectedHour = cbHourIn.getValue();
+            Integer currentHour = LocalTime.now().getHour();
+            if (selectedHour < currentHour) {
+                cbHourIn.setValue(currentHour);
+            }
+        }
+        // Check checkin trùng checkout thì validate giờ
+        if (daysBetween == 0 && hoursBetween <= 0) {
             Dialog.showError("Date", null, "Please choose suitable hours");
-            cbHourIn.setValue(0);
+            cbHourIn.setValue(checkInDate.equals(LocalDate.now()) ? LocalTime.now().getHour() : 0);
             cbHourOut.setValue(23);
             return;
-        }
-        double price = room.getPrice();
-        double total = 0;
-
-        if(daysBetween == 0 && hoursBetween > 0) {
+        } else {
             total = price;
         }
+
+
         if(daysBetween > 0) {
             daysBetween++;
             if(cbHourOut.getValue() <= cbHourIn.getValue()) {
@@ -458,4 +471,12 @@ public class PaymentController extends HomeController {
         }
     }
 
+    @FXML
+    private void paymentMethod() {
+        if (cbPaymentMethod.getValue().equals(PaymentMethod.BITCOIN.getText()) || cbPaymentMethod.getValue().equals(PaymentMethod.PAYPAL.getText())) {
+            Dialog.showWarning("Warning", null, "This payment method is under development");
+            cbPaymentMethod.getSelectionModel().selectFirst();
+            return;
+        }
+    }
 }

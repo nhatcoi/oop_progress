@@ -68,7 +68,7 @@ public class EditProfileController extends GuestController {
 
     public Connection connect;
 
-    public void initialize() throws IOException, SQLException {
+    public void initialize() throws SQLException {
         long startTime = System.nanoTime();
 
         // set avt

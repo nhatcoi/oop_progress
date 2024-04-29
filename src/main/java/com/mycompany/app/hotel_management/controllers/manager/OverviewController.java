@@ -2,8 +2,7 @@ package com.mycompany.app.hotel_management.controllers.manager;
 
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
-import com.mycompany.app.hotel_management.Service.RoomServiceImpl;
-import com.mycompany.app.hotel_management.repositories.Database;
+import com.mycompany.app.hotel_management.service.Impl.RoomServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,9 +39,6 @@ public class OverviewController  {
     public static ObservableList<Image> images = FXCollections.observableArrayList();
     public static ObservableList<Room> roomList = FXCollections.observableArrayList();
     public void initialize() throws SQLException, ParseException {
-        roomList.clear();
-        images.clear();
-
         roomList = roomsIni;
         images = imagesIni;
         setTag();

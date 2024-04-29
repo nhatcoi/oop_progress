@@ -1,5 +1,6 @@
-package com.mycompany.app.hotel_management.Service;
+package com.mycompany.app.hotel_management.service.Impl;
 
+import com.mycompany.app.hotel_management.service.GuestService;
 import com.mycompany.app.hotel_management.entities.Guest;
 import com.mycompany.app.hotel_management.repositories.Database;
 import javafx.collections.ObservableList;
@@ -10,8 +11,9 @@ import java.sql.SQLException;
 
 public class GuestServiceImpl implements GuestService {
 
+    Connection connect;
     // read
-    public void getData(Connection connect, ObservableList<Guest> guestsList){
+    public void getData(ObservableList<Guest> guestsList){
         try {
             connect = Database.connectDb();
             assert connect != null;
@@ -25,7 +27,7 @@ public class GuestServiceImpl implements GuestService {
     }
 
     // delete
-    public void deleteData(Connection connect, ObservableList<Guest> guestsList, Guest guest) {
+    public void deleteData(ObservableList<Guest> guestsList, Guest guest) {
         try {
             connect = Database.connectDb();
             assert connect != null;
@@ -36,7 +38,8 @@ public class GuestServiceImpl implements GuestService {
         }
     }
 
-    public void updateData(Connection connect, ObservableList<Guest> guestsList, Guest guest) {
+    // update
+    public void updateData(ObservableList<Guest> guestsList, Guest guest) {
         try {
             connect = Database.connectDb();
             assert connect != null;
@@ -45,5 +48,10 @@ public class GuestServiceImpl implements GuestService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // create
+    public void createDate(ObservableList<Guest> guestsList, Guest guest) {
+        //
     }
 }

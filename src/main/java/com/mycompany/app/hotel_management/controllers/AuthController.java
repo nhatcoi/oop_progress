@@ -1,7 +1,7 @@
 package com.mycompany.app.hotel_management.controllers;
 
 
-import com.mycompany.app.hotel_management.Service.RoomServiceImpl;
+import com.mycompany.app.hotel_management.service.Impl.RoomServiceImpl;
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.entities.User;
 import com.mycompany.app.hotel_management.enums.UserRole;
@@ -286,9 +286,9 @@ public class AuthController {
     }
 
     public void initialize() throws SQLException, ParseException {
+        connect = Database.connectDb();
         roomsIni.clear();
         imagesIni.clear();
-        connect = Database.connectDb();
         sv.getAllRoom(connect, roomsIni, "rooms");
         sv.getImage(connect, roomsIni, imagesIni);
     }

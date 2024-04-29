@@ -8,6 +8,8 @@ import com.mycompany.app.hotel_management.utils.FilesUtils;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -127,6 +129,11 @@ public class PaymentDetailController extends PaymentController {
     @FXML
     void closeBill() {
         ToolFXML.closeFXML(billPaymentPane);
+    }
+
+    public void escKey(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.ESCAPE)
+            closeBill();
     }
 
     @FXML

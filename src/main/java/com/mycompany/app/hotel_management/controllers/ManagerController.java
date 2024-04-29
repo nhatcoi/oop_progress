@@ -20,12 +20,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.mycompany.app.hotel_management.controllers.GuestController.guest;
+import static com.mycompany.app.hotel_management.controllers.manager.OverviewController.roomList;
+import static com.mycompany.app.hotel_management.controllers.manager.OverviewController.images;
+import static com.mycompany.app.hotel_management.controllers.AuthController.roomsIni;
+import static com.mycompany.app.hotel_management.controllers.AuthController.imagesIni;
 
-public class ManagerController {
+
+
+public class ManagerController extends AuthController {
     @FXML
     private AnchorPane paneHome;
     @FXML
@@ -78,7 +86,7 @@ public class ManagerController {
         }
 
 
-        show(overview);
+        showPane(overview);
     }
 
     private String removeExtension(String filename) {
@@ -93,41 +101,42 @@ public class ManagerController {
     }
 
     @FXML
-    void signOut() throws IOException {
+    void signOut() throws IOException, SQLException, ParseException {
         guest = new Guest();
         user = new User();
+        super.initialize();
         ToolFXML.openFXML("views/authForm.fxml", 600, 400);
         ToolFXML.closeFXML(paneHome);
     }
 
     @FXML
     void showRoom(ActionEvent actionEvent) {
-        show(showRoomDetails);
+        showPane(showRoomDetails);
     }
 
     @FXML
     void overview(ActionEvent event) {
-        show(overview);
+        showPane(overview);
     }
 
     @FXML
     void manageRoom(ActionEvent event) {
-        show(edit);
+        showPane(edit);
     }
 
     @FXML
     void manageGuest(ActionEvent event) {
-        show(guests);
+        showPane(guests);
     }
 
     @FXML
     void booking(ActionEvent actionEvent) {
-        show(booking);
+        showPane(booking);
     }
 
     @FXML
     void manageStaff(ActionEvent actionEvent) {
-        show(staff);
+        showPane(staff);
     }
 
 
@@ -149,7 +158,7 @@ public class ManagerController {
     }
 
 
-    void show(AnchorPane paneToShow) {
+    void showPane(AnchorPane paneToShow) {
         List<AnchorPane> allPanes = Arrays.asList(overview, edit, guests, staff, showRoomDetails, booking);
         for (AnchorPane pane : allPanes) {
             pane.setVisible(pane == paneToShow);

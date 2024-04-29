@@ -22,7 +22,9 @@ import java.security.Key;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -120,9 +122,9 @@ public class ResManageController extends OverviewController  {
         ObservableList<Integer> roomsToOccupied = FXCollections.observableArrayList();
 
         for (Reservation resNotOfDate : reservations) {
-            Date checkoutDate = resNotOfDate.getCheckoutDate();
-            Date checkInDate = resNotOfDate.getCheckInDate();
-            // Kiểm tra nếu checkout đã qua hoặc checkin là hôm sau của ngày hiện tại
+            Timestamp checkoutDate = (Timestamp) resNotOfDate.getCheckoutDate();
+            Timestamp checkInDate = (Timestamp) resNotOfDate.getCheckInDate();
+            // Kiểm tra nếu checkout đã qua hoặc checkin là hôm sau của hiện tại
             if (isCheckoutPastToday(checkoutDate) || isCheckinNextDay(checkInDate)) {
                 int roomId = indexOfRoom(resNotOfDate);
                 roomsToAvailable.add(roomId);
@@ -138,18 +140,21 @@ public class ResManageController extends OverviewController  {
         }
     }
 
-    private boolean isCheckoutPastToday(Date date) {
-        LocalDate currentDate = LocalDate.now();
-        LocalDate checkoutDate = LocalDate.ofEpochDay(date.getTime() / (24 * 60 * 60 * 1000)); // Chuyển đổi từ java.sql.Date sang java.time.LocalDate
-        checkoutDate = checkoutDate.plusDays(1);
-        return checkoutDate.isBefore(currentDate);
+    private boolean isCheckoutPastToday(Timestamp dateRes) {
+        Instant instant = Instant.now();
+        // Chuyển đổi Instant thành Timestamp
+        Timestamp currentDate = Timestamp.from(instant);
+        System.out.println("\ninstant" + instant);
+        System.out.println("time stamp"+ currentDate);
+        System.out.println("date res"+dateRes);
+        return dateRes.before(currentDate);
     }
 
-    private boolean isCheckinNextDay(Date date) {
-        LocalDate currentDate = LocalDate.now();
-        LocalDate checkinDate = LocalDate.ofEpochDay(date.getTime() / (24 * 60 * 60 * 1000)); // Chuyển đổi từ java.sql.Date sang java.time.LocalDate
-        checkinDate = checkinDate.plusDays(1);
-        return checkinDate.isAfter(currentDate);
+    private boolean isCheckinNextDay(Timestamp dateRes) {
+        Instant instant = Instant.now();
+        // Chuyển đổi Instant thành Timestamp
+        Timestamp currentDate = Timestamp.from(instant);
+        return dateRes.after(currentDate);
     }
 
     private void updateStatusBatch(ObservableList<Integer> roomIds, int statusRoom) throws SQLException {
@@ -207,12 +212,12 @@ public class ResManageController extends OverviewController  {
                 ObservableList<Reservation> searchRes = FXCollections.observableArrayList();
                 ObservableList<Payment> searchPay = FXCollections.observableArrayList();
                 for(int i = 0; i < reservations.size(); i++) {
-                    String id = String.valueOf(reservations.get(i).getId());
-                    if(search.contains(id)) {
+                    String id = String.valueOf(reservations.get(i).getId()).trim(),
+                           id2 = String.valueOf(payments.get(i).getReservationId()).trim();
+                    if(id.contains(search)) {
                         searchRes.add(reservations.get(i));
                     }
-                    String id2 = String.valueOf(payments.get(i).getReservationId());
-                    if(search.contains(id2)) {
+                    if(id2.contains(search)) {
                         searchPay.add(payments.get(i));
                     }
                 }
