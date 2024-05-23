@@ -6,9 +6,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Objects;
+
+
 
 public class App extends Application {
 
@@ -37,8 +41,8 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
         System.out.println("Group 17");
+        launch(args);
     }
 
 }

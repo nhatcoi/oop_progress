@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.*?>
 <?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -68,7 +70,7 @@
                   <Font size="19.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbPaymentMethod" onAction="#paymentMethod" layoutX="164.0" layoutY="457.0" prefHeight="34.0" prefWidth="159.0" promptText="Payment Methods" styleClass="textField" stylesheets="@../../css/home.css" />
+            <ComboBox fx:id="cbPaymentMethod" layoutX="164.0" layoutY="457.0" onAction="#paymentMethod" prefHeight="34.0" prefWidth="159.0" promptText="Payment Methods" styleClass="textField" stylesheets="@../../css/home.css" />
             <Button layoutX="381.0" layoutY="569.0" mnemonicParsing="false" onAction="#delete" prefHeight="28.0" prefWidth="140.0" styleClass="btn" stylesheets="@../../css/home.css" text="Delete" />
             <Label layoutX="108.0" layoutY="51.0" prefHeight="34.0" prefWidth="113.0" styleClass="font-room" stylesheets="@../../css/home.css" text="CART">
                <font>
@@ -136,17 +138,39 @@
             </Label>
             <ComboBox fx:id="cbHourIn" layoutX="101.0" layoutY="514.0" onAction="#checkTimeIn" prefHeight="22.0" prefWidth="78.0" promptText="hour" styleClass="textField" stylesheets="@../../css/home.css" />
             <ComboBox fx:id="cbHourOut" layoutX="101.0" layoutY="555.0" onAction="#checkTimeOut" prefHeight="28.0" prefWidth="78.0" promptText="hour" styleClass="textField" stylesheets="@../../css/home.css" />
-            <Button layoutX="41.0" layoutY="40.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="64.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
+            <Button layoutX="41.0" layoutY="39.0" mnemonicParsing="false" onAction="#cart" prefHeight="56.0" prefWidth="64.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
                <graphic>
                   <FontAwesomeIcon fill="#140a9a" glyphName="SHOPPING_CART" size="3em" />
                </graphic>
             </Button>
-            <Button layoutX="563.0" layoutY="40.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="64.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
+            <Button layoutX="563.0" layoutY="40.0" mnemonicParsing="false" onAction="#reservation" prefHeight="55.0" prefWidth="64.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
                <graphic>
                   <FontAwesomeIcon fill="#0b046f" glyphName="CREDIT_CARD" size="3em" />
                </graphic>
             </Button>
          </children>
       </AnchorPane>
+      <ScrollPane fx:id="cartPane" layoutX="10.0" layoutY="13.0" prefHeight="436.0" prefWidth="1083.0" visible="false">
+        <content>
+          <AnchorPane fx:id="containPane" minHeight="0.0" minWidth="0.0" prefHeight="439.0" prefWidth="1064.0">
+               <children>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="366.0" />
+                  <GridPane fx:id="roomBox" prefHeight="199.0" prefWidth="367.0">
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </GridPane>
+                  <Button layoutX="1011.0" layoutY="-4.0" mnemonicParsing="false" onAction="#closeCart" prefHeight="39.0" prefWidth="40.0" styleClass="transparent-button" stylesheets="@../../css/home.css">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="CLOSE" size="1.5em" />
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

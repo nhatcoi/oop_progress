@@ -26,12 +26,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.mycompany.app.hotel_management.controllers.GuestController.guest;
-import static com.mycompany.app.hotel_management.controllers.manager.OverviewController.roomList;
-import static com.mycompany.app.hotel_management.controllers.manager.OverviewController.images;
-import static com.mycompany.app.hotel_management.controllers.AuthController.roomsIni;
-import static com.mycompany.app.hotel_management.controllers.AuthController.imagesIni;
-
-
 
 public class ManagerController extends AuthController {
     @FXML

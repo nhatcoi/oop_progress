@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Font?>
+<VBox layoutX="27.0" layoutY="12.0" prefHeight="186.0" prefWidth="277.0" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycompany.app.hotel_management.controllers.guest.CardController">
+    <children>
+        <ImageView fx:id="roomImg" fitHeight="121.0" fitWidth="277.0" pickOnBounds="true">
+            <image>
+                <Image url="@../../img/hotel3.jpeg" />
+            </image>
+        </ImageView>
+        <VBox prefHeight="62.0" prefWidth="277.0">
+            <children>
+                <Label fx:id="lbName" prefHeight="21.0" prefWidth="277.0" text="Label">
+                    <font>
+                        <Font name="Bodoni 72 Bold" size="13.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lbType" prefHeight="21.0" prefWidth="277.0" text="Label">
+                    <font>
+                        <Font name="Bodoni 72 Bold" size="13.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="19.0" fitWidth="276.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../img/star.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </VBox>
+    </children>
+</VBox>

@@ -2,7 +2,6 @@ package com.mycompany.app.hotel_management.controllers.manager.admin;
 
 import com.mycompany.app.hotel_management.repositories.Database;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;

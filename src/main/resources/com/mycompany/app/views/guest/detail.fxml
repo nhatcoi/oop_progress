@@ -53,7 +53,7 @@
             <Image url="@../../img/emptyImg.png" />
          </image>
       </ImageView>
-      <Button layoutX="7.0" layoutY="406.0" mnemonicParsing="false" onAction="#send" prefHeight="28.0" prefWidth="57.0" styleClass="btn" stylesheets="@../../css/home.css" text="Send" />
+      <Button layoutX="7.0" layoutY="406.0" mnemonicParsing="false" onAction="#sendFeedback" prefHeight="28.0" prefWidth="57.0" styleClass="btn" stylesheets="@../../css/home.css" text="Send" />
       <Label fx:id="user1" layoutX="30.0" layoutY="465.0" text="Label" />
       <Label fx:id="user2" layoutX="30.0" layoutY="505.0" text="Label" />
       <Label fx:id="user3" layoutX="30.0" layoutY="546.0" text="Label" />

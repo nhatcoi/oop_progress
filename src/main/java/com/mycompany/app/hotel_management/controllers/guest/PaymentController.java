@@ -1,5 +1,6 @@
 package com.mycompany.app.hotel_management.controllers.guest;
 
+import com.mycompany.app.App;
 import com.mycompany.app.hotel_management.entities.Payment;
 import com.mycompany.app.hotel_management.entities.Reservation;
 import com.mycompany.app.hotel_management.entities.Room;
@@ -12,8 +13,15 @@ import com.mycompany.app.hotel_management.utils.MailSender;
 import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import lombok.var;
 
 import java.io.IOException;
@@ -26,6 +34,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -36,20 +45,26 @@ public class PaymentController extends HomeController {
     @FXML
     private TableView<Reservation> tableViewReservation;
     @FXML
-    private TableView<Room> tableViewBooking;
+    TableView<Room> tableViewBooking;
     @FXML
-    private Label lbTotal;
+    Label lbTotal;
     @FXML
     private ComboBox<String> cbPaymentMethod;
     @FXML
     private DatePicker dpCheckIn;
     @FXML
     private DatePicker dpCheckOut;
-    public ComboBox<Integer> cbHourIn;
-    public ComboBox<Integer> cbHourOut;
+    @FXML
+    private ComboBox<Integer> cbHourIn;
+    @FXML
+    private ComboBox<Integer> cbHourOut;
+
+    @FXML
+    private ScrollPane cartPane;
+    @FXML
+    private AnchorPane containPane;
 
     Connection connect;
-
     public static ObservableList<Room> roomBooking = FXCollections.observableArrayList();
     //ObservableList<Room> selectedRooms;
     Room room;
@@ -77,11 +92,7 @@ public class PaymentController extends HomeController {
         dpCheckOut.setValue(LocalDate.now());
 
         // cart handing
-        tableViewBooking.setItems(roomBooking);
-        tableViewBooking.setOnMouseClicked(e -> {
-            room = tableViewBooking.getSelectionModel().getSelectedItem();
-            lbTotal.setText(String.valueOf(room.getPrice()));
-        });
+        cartHanding();
 
         // reservations handing
         reservations.clear();
@@ -104,6 +115,14 @@ public class PaymentController extends HomeController {
 //        resOutOfDate();
 
         ToolFXML.test("Payment: ", startTime);
+    }
+
+    private void cartHanding() {
+        tableViewBooking.setItems(roomBooking);
+        tableViewBooking.setOnMouseClicked(e -> {
+            room = tableViewBooking.getSelectionModel().getSelectedItem();
+            lbTotal.setText(String.valueOf(room.getPrice()));
+        });
     }
 
     private void resOutOfDate() throws SQLException {
@@ -275,7 +294,7 @@ public class PaymentController extends HomeController {
 
     private void updateStatus(Room room, int statusRoom) throws SQLException {
         connect = Database.connectDb();
-        sv.getAllRoom(connect, rooms, "rooms");
+        sv.getAllRoom(rooms, "rooms");
         String sql = "UPDATE rooms SET status = ? WHERE id = ?";
         try {
             assert connect != null;
@@ -284,7 +303,7 @@ public class PaymentController extends HomeController {
             prepare.setInt(2, room.getId());
             prepare.executeUpdate();
 
-            sv.getAllRoom(connect, rooms, "rooms");
+            sv.getAllRoom(rooms, "rooms");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -294,7 +313,6 @@ public class PaymentController extends HomeController {
     void checkIn() {
         checkDate();
     }
-
     @FXML
     void checkOut() {
         checkDate();
@@ -356,6 +374,8 @@ public class PaymentController extends HomeController {
 
     @FXML
     void delete() {
+        cartPane.setVisible(false);
+
         Room room = tableViewBooking.getSelectionModel().getSelectedItem();
         if(room == null) {
             Dialog.showError("Error", null, "Please select a room to delete");
@@ -478,5 +498,51 @@ public class PaymentController extends HomeController {
             cbPaymentMethod.getSelectionModel().selectFirst();
             return;
         }
+    }
+
+
+    @FXML
+    private GridPane roomBox;
+    @FXML
+    public void cart() throws IOException, SQLException {
+        if (roomBooking.isEmpty()) {
+            Dialog.showWarning("Warning", null, "Your cart is empty");
+            return;
+        }
+        cartPane.setVisible(true);
+        roomBox.getChildren().clear();
+
+        int column = 0;
+        int row = 1;
+        for (Room room : roomBooking) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/mycompany/app/views/guest/card.fxml"));
+            VBox vBox = fxmlLoader.load();
+            CardController card = fxmlLoader.getController();
+            card.setData(room);
+            if (column == 3) {
+                column = 0;
+                row++;
+                containPane.setPrefHeight(containPane.getPrefHeight() + 150);
+            }
+            roomBox.add(vBox, column++, row);
+            System.out.println(roomBox.getChildren().size());
+            GridPane.setMargin(vBox, new Insets(25));
+        }
+    }
+
+
+    @FXML
+    void reservation() {
+
+    }
+
+    @FXML
+    void closeCart() {
+        cartPane.setVisible(false);
+    }
+
+    public void reload(ActionEvent actionEvent) throws SQLException {
+        initialize();
     }
 }

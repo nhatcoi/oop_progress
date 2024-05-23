@@ -5,63 +5,57 @@ import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.service.Impl.RoomServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-import static com.mycompany.app.hotel_management.controllers.AuthController.imagesIni;
 import static com.mycompany.app.hotel_management.controllers.AuthController.roomsIni;
 
-public class OverviewController  {
+public class OverviewController {
     @FXML
-    private Label lbAvailable;
-
-    @FXML
-    private Label lbTotalIncome;
-
-    @FXML
-    private Label lbRented;
-
+    private Label lbAvailable, lbTotalIncome, lbRented;
     @FXML
     private ImageView image1;
 
+    private final RoomServiceImpl roomService = new RoomServiceImpl();
 
-    public int currentImageIndex = 0;
-    Connection connect;
-
-    RoomServiceImpl sv = new RoomServiceImpl();
-    public static ObservableList<Image> images = FXCollections.observableArrayList();
     public static ObservableList<Room> roomList = FXCollections.observableArrayList();
+
+    @FXML
     public void initialize() throws SQLException, ParseException {
         roomList = roomsIni;
-        images = imagesIni;
         setTag();
     }
 
     @FXML
-    void changeImage(ActionEvent actionEvent) throws SQLException {
-        if (!images.isEmpty()) {
-            image1.setImage(images.get(currentImageIndex));
-            currentImageIndex = (currentImageIndex + 1) % images.size();
-        }
+    void changeImage() {
+        // This method is currently commented out and not in use
     }
 
     @FXML
     void refresh() throws SQLException {
-        sv.getAllRoom(connect, roomList, "rooms");
+        roomService.getAllRoom(roomList, "rooms");
         setTag();
     }
 
-    void setTag() {
-        lbAvailable.setText(String.valueOf(roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.AVAILABLE.getText())).count()));
-        lbRented.setText(String.valueOf(roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.OCCUPIED.getText())).count()));
-        // Tổng tổng tiền của các phòng đã cho thuê hom nay
-        lbTotalIncome.setText(String.valueOf(roomList.stream().filter(room -> room.getStatus().equals(RoomStatus.OCCUPIED.getText())).mapToDouble(Room::getPrice).sum()));
+    private void setTag() {
+        long availableCount = roomList.stream()
+                .filter(room -> RoomStatus.AVAILABLE.getText().equals(room.getStatus()))
+                .count();
+        long rentedCount = roomList.stream()
+                .filter(room -> RoomStatus.OCCUPIED.getText().equals(room.getStatus()))
+                .count();
+        double totalIncome = roomList.stream()
+                .filter(room -> RoomStatus.OCCUPIED.getText().equals(room.getStatus()))
+                .mapToDouble(Room::getPrice)
+                .sum();
+
+        lbAvailable.setText(String.valueOf(availableCount));
+        lbRented.setText(String.valueOf(rentedCount));
+        lbTotalIncome.setText(String.valueOf(totalIncome));
     }
 }

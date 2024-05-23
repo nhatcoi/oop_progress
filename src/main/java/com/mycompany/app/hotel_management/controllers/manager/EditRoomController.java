@@ -4,10 +4,13 @@ import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.enums.RoomStatus;
 import com.mycompany.app.hotel_management.enums.RoomType;
 import com.mycompany.app.hotel_management.repositories.Database;
+import com.mycompany.app.hotel_management.service.Impl.RoomServiceImpl;
 import com.mycompany.app.hotel_management.utils.Dialog;
 import com.mycompany.app.hotel_management.utils.imgTool;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
@@ -21,123 +24,119 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.sql.*;
 
-//import static com.mycompany.app.hotel_management.controllers.manager.OverviewController.roomList;
+import static com.mycompany.app.hotel_management.controllers.guest.HomeController.imageCache;
 
-public class EditRoomController extends OverviewController{
-    public Button btnAdd;
-    public TextField rnameField;
-    public ComboBox<String> cbTypeRoom;
-    public ComboBox<String> cbStatus;
-    public TextField rpriceField;
-    public TableView<Room> tableView;
-    public TextField searchField;
-    public Button btnSearch;
-    public ImageView imgView;
+public class EditRoomController extends OverviewController {
+    @FXML
+    private Button btnAdd;
+    @FXML
+    private TextField nameField, priceField, searchField;
+    @FXML
+    private ComboBox<String> cbTypeRoom, cbStatus;
+    @FXML
+    private TableView<Room> tableView;
+    @FXML
+    private ImageView imgView;
 
-    Connection connect;
+    private Connection connect;
+    private final ObservableList<Room> roomList = FXCollections.observableArrayList();
+    RoomServiceImpl sv = new RoomServiceImpl();
 
+    @FXML
     public void initialize() throws SQLException {
-        // Add data to combobox
+        populateComboBoxes();
+        tableView.setItems(roomList);
+        tableView.setOnMouseClicked(this::handleTableClick);
+        fetchDataFromDatabase();
+    }
+
+    private void populateComboBoxes() {
         for (RoomType value : RoomType.values()) {
             cbTypeRoom.getItems().add(value.getText());
         }
-        for(RoomStatus value : RoomStatus.values()) {
+        for (RoomStatus value : RoomStatus.values()) {
             cbStatus.getItems().add(value.getText());
         }
-        if(!cbStatus.getItems().isEmpty()) {
-            cbStatus.setValue(cbStatus.getItems().get(0));
+        cbStatus.setValue(cbStatus.getItems().get(0));
+        cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
+    }
+
+    private void handleTableClick(MouseEvent event) {
+        Room room = tableView.getSelectionModel().getSelectedItem();
+        if (room != null) {
+            populateFields(room);
+            displayRoomImage(room);
         }
-        if (!cbTypeRoom.getItems().isEmpty()) {
-            cbTypeRoom.setValue(cbTypeRoom.getItems().get(0));
+    }
+
+    private void populateFields(Room room) {
+        nameField.setText(room.getName());
+        cbTypeRoom.setValue(room.getType());
+        priceField.setText(String.valueOf(room.getPrice()));
+        cbStatus.setValue(room.getStatus());
+    }
+
+    private void displayRoomImage(Room room) {
+        Image img = imageCache.getOrDefault(room.getId(), null);
+        if (img == null) {
+            img = sv.fetchImageRoom(room);
+            imageCache.put(room.getId(), img);
         }
-//        fetchDataFromDatabase();
-
-        // Add data to tableview
-        tableView.setItems(roomList);
-
-        // Click to show data
-        tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                //if (event.getClickCount() == 2) { // Double click
-                Room room = tableView.getSelectionModel().getSelectedItem();
-                if (room != null) {
-                    rnameField.setText(room.getName());
-                    cbTypeRoom.setValue(room.getType());
-                    rpriceField.setText(String.valueOf(room.getPrice()));
-                    cbStatus.setValue(room.getStatus());
-                    connect = Database.connectDb();
-                    String query = "SELECT * FROM pictures WHERE room_id = " + room.getId();
-                    try {
-                        assert connect != null;
-                        ResultSet resultSet = connect.createStatement().executeQuery(query);
-                        if (resultSet.next()) {
-                            String base64 = resultSet.getString("base64");
-                            Image image = imgTool.base64ToImage(base64);
-                            imgView.setImage(image);
-                        }
-                        else {
-                            imgView.setImage(null);
-                        }
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                }
-                //}
-            }
-        });
+        imgView.setImage(img);
     }
     public void clearInput() {
-        rnameField.clear();
-        rpriceField.clear();
+        nameField.clear();
+        priceField.clear();
     }
 
     public void addData() {
-        connect = Database.connectDb();
-        String name = rnameField.getText();
+        String name = nameField.getText();
         int type = cbTypeRoom.getSelectionModel().getSelectedIndex();
         int status = cbStatus.getSelectionModel().getSelectedIndex();
+
         try {
-            double price = Double.parseDouble(rpriceField.getText());
+            double price = Double.parseDouble(priceField.getText());
             String query = "INSERT INTO rooms (name, type, status, price) VALUES (?, ?, ?, ?)";
-            try {
+            try (Connection connect = Database.connectDb()) {
                 assert connect != null;
-                PreparedStatement preparedStatement = connect.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                preparedStatement.setString(1, name);
-                preparedStatement.setInt(2, type);
-                preparedStatement.setInt(3, status);
-                preparedStatement.setDouble(4, price);
-                preparedStatement.executeUpdate();
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-
-                int roomId = -1; // Giá trị mặc định nếu không có ID được trả về
-                if (generatedKeys.next()) {
-                    roomId = generatedKeys.getInt(1);
-                }
-                fetchDataFromDatabase();
-                clearInput();
-
-                Image image = imgView.getImage();
-                if(image != null)
-                {
-                    String base64 = imgTool.imageViewToBase64(imgView);
-                    if(roomId != -1)
-                    {
-                        query = "INSERT INTO pictures (base64, room_id) VALUES (?, ?)";
-                        preparedStatement = connect.prepareStatement(query);
-                        preparedStatement.setString(1, base64);
-                        preparedStatement.setInt(2, roomId);
-                        preparedStatement.executeUpdate();
+                try (PreparedStatement preparedStatement = connect.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+                    preparedStatement.setString(1, name);
+                    preparedStatement.setInt(2, type);
+                    preparedStatement.setInt(3, status);
+                    preparedStatement.setDouble(4, price);
+                    preparedStatement.executeUpdate();
+                    int roomId = -1;
+                    try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            roomId = generatedKeys.getInt(1);
+                        }
                     }
-                    //System.out.println(base64);
-                } Dialog.showInformation("Information", "Information", "Thêm phòng thành công!");
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                    fetchDataFromDatabase();
+                    clearInput();
+                    saveRoomImage(roomId);
+                    Dialog.showInformation("Information", "Information", "Thêm phòng thành công!");
+                }
             }
         } catch (NumberFormatException e) {
-            Dialog.showError("Error", "Error", "Price Phải là số!");
-            return;
+            Dialog.showError("Error", "Error", "Price phải là số!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void saveRoomImage(int roomId) throws SQLException {
+        Image image = imgView.getImage();
+        if (image != null && roomId != -1) {
+            String base64 = imgTool.imageViewToBase64(imgView);
+            String query = "INSERT INTO pictures (base64, room_id) VALUES (?, ?)";
+            try (Connection connect = Database.connectDb()) {
+                assert connect != null;
+                try (PreparedStatement preparedStatement = connect.prepareStatement(query)) {
+                    preparedStatement.setString(1, base64);
+                    preparedStatement.setInt(2, roomId);
+                    preparedStatement.executeUpdate();
+                }
+            }
         }
     }
 
@@ -146,50 +145,52 @@ public class EditRoomController extends OverviewController{
         if (search.isEmpty()) {
             fetchDataFromDatabase();
         } else {
-            try {
-                connect = Database.connectDb();
+            try (Connection connect = Database.connectDb()) {
                 sv.searchRoom(connect, roomList, search);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
     }
+
     public void deleteData() {
         Room room = tableView.getSelectionModel().getSelectedItem();
         if (room == null) {
             Dialog.showError("Error", "Error", "Chọn phòng cần xóa!");
             return;
         }
-        connect = Database.connectDb();
-        String query = "DELETE FROM rooms WHERE id = " + room.getId();
-        try {
+        String query = "DELETE FROM rooms WHERE id = ?";
+        try (Connection connect = Database.connectDb()) {
             assert connect != null;
-            connect.createStatement().executeUpdate(query);
-            fetchDataFromDatabase();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            try (PreparedStatement preparedStatement = connect.prepareStatement(query)) {
+                preparedStatement.setInt(1, room.getId());
+                preparedStatement.executeUpdate();
+                fetchDataFromDatabase();
+                Dialog.showInformation("Information", "Information", "Xóa " + room.getName() + " thành công!");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        Dialog.showInformation("Information", "Information", "Xóa" + room.getName() + " thành công!");
     }
 
     public void fetchDataFromDatabase() throws SQLException {
-
-        connect = Database.connectDb();
         String query = "SELECT * FROM rooms";
-        assert connect != null;
-        ResultSet resultSet = connect.createStatement().executeQuery(query);
-        roomList.clear();
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String name = resultSet.getString("name");
-            String type = RoomType.values()[resultSet.getInt("type")].getText();
-            String status = RoomStatus.values()[resultSet.getInt("status")].getText();
-            double price = resultSet.getDouble("price");
-
-            roomList.add(new Room(id, name, type, status, price));
+        try (Connection connect = Database.connectDb()) {
+            assert connect != null;
+            try (Statement statement = connect.createStatement();
+                 ResultSet resultSet = statement.executeQuery(query)) {
+                roomList.clear();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String name = resultSet.getString("name");
+                    String type = RoomType.values()[resultSet.getInt("type")].getText();
+                    String status = RoomStatus.values()[resultSet.getInt("status")].getText();
+                    double price = resultSet.getDouble("price");
+                    roomList.add(new Room(id, name, type, status, price));
+                }
+            }
         }
     }
-
 
     public void openSelectFile() {
         FileChooser fileChooser = new FileChooser();
@@ -198,87 +199,80 @@ public class EditRoomController extends OverviewController{
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
         );
         File selectedFile = fileChooser.showOpenDialog(btnAdd.getScene().getWindow());
-
         if (selectedFile != null) {
             try {
                 String fileUrl = selectedFile.toURI().toURL().toString();
-                System.out.println("Selected File URL: " + fileUrl);
                 imgView.setImage(new Image(fileUrl));
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
     }
 
     public void changeData() {
         Room currRoom = tableView.getSelectionModel().getSelectedItem();
-        Image currImg = imgView.getImage();
         if (currRoom == null) {
             Dialog.showError("Error", "Error", "Chọn phòng cần sửa!");
             return;
         }
-        connect = Database.connectDb();
-        String name = rnameField.getText();
+        String name = nameField.getText();
         int type = cbTypeRoom.getSelectionModel().getSelectedIndex();
         int status = cbStatus.getSelectionModel().getSelectedIndex();
 
         try {
-            double price = Double.parseDouble(rpriceField.getText());
+            double price = Double.parseDouble(priceField.getText());
             String query = "UPDATE rooms SET name = ?, type = ?, price = ?, status = ? WHERE id = ?";
-            try {
+            try (Connection connect = Database.connectDb()) {
                 assert connect != null;
-                PreparedStatement preparedStatement = connect.prepareStatement(query);
-                preparedStatement.setString(1, name);
-                preparedStatement.setInt(2, type);
-                preparedStatement.setDouble(3, price);
-                preparedStatement.setInt(4, status);
-                preparedStatement.setInt(5, currRoom.getId());
-                preparedStatement.executeUpdate();
-                fetchDataFromDatabase();
+                try (PreparedStatement preparedStatement = connect.prepareStatement(query)) {
+                    preparedStatement.setString(1, name);
+                    preparedStatement.setInt(2, type);
+                    preparedStatement.setDouble(3, price);
+                    preparedStatement.setInt(4, status);
+                    preparedStatement.setInt(5, currRoom.getId());
+                    preparedStatement.executeUpdate();
+                    fetchDataFromDatabase();
+                    updateRoomImage(currRoom);
+                    Dialog.showInformation("Information", "Information", "Cập nhật phòng thành công!");
+                }
+            }
+        } catch (NumberFormatException e) {
+            Dialog.showError("Error", "Error", "Price phải là số!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-                Image image = imgView.getImage();
-                if(image != null)
-                {
-                    String base64 = imgTool.imageViewToBase64(imgView);
-                    if(currRoom.getId() != -1)
-                    {
-                        String checkQuery = "SELECT COUNT(*) FROM pictures WHERE room_id = ?";
-                        PreparedStatement checkStatement = connect.prepareStatement(checkQuery);
-                        checkStatement.setInt(1, currRoom.getId());
-                        ResultSet resultSet = checkStatement.executeQuery();
+    private void updateRoomImage(Room currRoom) throws SQLException {
+        Image image = imgView.getImage();
+        if (image != null && currRoom.getId() != -1) {
+            String base64 = imgTool.imageViewToBase64(imgView);
+            String checkQuery = "SELECT COUNT(*) FROM pictures WHERE room_id = ?";
+            try (Connection connect = Database.connectDb()) {
+                assert connect != null;
+                try (PreparedStatement checkStatement = connect.prepareStatement(checkQuery)) {
+                    checkStatement.setInt(1, currRoom.getId());
+                    try (ResultSet resultSet = checkStatement.executeQuery()) {
                         resultSet.next();
                         int count = resultSet.getInt(1);
-
+                        String query;
                         if (count > 0) {
-                            // Nếu có bản ghi có room_id tương ứng, thực hiện cập nhật
                             query = "UPDATE pictures SET base64 = ? WHERE room_id = ?";
-                            preparedStatement = connect.prepareStatement(query);
+                        } else {
+                            query = "INSERT INTO pictures (base64, room_id) VALUES (?, ?)";
+                        }
+                        try (PreparedStatement preparedStatement = connect.prepareStatement(query)) {
                             preparedStatement.setString(1, base64);
                             preparedStatement.setInt(2, currRoom.getId());
                             preparedStatement.executeUpdate();
-                        } else {
-                            // Nếu không có bản ghi có room_id tương ứng, thực hiện chèn dữ liệu mới
-                            query = "INSERT INTO pictures (base64,room_id) VALUES (?, ?)";
-                            preparedStatement = connect.prepareStatement(query);
-                            preparedStatement.setInt(2, currRoom.getId()); // Giả sử roomId là ID của phòng mà bạn đang thao tác
-                            preparedStatement.setString(1, base64);
-                            preparedStatement.executeUpdate();
                         }
                     }
-                    //System.out.println(base64);
                 }
-
-                Dialog.showInformation("Information", "Information", "Cập nhật phòng thành công!");
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
             }
-        } catch (NumberFormatException e) {
-            Dialog.showError("Error", "Error", "Price Phải là số!");
-            return;
         }
     }
 
     public void refreshTable(ActionEvent actionEvent) throws SQLException {
-        initialize();
+        fetchDataFromDatabase();
     }
 }

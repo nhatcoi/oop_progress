@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 
 public class BankController extends PaymentDetailController{
@@ -18,16 +19,10 @@ public class BankController extends PaymentDetailController{
 
     final double VND = 25445;
 
-    public void initialize() {
-
-        System.out.println(reservation.getId() + "iddddd");
-
+    public void initialize() throws SQLException {
         Payment payment = new Payment();
         fetchPayment(payment);
-
         String totalPrice = formatPrice(payment.getTotalPrice() * VND) + " VND";
-
-
         lbBankMoney.setText(totalPrice);
         lbNote.setText(String.valueOf(reservation.getId()));
     }

@@ -38,6 +38,7 @@ public class StaffServiceImpl implements StaffService {
         connect = Database.connectDb();
         String sqlGetUserId = "SELECT id, role FROM users WHERE username = '" + staff.getUsername() + "'";
         try {
+            assert connect != null;
             Statement statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlGetUserId);
             if(resultSet.next()) {
@@ -62,6 +63,7 @@ public class StaffServiceImpl implements StaffService {
         connect = Database.connectDb();
         String sql = "DELETE FROM staff WHERE id = " + staff.getId();
         try {
+            assert connect != null;
             Statement statement = connect.createStatement();
             statement.executeUpdate(sql);
         } catch (SQLException e) {

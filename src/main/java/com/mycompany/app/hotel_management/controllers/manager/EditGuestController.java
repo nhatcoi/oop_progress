@@ -4,62 +4,53 @@ import com.mycompany.app.hotel_management.entities.Guest;
 import com.mycompany.app.hotel_management.service.Impl.GuestServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class EditGuestController {
 
     @FXML
-    private TextField tfPhoneNumber;
-
-    @FXML
     private TableView<Guest> tableViewUser;
-
+    @FXML
+    private TextField tfPhoneNumber;
     @FXML
     private TextField tfAddress;
-
     @FXML
     private TextField tfName;
     @FXML
     private TextField tfEmail;
 
-    private Connection connect;
     private final ObservableList<Guest> guestsList = FXCollections.observableArrayList();
-    GuestServiceImpl sv = new GuestServiceImpl();
+    private final GuestServiceImpl guestService = new GuestServiceImpl();
+
+    @FXML
     public void initialize() throws SQLException {
-        // code display username of staff from db
-        // add display data to the table
         tableViewUser.setItems(guestsList);
 
+        tableViewUser.setOnMouseClicked(event -> populateFields());
 
-        // Set up the columns in the table
-        tableViewUser.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Guest guest = tableViewUser.getSelectionModel().getSelectedItem();
-                if(guest != null) {
-                    tfName.setText(guest.getName());
-                    tfPhoneNumber.setText(guest.getPhone());
-                    tfAddress.setText(guest.getAddress());
-                    tfEmail.setText(guest.getEmail());
-                }
-            }
-        });
+        guestService.getData(guestsList);
+    }
 
-        sv.getData(guestsList);
+    private void populateFields() {
+        Guest guest = tableViewUser.getSelectionModel().getSelectedItem();
+        if (guest != null) {
+            tfName.setText(guest.getName());
+            tfPhoneNumber.setText(guest.getPhone());
+            tfAddress.setText(guest.getAddress());
+            tfEmail.setText(guest.getEmail());
+        }
     }
 
     @FXML
     void removeData() {
         Guest guest = tableViewUser.getSelectionModel().getSelectedItem();
-        if(guest != null) {
-            sv.deleteData( guestsList, guest);
+        if (guest != null) {
+            guestService.deleteData(guestsList, guest);
         }
     }
 
@@ -71,7 +62,7 @@ public class EditGuestController {
             guest.setPhone(tfPhoneNumber.getText());
             guest.setAddress(tfAddress.getText());
             guest.setEmail(tfEmail.getText());
-            sv.updateData(guestsList, guest);
+            guestService.updateData(guestsList, guest);
         }
     }
 }

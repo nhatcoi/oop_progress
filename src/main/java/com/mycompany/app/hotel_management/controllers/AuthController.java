@@ -1,6 +1,5 @@
 package com.mycompany.app.hotel_management.controllers;
 
-
 import com.mycompany.app.hotel_management.service.Impl.RoomServiceImpl;
 import com.mycompany.app.hotel_management.entities.Room;
 import com.mycompany.app.hotel_management.entities.User;
@@ -13,13 +12,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -29,202 +28,159 @@ import java.util.Random;
 public class AuthController {
 
     @FXML
-    private TextField tfEmail;
+    private TextField tfEmail, tfUsername, username, signup_username;
     @FXML
-    private TextField tfUsername;
+    private PasswordField password, signup_password, signup_password2;
     @FXML
     private StackPane authForm;
     @FXML
-    private AnchorPane login_form;
+    private AnchorPane login_form, signup_form, forgot_form;
     @FXML
-    private TextField username;
-    @FXML
-    private PasswordField password;
-    @FXML
-    private Hyperlink forgotPassword;
-    @FXML
-    private Hyperlink createAccount;
-    @FXML
-    private AnchorPane signup_form;
-    @FXML
-    private TextField signup_username;
-    @FXML
-    private PasswordField signup_password;
-    @FXML
-    private PasswordField signup_password2;
-    @FXML
-    private Hyperlink signup_forgot;
-    @FXML
-    private Hyperlink signup_login;
-    // forgot
-    @FXML
-    private AnchorPane forgot_form;
-    @FXML
-    private Hyperlink forgot_login;
-    @FXML
-    private Hyperlink forgot_signup;
+    private Hyperlink forgotPassword, createAccount, signup_forgot, signup_login, forgot_login, forgot_signup;
 
-    // db tools
     private Connection connect;
     private PreparedStatement prepare;
-    private Statement statement;
     private ResultSet result;
-    RoomServiceImpl sv = new RoomServiceImpl();
-    public static ObservableList<Image> imagesIni = FXCollections.observableArrayList();
+    private RoomServiceImpl roomService = new RoomServiceImpl();
     public static ObservableList<Room> roomsIni = FXCollections.observableArrayList();
 
     public void login() {
+        String userLog = username.getText();
+        String passLog = password.getText();
 
-        connect = Database.connectDb();
+        if (userLog.isEmpty() || passLog.isEmpty()) {
+            Dialog.showError("Login failed", null, "Please fill in all fields");
+            return;
+        }
+
         try {
-            // add user to list
-            String userLog = username.getText();
-            String passLog = password.getText();
+            connect = Database.connectDb();
+            passLog = Md5.hashString(passLog);
+            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+            prepare = connect.prepareStatement(sql);
+            prepare.setString(1, userLog);
+            prepare.setString(2, passLog);
+            result = prepare.executeQuery();
 
-            if (userLog.isEmpty() || passLog.isEmpty()) {
-                Dialog.showError("Login failed", null, "Please fill in all fields");
+            if (result.next()) {
+                int id = result.getInt("id");
+                int role = result.getInt("role");
+                ManagerController.user = new User(id, userLog, role);
+
+                Dialog.showInformation("Login successful", null, "Welcome " + userLog);
+                handleUserRole(role);
+                ToolFXML.closeFXML(authForm);
             } else {
-
-                passLog = Md5.hashString(passLog);
-                String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-                prepare = connect.prepareStatement(sql);
-                prepare.setString(1, userLog);
-                prepare.setString(2, passLog);
-                result = prepare.executeQuery();
-                if (result.next()) {
-
-                    int id = result.getInt("id");
-                    int role = result.getInt("role");
-                    ManagerController.user = new User(id, userLog, role);
-
-                    Dialog.showInformation("Login successful", null, "Welcome " + userLog);
-                    if (ManagerController.user.getRole() == UserRole.GUEST.getValue()) {
-                        String sql2 = "SELECT * FROM guests WHERE user_id = ?";
-                        prepare = connect.prepareStatement(sql2);
-                        prepare.setInt(1, ManagerController.user.getId());
-                        result = prepare.executeQuery();
-                        if (result.next()) {
-                            GuestController.guest.setId(result.getInt("id"));
-                            GuestController.guest.setName(result.getString("name"));
-                            GuestController.guest.setPhone(result.getString("phone"));
-                            GuestController.guest.setAddress(result.getString("address"));
-                            GuestController.guest.setEmail(result.getString("email"));
-                            GuestController.guest.setUser_id(result.getInt("user_id"));
-                        }
-                        ToolFXML.openFXML("views/guestForm.fxml");
-                    } else if (ManagerController.user.getRole() == UserRole.STAFF.getValue()) {
-                        ToolFXML.openFXML("views/manager.fxml");
-                    } else if (ManagerController.user.getRole() == UserRole.ADMIN.getValue()) {
-                        ToolFXML.openFXML("views/manager.fxml");
-                    }
-                    ToolFXML.closeFXML(authForm);
-                } else {
-                    Dialog.showError("Login failed", null, "Username or password is incorrect");
-                }
+                Dialog.showError("Login failed", null, "Username or password is incorrect");
             }
-        } catch (Exception e) {
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    private void handleUserRole(int role) throws SQLException, IOException {
+        if (role == UserRole.GUEST.getValue()) {
+            loadGuestData();
+            ToolFXML.openFXML("views/guestForm.fxml");
+        } else {
+            ToolFXML.openFXML("views/manager.fxml");
+        }
+    }
 
-    // sign up
+    private void loadGuestData() throws SQLException {
+        String sql2 = "SELECT * FROM guests WHERE user_id = ?";
+        prepare = connect.prepareStatement(sql2);
+        prepare.setInt(1, ManagerController.user.getId());
+        result = prepare.executeQuery();
+        if (result.next()) {
+            GuestController.guest.setId(result.getInt("id"));
+            GuestController.guest.setName(result.getString("name"));
+            GuestController.guest.setPhone(result.getString("phone"));
+            GuestController.guest.setAddress(result.getString("address"));
+            GuestController.guest.setEmail(result.getString("email"));
+            GuestController.guest.setUser_id(result.getInt("user_id"));
+        }
+    }
+
     public void signup() {
-        // connect to db
-        connect = Database.connectDb();
+        String username = signup_username.getText();
+        String password = signup_password.getText();
+        String confirmPassword = signup_password2.getText();
+
+        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            Dialog.showError("Sign up failed", null, "Please fill in all fields");
+            return;
+        }
+
+        if (username.length() < 6) {
+            Dialog.showError("Error", null, "Username must be at least 6 characters");
+            return;
+        }
+
+        if (password.length() < 6) {
+            Dialog.showError("Error", null, "Password must be at least 6 characters");
+            return;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            Dialog.showError("Error", null, "Confirm password does not match");
+            return;
+        }
 
         try {
-            // get data from input fields
-            String username = signup_username.getText();
-            String password = signup_password.getText();
-            String confirmPassword = signup_password2.getText();
-
-            // check empty fields
-            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Dialog.showError("Sign up failed", null, "Please fill in all fields");
-                return;
-            }
-            if (username.length() < 6) {
-                Dialog.showError("Error", null, "Username must be at least 6 characters");
-                return;
-            }
-            if (password.length() < 6) {
-                Dialog.showError("Error", null, "Password must be at least 6 characters");
-                return;
-            }
-            if (!password.equals(confirmPassword)) {
-                Dialog.showError("Error", null, "Confirm password is not match with new password");
-                return;
-            }
-            password = Md5.hashString(password);
-
-            // Check if the email or username is already registered
-            String checkSql = "SELECT * FROM users WHERE username = ?";
-            prepare = connect.prepareStatement(checkSql);
-            prepare.setString(1, username);
-            ResultSet checkResult = prepare.executeQuery();
-
-            if (checkResult.next()) {
+            connect = Database.connectDb();
+            if (isUsernameTaken(username)) {
                 Dialog.showError("Error", null, "Username is already taken");
                 return;
             }
 
-            // Thêm người dùng vào bảng users
-            String insertSql = "INSERT INTO users (username, password) VALUES (?, ?)";
-            prepare = connect.prepareStatement(insertSql);
-            prepare.setString(1, username);
-            prepare.setString(2, password);
-            prepare.executeUpdate();
-
-
-            String selectIdSql = "SELECT id FROM users WHERE username = ?";
-            prepare = connect.prepareStatement(selectIdSql);
-            prepare.setString(1, username);
-            ResultSet idResult = prepare.executeQuery();
-
-            int userId = -1; // Default value if no ID is found
-            if (idResult.next()) {
-                userId = idResult.getInt("id");
-            }
-
+            password = Md5.hashString(password);
+            addUser(username, password);
             Dialog.showInformation("Success", null, "Account created successfully");
 
             this.signup_form.setVisible(false);
             this.login_form.setVisible(true);
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    private boolean isUsernameTaken(String username) throws SQLException {
+        String checkSql = "SELECT * FROM users WHERE username = ?";
+        prepare = connect.prepareStatement(checkSql);
+        prepare.setString(1, username);
+        ResultSet checkResult = prepare.executeQuery();
+        return checkResult.next();
+    }
 
-    // forgot password
+    private void addUser(String username, String password) throws SQLException {
+        String insertSql = "INSERT INTO users (username, password) VALUES (?, ?)";
+        prepare = connect.prepareStatement(insertSql);
+        prepare.setString(1, username);
+        prepare.setString(2, password);
+        prepare.executeUpdate();
+    }
+
     public void requestPassword() {
         String username = tfUsername.getText();
         String email = tfEmail.getText();
-        if (Validate.validateEmail(email)) {
+        if (Security.validateEmail(email)) {
             Dialog.showError("Error", null, "Email is invalid");
             return;
         }
+
         try {
             connect = Database.connectDb();
-            assert connect != null;
             String sql = "SELECT * FROM guests WHERE email = ?";
             prepare = connect.prepareStatement(sql);
             prepare.setString(1, email);
             result = prepare.executeQuery();
+
             if (result.next()) {
-                String newPassword = generateRandomString(6);
+                String newPassword = Security.generateRandomString(6);
                 String hashedPassword = Md5.hashString(newPassword);
 
-                String updateSql = "UPDATE users " +
-                        "SET password = ? " +
-                        "WHERE id = (SELECT id FROM users WHERE username = ?)";
-                prepare = connect.prepareStatement(updateSql);
-                prepare.setString(1, hashedPassword);
-                prepare.setString(2, username);
-                prepare.executeUpdate();
-
+                updatePassword(username, hashedPassword);
                 MailSender.sendEmail(email, "New password", "Your new password is: " + newPassword);
                 Dialog.showInformation("Success", null, "Your new password has been sent to your email");
             } else {
@@ -235,22 +191,14 @@ public class AuthController {
         }
     }
 
-    public static String generateRandomString(int length) {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        Random random = new Random();
-        // Khởi tạo chuỗi kết quả
-        StringBuilder stringBuilder = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
-            // chọn kí tự ran đầm
-            char randomChar = characters.charAt(random.nextInt(characters.length()));
-            stringBuilder.append(randomChar);
-        }
-        return stringBuilder.toString();
+    private void updatePassword(String username, String hashedPassword) throws SQLException {
+        String updateSql = "UPDATE users SET password = ? WHERE username = ?";
+        prepare = connect.prepareStatement(updateSql);
+        prepare.setString(1, hashedPassword);
+        prepare.setString(2, username);
+        prepare.executeUpdate();
     }
 
-
-    // exit and minimize
     public void exit() {
         System.exit(0);
     }
@@ -260,42 +208,38 @@ public class AuthController {
         stage.setIconified(true);
     }
 
-    // switch form
     public void switchForm(ActionEvent event) {
-        this.login_form.setVisible(false);
-        this.signup_form.setVisible(false);
-        this.forgot_form.setVisible(false);
+        login_form.setVisible(false);
+        signup_form.setVisible(false);
+        forgot_form.setVisible(false);
 
-        if (event.getSource() == this.signup_login || event.getSource() == this.forgot_login) {
-            show(login_form);
+        if (event.getSource() == signup_login || event.getSource() == forgot_login) {
+            showForm(login_form);
+        } else if (event.getSource() == createAccount || event.getSource() == forgot_signup) {
+            showForm(signup_form);
+        } else if (event.getSource() == forgotPassword || event.getSource() == signup_forgot) {
+            showForm(forgot_form);
         }
-        if (event.getSource() == this.createAccount || event.getSource() == this.forgot_signup) {
-            show(signup_form);
-        }
-        if (event.getSource() == this.forgotPassword || event.getSource() == this.signup_forgot) {
-            show(forgot_form);
-        }
-
     }
 
-    public void show(AnchorPane paneToShow) {
+    private void showForm(AnchorPane paneToShow) {
         List<AnchorPane> allPanes = Arrays.asList(login_form, signup_form, forgot_form);
         for (AnchorPane pane : allPanes) {
             pane.setVisible(pane == paneToShow);
         }
     }
 
+    @FXML
     public void initialize() throws SQLException, ParseException {
         connect = Database.connectDb();
         roomsIni.clear();
-        imagesIni.clear();
-        sv.getAllRoom(connect, roomsIni, "rooms");
-        sv.getImage(connect, roomsIni, imagesIni);
+        roomService.getAllRoom(roomsIni, "rooms");
     }
 
-    public void loginEnter(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.ENTER)
+    @FXML
+    private void loginEnter(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
             login();
+        }
     }
 }
-

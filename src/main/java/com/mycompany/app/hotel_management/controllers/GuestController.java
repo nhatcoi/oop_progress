@@ -16,60 +16,54 @@ import static com.mycompany.app.hotel_management.controllers.ManagerController.u
 
 public class GuestController extends AuthController {
     @FXML
-    private  AnchorPane guestPane;
-    @FXML
-    private  AnchorPane signOutPane;
-    @FXML
-    private  AnchorPane editProfile;
-    @FXML
-    private AnchorPane findRoom;
-    @FXML
-    private  AnchorPane home;
-    @FXML
-    private  AnchorPane payment;
-    @FXML
-    private  AnchorPane detail;
-
+    private AnchorPane guestPane, signOutPane, editProfile, findRoom, home, payment, detail;
 
     public static Guest guest = new Guest();
 
+    @FXML
     public void initialize() throws SQLException {
-        show(home);
+        showPane(home);
     }
 
+    @FXML
     public void search() {
-        show(findRoom);
+        showPane(findRoom);
     }
 
+    @FXML
     public void detail() {
-        show(detail);
+        showPane(detail);
     }
 
+    @FXML
     public void home() {
-        show(home);
+        showPane(home);
     }
 
+    @FXML
     public void cartBooking() {
-        show(payment);
+        showPane(payment);
     }
 
-    public void userAccount() throws IOException {
-        show(editProfile);
+    @FXML
+    public void userAccount() {
+        showPane(editProfile);
         signOutPane.setVisible(true);
     }
 
-    public void show(AnchorPane paneToShow) {
-        List<AnchorPane> allPanes = Arrays.asList(home, payment, detail, findRoom, editProfile, signOutPane);
-        for (AnchorPane pane : allPanes) {
-            pane.setVisible(pane == paneToShow);
-        }
-    }
-
+    @FXML
     public void signOut() throws IOException, SQLException, ParseException {
         guest = new Guest();
         user = new User();
         super.initialize();
         ToolFXML.openFXML("views/authForm.fxml", 600, 400);
         ToolFXML.closeFXML(guestPane);
+    }
+
+    private void showPane(AnchorPane paneToShow) {
+        List<AnchorPane> allPanes = Arrays.asList(home, payment, detail, findRoom, editProfile, signOutPane);
+        for (AnchorPane pane : allPanes) {
+            pane.setVisible(pane == paneToShow);
+        }
     }
 }

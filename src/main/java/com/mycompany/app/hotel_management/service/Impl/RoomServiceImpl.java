@@ -10,6 +10,8 @@ import com.mycompany.app.hotel_management.utils.imgTool;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import lombok.var;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -19,9 +21,11 @@ import java.util.stream.Collectors;
 
 public class RoomServiceImpl extends Database implements RoomService {
 
+    Connection connect;
+
     // read room
     @Override
-    public void getAllRoom(Connection connect, ObservableList<Room> roomList, String table) throws SQLException {
+    public void getAllRoom(ObservableList<Room> roomList, String table) throws SQLException {
         findAll(connect, roomList, table);
     }
 
@@ -46,7 +50,26 @@ public class RoomServiceImpl extends Database implements RoomService {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Image fetchImageRoom(Room roomImage) {
+        int roomId = roomImage.getId();
+        connect = Database.connectDb();
+        String sql = "SELECT * FROM pictures WHERE room_id = " + roomId;
+        try{
+            assert connect != null;
+            var resultSet = connect.createStatement().executeQuery(sql);
+            if(resultSet.next()) {
+                String base64 = resultSet.getString("base64");
+                return imgTool.base64ToImage(base64);
+
+            } else {
+                return new Image("https://via.placeholder.com/150");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -87,7 +110,7 @@ public class RoomServiceImpl extends Database implements RoomService {
 //                images.add(image);
 //            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         return images;
@@ -122,7 +145,7 @@ public class RoomServiceImpl extends Database implements RoomService {
                 roomImages.put(roomId, image);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         // Thêm hình ảnh vào danh sách theo thứ tự phòng

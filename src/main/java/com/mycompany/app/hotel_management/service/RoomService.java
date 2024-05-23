@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface RoomService {
-    void getAllRoom(Connection connect, ObservableList<Room> roomList, String table) throws SQLException;
+    void getAllRoom(ObservableList<Room> roomList, String table) throws SQLException;
     ObservableList<Image> getImage(Connection connect, ObservableList<Room> roomList, ObservableList<Image> images) throws SQLException;
     ObservableList<Image> getImage(Connection connect, ObservableList<Room> roomList) throws SQLException;
     ObservableList<Room> addRoom(Connection connect, ObservableList<Room> roomList, Room room) throws SQLException;

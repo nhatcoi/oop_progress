@@ -8,206 +8,159 @@ import com.mycompany.app.hotel_management.utils.ToolFXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-
-import java.sql.*;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
-
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static com.mycompany.app.hotel_management.controllers.guest.PaymentController.roomBooking;
 
 public class HomeController extends GuestController {
 
     @FXML
     private AnchorPane homePane;
     @FXML
-    private ImageView image1;
+    private ImageView image1, image2, image3;
     @FXML
-    private ImageView image2;
-    @FXML
-    private ImageView image3;
-
-    @FXML
-    private Label lbPrice2;
-
-    @FXML
-    private Label lbPrice1;
-
-    @FXML
-    private Label lbName1;
-
-    @FXML
-    private Label lbName2;
-
-    @FXML
-    private Label lbName3;
-
+    private Label lbPrice1, lbPrice2, lbPrice3, lbName1, lbName2, lbName3, clockLabel;
     @FXML
     private TextField tfSearch;
 
-    @FXML
-    private Label lbPrice3;
-    @FXML
-    private Label clockLabel;
+    private Connection connect;
 
-    Connection connect;
+    public static ObservableList<Room> rooms = FXCollections.observableArrayList();
+    public static Map<Integer, Image> imageCache = new HashMap<>();
 
-
-    static ObservableList<Room> rooms = FXCollections.observableArrayList();
-    static ObservableList<Image> images = FXCollections.observableArrayList();
-    RoomServiceImpl sv = new RoomServiceImpl();
-    int[] index = new int[3];
-    List<Room> selectedRooms;
-
-    private void randomRoom(ObservableList<Room> rooms, ObservableList<Image> images) throws SQLException {
-        List<Label> names = List.of(lbName1, lbName2, lbName3);
-        List<Label> prices = List.of(lbPrice1, lbPrice2, lbPrice3);
-
-        if (rooms.size() > names.size()) {
-            selectedRooms = getRandomSublist(rooms, names.size());
-        } else {
-            selectedRooms = rooms;
-        }
-        IntStream.range(0, selectedRooms.size())
-                .forEach(i -> {
-                    names.get(i).setText(selectedRooms.get(i).getName());
-                    prices.get(i).setText(String.valueOf(selectedRooms.get(i).getPrice()));
-                    index[i] = rooms.indexOf(selectedRooms.get(i));
-                    matchImg(images, index, i);
-                });
-    }
-
-    private List<Room> getRandomSublist(List<Room> list, int size) {
-        List<Room> sublist = new ArrayList<>(list);
-        Collections.shuffle(sublist, new Random());
-        return sublist.subList(0, size);
-    }
-
-    private void matchImg(ObservableList<Image> images, int[] index, int i) {
-        List<ImageView> imageList = List.of(image1, image2, image3);
-        imageList.get(i).setImage(images.get(index[i]));
-    }
-
-    @FXML
-    void otherRoom() throws SQLException {
-        randomRoom(rooms, images);
-    }
-
-    @FXML
-    public void searchRoom() throws SQLException {
-        String search = tfSearch.getText().trim();
-        if (search.isEmpty()) {
-            sv.getAllRoom(connect, rooms, "rooms");
-            images = sv.getImage(connect, rooms, images);
-        } else {
-            try {
-                ObservableList<Room> searchRooms = FXCollections.observableArrayList();
-                ObservableList<Image> searchImages = FXCollections.observableArrayList();
-                for (int i = 0; i < rooms.size(); i++) {
-                    if (rooms.get(i).getName().contains(search)) {
-                        searchRooms.add(rooms.get(i));
-                        searchImages.add(images.get(i));
-                    }
-                }
-                randomRoom(searchRooms, searchImages);
-
-                // Lọc lại index sau search
-                Map<Room, Integer> roomIndexMap = IntStream.range(0, rooms.size())
-                        .boxed()
-                        .collect(Collectors.toMap(rooms::get, i -> i));
-                index = selectedRooms.stream()
-                        .filter(roomIndexMap::containsKey)
-                        .mapToInt(roomIndexMap::get)
-                        .toArray();
-                Arrays.stream(index).forEach(System.out::println);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public void booking1() {
-        booking(1);
-    }
-
-    public void booking2() {
-        booking(2);
-    }
-
-    public void booking3() {
-        booking(3);
-    }
-
-    void booking(int idxTag) {
-        idxTag = idxTag - 1;
-//        if(rooms.get(id[idxTag]).getStatus().equals(RoomStatus.OCCUPIED.getText())) {
-//            Dialog.showError("Room is occupied", null, "Room " + rooms.get(id[idxTag]).getName() + " is occupied, please choose another room");
-//            return;
-//        }
-
-//        int a = 0;
-//        for(Room room : selectedRooms) {
-//            for(int i = 0; i < rooms.size(); i++) {
-//                if(room.equals(rooms.get(i))) {
-//                    index[a] = i;
-//                    System.out.println(index[a]);
-//                    a++;
-//                    break;
-//                }
-//            }
-//        }
-
-        if (roomBooking.contains(rooms.get(index[idxTag]))) {
-            Dialog.showError("Room is already in cart", null, "Room " + rooms.get(index[idxTag]).getName() + " is already in cart, please open cart to check in room");
-            return;
-        }
-        roomBooking.add(rooms.get(index[idxTag]));
-        Dialog.showInformation("Add to Cart", null, "Add room " + rooms.get(index[idxTag]).getName() + " to payment Successfully \nCarry out payment to finish booking");
-    }
-
-
+    private final RoomServiceImpl roomService = new RoomServiceImpl();
+    private List<Room> selectedRooms;
+    private final int TAG = 3;
+    private int[] idxTag = new int[TAG];
     public void initialize() throws SQLException {
         long startTime = System.nanoTime();
-
         rooms = roomsIni;
-        images = imagesIni;
-        randomRoom(rooms, images);
+        randomRoom(rooms);
+        initializeClock();
+        ToolFXML.test("Home : ", startTime);
+    }
 
-        for (Room room : rooms) {
-            System.out.println(room.toString());
-        }
-
-        // clock
+    private void initializeClock() {
         Timeline clockTimeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        LocalTime currentTime = LocalTime.now();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-                        String formattedTime = currentTime.format(formatter);
-                        clockLabel.setText(formattedTime);
-                    }
+                new KeyFrame(Duration.ZERO, event -> {
+                    LocalTime currentTime = LocalTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                    clockLabel.setText(currentTime.format(formatter));
                 }),
                 new KeyFrame(Duration.seconds(1))
         );
         clockTimeline.setCycleCount(Animation.INDEFINITE);
         clockTimeline.play();
+    }
 
+    public void randomRoom(ObservableList<Room> rooms) throws SQLException {
+        List<Label> names = List.of(lbName1, lbName2, lbName3);
+        List<Label> prices = List.of(lbPrice1, lbPrice2, lbPrice3);
 
-        ToolFXML.test("Home : ", startTime);
+        int numLabels = names.size();
+
+        // Nếu số phòng ít hơn số nhãn, lấy tất cả phòng có sẵn
+        if (rooms.size() < numLabels) {
+            selectedRooms = new ArrayList<>(rooms);
+            // Thêm các phòng ngẫu nhiên từ danh sách ban đầu cho đến khi đủ số lượng nhãn
+            for (int i = selectedRooms.size(); i < numLabels; i++) {
+                selectedRooms.add(HomeController.rooms.get(i % HomeController.rooms.size()));
+            }
+        } else {
+            selectedRooms = getRandomSublist(rooms, numLabels);
+        }
+
+        // Hiển thị thông tin phòng lên các nhãn
+        IntStream.range(0, numLabels).forEach(i -> {
+            Room room = selectedRooms.get(i);
+            names.get(i).setText(room.getName());
+            prices.get(i).setText(String.valueOf(room.getPrice()));
+            idxTag[i] = rooms.indexOf(room);
+            matchImg(room, i);
+        });
+    }
+
+    private List<Room> getRandomSublist(ObservableList<Room> rooms, int size) {
+        Random rand = new Random();
+        return rand.ints(0, rooms.size())
+                .distinct()
+                .limit(size)
+                .mapToObj(rooms::get)
+                .collect(Collectors.toList());
+    }
+
+    private void matchImg(Room room, int idx) {
+        List<ImageView> imageList = List.of(image1, image2, image3);
+        Image img = imageCache.computeIfAbsent(rooms.indexOf(room), key -> roomService.fetchImageRoom(room));
+        imageList.get(idx).setImage(img);
+    }
+
+    @FXML
+    void otherRoom() throws SQLException {
+        randomRoom(rooms);
+    }
+
+    @FXML
+    public void searchRoom() throws SQLException {
+        String search = tfSearch.getText().trim().toLowerCase();
+        if (search.isEmpty()) {
+            return;
+        }
+
+        ObservableList<Room> searchRooms = rooms.stream()
+                .filter(room -> room.getName().toLowerCase().contains(search))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        randomRoom(searchRooms);
+
+        // Lọc lại index sau search
+        Map<Room, Integer> roomIndexMap = IntStream.range(0, rooms.size())
+                .boxed()
+                .collect(Collectors.toMap(rooms::get, i -> i));
+        idxTag = selectedRooms.stream()
+                .filter(roomIndexMap::containsKey)
+                .mapToInt(roomIndexMap::get)
+                .toArray();
+    }
+
+    @FXML
+    public void booking1() {
+        booking(0);
+    }
+
+    @FXML
+    public void booking2() {
+        booking(1);
+    }
+
+    @FXML
+    public void booking3() {
+        booking(2);
+    }
+
+    private void booking(int idx) {
+        Room room = rooms.get(idxTag[idx]);
+        if (roomBooking.contains(room)) {
+            Dialog.showError("Room is already in cart", null, "Room " + room.getName() + " is already in cart, please open cart to check in room");
+            return;
+        }
+        roomBooking.add(room);
+        Dialog.showInformation("Add to Cart", null, "Add room " + room.getName() + " to payment Successfully. Carry out payment to finish booking.");
     }
 }
