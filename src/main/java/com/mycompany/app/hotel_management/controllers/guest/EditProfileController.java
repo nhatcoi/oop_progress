@@ -128,6 +128,13 @@ public class EditProfileController extends GuestController {
     @FXML
     private void updateInfo() throws SQLException, IOException {
         updateGuestInfo();
+        if (!tfEmail.getText().isEmpty()) {
+            guest.setEmail(tfEmail.getText());
+            if (!Security.validateEmail(tfEmail.getText())) {
+                Dialog.showError("Error", null, "Email is invalid");
+                return;
+            }
+        }
         updateDatabase();
         Dialog.showInformation("Success", null, "Information updated successfully");
         initialize();
@@ -137,18 +144,12 @@ public class EditProfileController extends GuestController {
         if (!tfPhone.getText().isEmpty()) guest.setPhone(tfPhone.getText());
         if (!tfAddress.getText().isEmpty()) guest.setAddress(tfAddress.getText());
         if (!tfName.getText().isEmpty()) guest.setName(tfName.getText());
-        if (!tfEmail.getText().isEmpty()) {
-            guest.setEmail(tfEmail.getText());
-            if (Security.validateEmail(tfEmail.getText())) {
-                Dialog.showError("Error", null, "Email is invalid");
-                return;
-            }
-        }
     }
 
     private void updateDatabase() throws SQLException {
         connect = Database.connectDb();
         String sql = "SELECT * FROM guests WHERE user_id = '" + user.getId() + "'";
+        assert connect != null;
         Statement statement = connect.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
 

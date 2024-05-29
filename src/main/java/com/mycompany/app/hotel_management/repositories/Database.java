@@ -22,9 +22,8 @@ public class Database {
             String username = jsonObject.get("username").getAsString();
             String password = jsonObject.get("password").getAsString();
             String url = "jdbc:mysql://" + host + ":3306/" + databaseName;
-
-            // Establish the connection
             return DriverManager.getConnection(url, username, password);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

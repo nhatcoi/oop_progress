@@ -164,7 +164,7 @@ public class AuthController {
     public void requestPassword() {
         String username = tfUsername.getText();
         String email = tfEmail.getText();
-        if (Security.validateEmail(email)) {
+        if (!Security.validateEmail(email)) {
             Dialog.showError("Error", null, "Email is invalid");
             return;
         }

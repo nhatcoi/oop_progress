@@ -38,6 +38,8 @@ public class HomeController extends GuestController {
     @FXML
     private Label lbPrice1, lbPrice2, lbPrice3, lbName1, lbName2, lbName3, clockLabel;
     @FXML
+    private Label cmSize1, cmSize2, cmSize3;
+    @FXML
     private TextField tfSearch;
 
     private Connection connect;

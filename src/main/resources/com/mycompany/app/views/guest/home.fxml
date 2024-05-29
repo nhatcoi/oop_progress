@@ -45,7 +45,7 @@
                </image>
             </ImageView>
             <FontAwesomeIcon fill="#ffd119" glyphName="STAR" layoutX="19.0" layoutY="227.0" />
-            <Label layoutX="39.0" layoutY="214.0" text="4.9 (999+)" />
+            <Label fx:id="cmSize1" layoutX="39.0" layoutY="214.0" text="4.9 (999+)" />
             <Label fx:id="lbName1" layoutX="16.0" layoutY="236.0" prefHeight="28.0" prefWidth="308.0" text="VN Hotel">
                <font>
                   <Font size="23.0" />
@@ -75,7 +75,7 @@
                </image>
             </ImageView>
             <FontAwesomeIcon fill="#ffd119" glyphName="STAR" layoutX="19.0" layoutY="227.0" />
-            <Label layoutX="39.0" layoutY="214.0" text="4.9 (999+)" />
+            <Label fx:id="cmSize2" layoutX="39.0" layoutY="214.0" text="4.9 (999+)" />
             <Label fx:id="lbName2" layoutX="25.0" layoutY="236.0" prefHeight="28.0" prefWidth="292.0" text="VN Hotel">
                <font>
                   <Font size="23.0" />
@@ -108,7 +108,7 @@
                </image>
             </ImageView>
             <FontAwesomeIcon fill="#ffd119" glyphName="STAR" layoutX="19.0" layoutY="227.0" />
-            <Label layoutX="39.0" layoutY="214.0" text="4.9 (999+)" />
+            <Label fx:id="cmSize3" layoutX="39.0" layoutY="214.0" text="4.9 (999+)" />
             <Label fx:id="lbName3" layoutX="31.0" layoutY="237.0" prefHeight="28.0" prefWidth="286.0" text="VN Hotel">
                <font>
                   <Font size="23.0" />
