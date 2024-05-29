@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="bankPane" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.BankController">
+   <children>
+      <ImageView fitHeight="236.0" fitWidth="236.0" layoutX="182.0" layoutY="66.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../img/momobank.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutX="166.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scan the code Momo to pay">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Text>
+      <Text layoutX="108.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Receiver : ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="107.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount of money : " wrappingWidth="149.69140625">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="108.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transfer note : ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button layoutX="179.0" layoutY="471.0" mnemonicParsing="false" onAction="#finished" prefHeight="42.0" prefWidth="242.0" styleClass="btn" stylesheets="@../../css/home.css" text="I have finished paying">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <Label alignment="CENTER_RIGHT" layoutX="284.0" layoutY="334.0" prefHeight="20.0" prefWidth="162.0" text="Nguyen Van Nhat">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbBankMoney" alignment="CENTER_RIGHT" layoutX="284.0" layoutY="367.0" prefHeight="20.0" prefWidth="162.0" text="total">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbNote" alignment="CENTER_RIGHT" layoutX="284.0" layoutY="405.0" prefHeight="20.0" prefWidth="162.0" text="id res">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

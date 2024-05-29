@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="profilePane" onKeyPressed="#escKey" prefHeight="511" prefWidth="386" stylesheets="@../../../css/home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.manager.admin.StaffProfileController">
+   <children>
+      <AnchorPane prefHeight="511.0" prefWidth="386.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+             <Label fx:id="lbStaffName" layoutX="145.0" layoutY="32.0" prefHeight="42.0" prefWidth="221.0" styleClass="font-room" stylesheets="@../../../css/home.css" text="STAFF MANAGE" />
+            <ImageView fx:id="imgAvt" fitHeight="115.0" fitWidth="93.0" layoutX="35.0" layoutY="34.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../img/goku.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lbPosition" layoutX="156.0" layoutY="83.0" prefHeight="17.0" prefWidth="177.0" text="Position" />
+            <Label fx:id="lbStartDate" layoutX="156.0" layoutY="107.0" prefHeight="17.0" prefWidth="177.0" text="start date" textFill="#ffa100" />
+            <Label fx:id="lbEndDate" layoutX="156.0" layoutY="130.0" prefHeight="17.0" prefWidth="177.0" text="start date" textFill="#ffa100" />
+            <Button layoutX="14.0" layoutY="196.0" mnemonicParsing="false" styleClass="transparent-button" stylesheets="@../../../css/home.css" text="Details" textFill="#0088ff">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+
+            <AnchorPane layoutX="27.0" layoutY="233.0" prefHeight="264.0" prefWidth="332.0" styleClass="bg-white" stylesheets="@../../../css/home.css">
+               <children>
+                  <Text layoutX="24.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="lbEmail" layoutX="66.0" layoutY="76.0" prefHeight="17.0" prefWidth="152.0" text="lbMail" textFill="#004bcd" />
+                  <Text layoutX="66.0" layoutY="66.0" opacity="0.44" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+                  <Text layoutX="66.0" layoutY="125.0" opacity="0.44" strokeType="OUTSIDE" strokeWidth="0.0" text="Mobile Number" />
+                  <Label fx:id="lbPhone" layoutX="66.0" layoutY="135.0" prefHeight="17.0" prefWidth="152.0" text="123-456-789" />
+                  <Label fx:id="lbAddress" layoutX="66.0" layoutY="196.0" prefHeight="17.0" prefWidth="152.0" text="address" />
+                  <Text layoutX="66.0" layoutY="186.0" opacity="0.44" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" />
+                  <FontAwesomeIcon glyphName="ENVELOPE" layoutX="24.0" layoutY="75.0" size="1.8em" />
+                  <FontAwesomeIcon glyphName="PHONE" layoutX="24.0" layoutY="135.0" size="1.8em" />
+                  <FontAwesomeIcon glyphName="MAP_MARKER" layoutX="26.0" layoutY="199.0" size="1.8em" text="" wrappingWidth="18.3857421875" />
+               </children></AnchorPane>
+            <Hyperlink layoutX="38.0" layoutY="149.0" onAction="#changePhoto" text="Change photo" />
+            <Button layoutX="346.0" layoutY="1.0" mnemonicParsing="false" onAction="#esc" prefHeight="27.0" prefWidth="40.0" styleClass="transparent-button" stylesheets="@../../../css/home.css" />
+         </children>
+      </AnchorPane>
+
+   </children>
+</AnchorPane>

@@ -42,7 +42,7 @@ public class Ex15 {
 
         @Override
         public void method4() {
-            System.out.println("Method 4");
+            System.out.println("Method 4.png");
         }
 
         @Override

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane fx:id="authForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#loginEnter" prefHeight="410.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.AuthController">
+    <children>
+        <AnchorPane fx:id="login_form" prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <AnchorPane layoutY="3.0" prefHeight="410.0" prefWidth="296.0" styleClass="left-form" stylesheets="@../css/loginDesign.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="296.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ImageView fitHeight="410.0" fitWidth="296.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../img/backgr.png" />
+                     </image>
+                  </ImageView>
+               </children></AnchorPane>
+                <AnchorPane layoutX="296.0" prefHeight="410.0" prefWidth="296.0" styleClass="right-bg" stylesheets="@../css/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="296.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <Label layoutX="108.0" layoutY="115.0" text="Welcome">
+                            <font>
+                                <Font name="Tahoma Bold" size="17.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="username" layoutX="39.0" layoutY="160.0" prefHeight="35.0" prefWidth="218.0" promptText="username" styleClass="textField" stylesheets="@../css/loginDesign.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="42.0" />
+                        <PasswordField fx:id="password" layoutX="36.0" layoutY="210.0" prefHeight="35.0" prefWidth="220.0" promptText="password" styleClass="textField" stylesheets="@../css/loginDesign.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="42.0" />
+                        <Button fx:id="login" layoutX="37.0" layoutY="281.0" mnemonicParsing="false" onAction="#login" prefHeight="43.0" prefWidth="220.0" styleClass="login-btn" stylesheets="@../css/loginDesign.css" text="Login" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="42.0" />
+                        <Button layoutX="214.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#minimize" prefHeight="27.0" prefWidth="41.0" styleClass="close" stylesheets="@../css/loginDesign.css" textFill="WHITE" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="2.0">
+                            <graphic>
+                                <FontAwesomeIcon fx:id="minimize" glyphName="MINUS" onMouseClicked="#minimize" wrappingWidth="12.214285850524902" />
+                            </graphic>
+                        </Button>
+                        <Button layoutX="231.0" layoutY="14.0" mnemonicParsing="false" styleClass="close" stylesheets="@../css/loginDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                            <graphic>
+                                <FontAwesomeIcon fx:id="forgot_exit" glyphName="CLOSE" onMouseClicked="#exit" size="1.2em" styleClass="close" textAlignment="CENTER" wrappingWidth="28.257143020629883" />
+                            </graphic>
+                        </Button>
+                        <Hyperlink fx:id="forgotPassword" layoutX="39.0" layoutY="247.0" onAction="#switchForm" text="Forgot password ?" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="145.0" />
+                        <Hyperlink fx:id="createAccount" layoutX="87.0" layoutY="360.0" onAction="#switchForm" text="Create a new account" />
+                        <FontAwesomeIcon glyphName="USER" layoutX="122.0" layoutY="100.0" size="5em" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+
+
+        <AnchorPane fx:id="signup_form" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <children>
+                <AnchorPane layoutY="3.0" prefHeight="410.0" prefWidth="296.0" styleClass="left-form" stylesheets="@../css/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="296.0" AnchorPane.topAnchor="0.0" />
+                <AnchorPane layoutX="296.0" prefHeight="410.0" prefWidth="296.0" styleClass="right-bg" stylesheets="@../css/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="296.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <FontAwesomeIcon glyphName="USER_PLUS" layoutX="127.0" layoutY="60.0" size="4em" />
+                        <Label layoutX="108.0" layoutY="76.0" text="Welcome">
+                            <font>
+                                <Font name="Tahoma Bold" size="17.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="signup_username" layoutX="35.0" layoutY="137.0" prefHeight="30.0" prefWidth="220.0" promptText="username" styleClass="textField" stylesheets="@../css/loginDesign.css" />
+                        <PasswordField fx:id="signup_password" layoutX="35.0" layoutY="190.0" prefHeight="30.0" prefWidth="220.0" promptText="signup_password" styleClass="textField" stylesheets="@../css/loginDesign.css" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="41.0" />
+                        <PasswordField fx:id="signup_password2" layoutX="35.0" layoutY="239.0" prefHeight="30.0" prefWidth="220.0" promptText="retype-password" styleClass="textField" stylesheets="@../css/loginDesign.css" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="41.0" />
+                        <Button fx:id="signup_signup" layoutX="38.0" layoutY="293.0" mnemonicParsing="false" onAction="#signup" prefHeight="40.0" prefWidth="220.0" styleClass="login-btn" stylesheets="@../css/loginDesign.css" text="Sign up" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="38.0" />
+                        <Button layoutX="214.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#minimize" prefHeight="27.0" prefWidth="41.0" styleClass="close" stylesheets="@../css/loginDesign.css" textFill="WHITE" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="2.0">
+                            <graphic>
+                                <FontAwesomeIcon fx:id="signup_minimize" glyphName="MINUS" onMouseClicked="#minimize" styleClass="close" wrappingWidth="12.214285850524902" />
+                            </graphic>
+                        </Button>
+                        <Button layoutX="231.0" layoutY="14.0" mnemonicParsing="false" styleClass="close" stylesheets="@../css/loginDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                            <graphic>
+                                <FontAwesomeIcon fx:id="signup_exit" glyphName="CLOSE" onMouseClicked="#exit" size="1.2em" styleClass="close" textAlignment="CENTER" wrappingWidth="28.257143020629883" />
+                            </graphic>
+                        </Button>
+                        <Hyperlink fx:id="signup_forgot" layoutX="93.0" layoutY="339.0" onAction="#switchForm" text="Forgot password ?" />
+                        <Hyperlink fx:id="signup_login" layoutX="74.0" layoutY="364.0" onAction="#switchForm" text="Already have an account " />
+                    </children>
+                </AnchorPane>
+            <ImageView fitHeight="410.0" fitWidth="296.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../img/backgr.png" />
+               </image>
+            </ImageView>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="forgot_form" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <children>
+                <AnchorPane layoutY="3.0" prefHeight="410.0" prefWidth="296.0" styleClass="left-form" stylesheets="@../css/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="296.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ImageView fitHeight="410.0" fitWidth="296.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../img/backgr.png" />
+                     </image>
+                  </ImageView>
+               </children></AnchorPane>
+                <AnchorPane layoutX="296.0" prefHeight="410.0" prefWidth="296.0" styleClass="right-bg" stylesheets="@../css/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="296.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <FontAwesomeIcon glyphName="USER" layoutX="128.0" layoutY="91.0" size="4em" />
+                        <Label layoutX="109.0" layoutY="105.0" text="Welcome">
+                            <font>
+                                <Font name="Tahoma Bold" size="17.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="tfEmail" layoutX="38.0" layoutY="205.0" prefHeight="30.0" prefWidth="220.0" promptText="Email Address" styleClass="textField" stylesheets="@../css/loginDesign.css" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="39.19999999999993" />
+                        <Button fx:id="btnRequest" layoutX="38.0" layoutY="252.0" mnemonicParsing="false" onAction="#requestPassword" prefHeight="40.0" prefWidth="220.0" styleClass="login-btn" stylesheets="@../css/loginDesign.css" text="Request password" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="38.0" />
+                        <Button layoutX="214.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#minimize" prefHeight="27.0" prefWidth="41.0" styleClass="close" stylesheets="@../css/loginDesign.css" textFill="WHITE" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="2.0">
+                            <graphic>
+                                <FontAwesomeIcon fx:id="forgot_minimize" glyphName="MINUS" onMouseClicked="#minimize" wrappingWidth="12.214285850524902" />
+                            </graphic>
+                        </Button>
+                        <Button layoutX="231.0" layoutY="14.0" mnemonicParsing="false" styleClass="close" stylesheets="@../css/loginDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                            <graphic>
+                                <FontAwesomeIcon fx:id="exit" glyphName="CLOSE" onMouseClicked="#exit" size="1.2em" styleClass="close" textAlignment="CENTER" wrappingWidth="28.257143020629883" />
+                            </graphic>
+                        </Button>
+                        <Hyperlink fx:id="forgot_login" layoutX="119.0" layoutY="339.0" onAction="#switchForm" text="Sign In ?" />
+                        <Hyperlink fx:id="forgot_signup" layoutX="85.0" layoutY="364.0" onAction="#switchForm" text="Create a new account" />
+                  <TextField fx:id="tfUsername" layoutX="38.0" layoutY="159.0" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textField" stylesheets="@../css/loginDesign.css" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="editProfileScreen" prefHeight="603.0" prefWidth="1100.0" visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.app.hotel_management.controllers.guest.EditProfileController">
+   <children>
+      <AnchorPane layoutX="9.0" layoutY="9.0" prefHeight="450.0" prefWidth="289.0" styleClass="bg-white" stylesheets="@../../css/home.css">
+         <children>
+            <Label layoutX="21.0" layoutY="187.0" prefHeight="42.0" prefWidth="153.0">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+            <Hyperlink layoutX="56.0" layoutY="285.0" onAction="#openPassword" prefHeight="24.0" prefWidth="155.0" text="Change password">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Hyperlink>
+            <ImageView fx:id="imgAvatar" fitHeight="126.0" fitWidth="99.0" layoutX="99.0" layoutY="29.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../img/goku.png" />
+               </image>
+            </ImageView>
+            <Hyperlink layoutX="56.0" layoutY="238.0" onAction="#openInfo" prefHeight="23.0" prefWidth="155.0" text="Informative">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Hyperlink>
+            <FontAwesomeIcon glyphName="KEY" layoutX="23.0" layoutY="306.0" size="1.7em" />
+            <FontAwesomeIcon glyphName="USER_SECRET" layoutX="23.0" layoutY="259.0" size="1.7em" wrappingWidth="16.968331336975098" />
+            <Hyperlink fx:id="change" layoutX="105.0" layoutY="162.0" onAction="#changeAvatar" text="change avatar" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="12.0" layoutY="470.0" prefHeight="126.0" prefWidth="1077.0" styleClass="bg-white" stylesheets="@../../css/home.css">
+         <children>
+            <Label layoutX="14.0" layoutY="42.0" prefHeight="42.0" prefWidth="153.0" text="Informations">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="107.0" fitWidth="263.0" layoutX="800.0" layoutY="14.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../img/VN_Hotel-removebg-preview.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="210.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Support">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Text>
+            <Button layoutX="187.0" layoutY="42.0" mnemonicParsing="false" onAction="#phoneSupport" prefHeight="29.0" prefWidth="159.0" styleClass="transparent-button" stylesheets="@../../css/home.css" text="Hotline : 037 6696 037">
+               <graphic>
+                  <FontAwesomeIcon fill="#288600" glyphName="PHONE" size="1.3em" text="" wrappingWidth="16.96832275390625" />
+               </graphic>
+               <font>
+                  <Font size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Text layoutX="553.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Introduce">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Text>
+            <Button layoutX="187.0" layoutY="70.0" mnemonicParsing="false" onAction="#cusSupport" prefHeight="29.0" prefWidth="304.0" styleClass="transparent-button" stylesheets="@../../css/home.css" text="Customer support: 23010887@st.phenika-uni.edu.vn">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="12.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIcon glyphName="ENVELOPE" />
+               </graphic>
+            </Button>
+            <Button layoutX="187.0" layoutY="97.0" mnemonicParsing="false" onAction="#contactSupport" prefHeight="29.0" prefWidth="297.0" styleClass="transparent-button" stylesheets="@../../css/home.css" text="Contact for coop: 23010636@st.phenika-uni.edu.vn">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="12.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIcon glyphName="ENVELOPE" />
+               </graphic>
+            </Button>
+            <Button layoutX="547.0" layoutY="42.0" mnemonicParsing="false" onAction="#aboutUs" prefHeight="29.0" prefWidth="90.0" styleClass="transparent-button" stylesheets="@../../css/home.css" text="About Us">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="12.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIcon glyphName="INFO_CIRCLE" size="1.3em" />
+               </graphic>
+            </Button>
+            <Button layoutX="550.0" layoutY="69.0" mnemonicParsing="false" onAction="#address" prefHeight="29.0" prefWidth="80.0" styleClass="transparent-button" stylesheets="@../../css/home.css" text=" Address">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="12.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIcon glyphName="MAP_MARKER" size="1.3em" />
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="passwordPane" layoutX="310.0" layoutY="9.0" prefHeight="449.0" prefWidth="777.0" styleClass="bg-white" stylesheets="@../../css/home.css">
+         <children>
+            <Label layoutX="57.0" layoutY="20.0" prefHeight="42.0" prefWidth="212.0" text="Change password">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="pfPassword" layoutX="250.0" layoutY="136.0" prefHeight="34.0" prefWidth="169.0" promptText="password" styleClass="textField" stylesheets="@../../css/home.css" />
+            <PasswordField fx:id="pfNewPassword" layoutX="250.0" layoutY="205.0" prefHeight="34.0" prefWidth="169.0" promptText="new password" styleClass="textField" stylesheets="@../../css/home.css" />
+            <PasswordField fx:id="pfConfirmPassword" layoutX="250.0" layoutY="276.0" prefHeight="34.0" prefWidth="169.0" promptText="authen 2th password" styleClass="textField" stylesheets="@../../css/home.css" />
+            <Button layoutX="295.0" layoutY="363.0" mnemonicParsing="false" onAction="#updatePassword" prefHeight="43.0" prefWidth="76.0" styleClass="btn" stylesheets="@../../css/home.css" text="Save" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="infoPane" layoutX="310.0" layoutY="9.0" prefHeight="449.0" prefWidth="777.0" styleClass="bg-white" stylesheets="@../../css/home.css">
+         <children>
+            <Label layoutX="52.0" layoutY="15.0" prefHeight="42.0" prefWidth="153.0" text="Informative">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+            <Button layoutX="303.0" layoutY="362.0" mnemonicParsing="false" onAction="#updateInfo" prefHeight="56.0" prefWidth="104.0" styleClass="btn" stylesheets="@../../css/home.css" text="Save">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Label layoutX="30.0" layoutY="64.0" prefHeight="53.0" prefWidth="99.0" text="username : ">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbUsername" layoutX="137.0" layoutY="63.0" prefHeight="53.0" prefWidth="403.0" text="metadata">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfName" layoutX="361.0" layoutY="137.0" promptText="change Name" styleClass="textField" stylesheets="@../../css/home.css" />
+            <Label fx:id="lbName" layoutX="135.0" layoutY="123.0" prefHeight="53.0" prefWidth="224.0" text="metadata">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="123.0" prefHeight="53.0" prefWidth="99.0" text="Name :">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="186.0" prefHeight="53.0" prefWidth="99.0" text="Phone :">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbPhone" layoutX="137.0" layoutY="185.0" prefHeight="53.0" prefWidth="224.0" text="metadata">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbAddress" layoutX="137.0" layoutY="246.0" prefHeight="53.0" prefWidth="224.0" text="metadata">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="247.0" prefHeight="53.0" prefWidth="99.0" text="Address :">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfPhone" layoutX="361.0" layoutY="200.0" promptText="change phone" styleClass="textField" stylesheets="@../../css/home.css" />
+            <TextField fx:id="tfAddress" layoutX="361.0" layoutY="259.0" promptText="change address" styleClass="textField" stylesheets="@../../css/home.css" />
+            <TextField fx:id="tfEmail" layoutX="361.0" layoutY="313.0" promptText="change address" styleClass="textField" stylesheets="@../../css/home.css" />
+            <Label layoutX="30.0" layoutY="301.0" prefHeight="53.0" prefWidth="99.0" text="Email :">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbEmail" layoutX="137.0" layoutY="300.0" prefHeight="53.0" prefWidth="224.0" text="metadata">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
