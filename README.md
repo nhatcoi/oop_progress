@@ -63,7 +63,7 @@ Nội dung:
 
 
 # Result
-## report project file:///Users/nhatcoi/Downloads/report_finalProject.pdf
+## report project 
    
 
 
