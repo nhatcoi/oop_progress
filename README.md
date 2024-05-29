@@ -65,7 +65,7 @@ Nội dung:
 
 
 # Result
-   [## report project ](https://drive.google.com/drive/folders/1mmPEKQvuDVeqmle39Xz6lNWhK89lLOJ7?usp=drive_link)
+   [Project](https://drive.google.com/drive/folders/1mmPEKQvuDVeqmle39Xz6lNWhK89lLOJ7?usp=drive_link)
    
 
 
